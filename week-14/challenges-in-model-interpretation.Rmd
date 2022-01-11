@@ -243,7 +243,7 @@ knitr::include_graphics("figs/eco-robinson.png")
 Suggests foreign-born people tend to be more literate (cor = -0.51).
 ]
 
-.cite[Source: Robinson, 1950]
+.cite[Source: Robinson 1950]
 
 ---
 ## Immigration and Illiteracy
