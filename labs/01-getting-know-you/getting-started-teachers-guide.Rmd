@@ -1,6 +1,6 @@
 ---
 title: "Lab 0: Getting Started with RStudio and RMarkdown"
-output: word_document
+output: md_document
 ---
 
 ## Goals
@@ -25,21 +25,21 @@ We aim for our students to
 
 ## During Berkeley time
 
-- Write out the 7 steps of Lab 0 (below) on the side board, plug your laptop into the projector, and click AV mute to turn off the screen until you're ready
-- Introduce yourself to students as they enter
-- Ask students to sign-in (this is informal)
+- Introduce yourself to students as they enter and thank them for having their camera on.
+- Record student attendance (just for your own purposes).
 
 
 ## Part 1: Pre-lab
 
 ### Icebreaker
 
-- Gives students 1 min to write down 2 truths and 1 lie in the meantime, write students names on the boards in groups of five. The sign-in sheet is helpful here.
+- Gives students 1 min to write down 2 truths and 1 lie on a sheet of paper.
 - Ask students to get into their groups of 5 and take turns sharing:
   - name
   - hometown
   - 2 truths and lie
 - After each student shares, group discusses which statement is the lie, then the next student shares
+- 
 
 ### Introduction and lab overview
 

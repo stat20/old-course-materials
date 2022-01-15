@@ -1,0 +1,80 @@
+---
+title: "Lab 1: Getting Started"
+author: "STAT 20 UC Berkeley, Spring '22"
+output:
+  xaringan::moon_reader:
+    lib_dir: "assets/libs"
+    css:
+      - assets/css/stat-375-slides.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: solarized-light
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(message = FALSE, 
+                      fig.align = "center",
+                      fig.retina = 3,
+                      warning = FALSE)
+
+library(tidyverse)
+library(emo)
+library(xaringanExtra)
+library(countdown)
+xaringanExtra::use_panelset()
+```
+
+## Agenda 
+
+- Icebreaker + Introduction (10 min) 
+- Intro to Ed (5 min)
+- Lab 1 Demo (10 min)
+- Lab 1 Students (20 min)
+- Q & A (5 min)
+
+---
+## Icebreaker
+--
+
+1. Write down 2 truths and a lie (1 min)
+
+--
+
+2. In breakout rooms of size 4, take turns sharing:
+  - name
+  - hometown
+  - 2 truths and lie
+  
+--
+
+3. After each student shares, group tries to guess which is the lie
+
+```{r echo = FALSE}
+countdown::countdown(1)
+```
+
+---
+## What is Stat 20 Lab?
+
+.pull-left[
+**Who**: 25 students + GSI
+
+**What**: applying the concepts from lecture by working with real data  
+
+**When**: Tu, Th mornings for 50 minutes  
+
+**Where**: Initially Zoom, then 3rd floor Evans  
+]
+
+--
+
+.pull-right[
+**Why**: Doing statistics requires a synthesis of conceptual frameworks, ideas and notation from mathematics, computation tools, and an understanding of the context of the data. It's a complex task and it requires practice.  
+
+**How**: When doing data analysis, for our computational tool we'll be using R.
+]
+
+---
