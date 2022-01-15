@@ -21,12 +21,10 @@ Please make the following modifications to your lab file. Be sure to knit it aft
 
 3. Delete everything after the header.
 
-4. Add a new title `## My Home County: {homecounty, state}`. If you're from abroad, instead use `## Where I'd like to visit: {county, state}`.
+4. Add a new title `## My home county: {homecounty, state}`. If you're from abroad, instead use `## Where I'd like to visit: {county, state}`.
 
 5. Copy and paste the first few paragraphs from that county's Wikipedia page (the bit before the "Contents" section) into the Rmd and remove any unusual formatting.
 
-6. Include a photo of an iconic spot from your hometown.
-
-7. Create a new section called `## My three favorite spots near my home` and list them in an enumerated list.
+6. Create a new section called `## My three favorite spots near my home` and list them in an enumerated list.
 
 Make one final knit, be sure you're happy with your report, then download it to your computer and upload it to [gradescope](http://www.gradescope.com).
