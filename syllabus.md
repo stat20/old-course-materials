@@ -76,7 +76,7 @@ You are encouraged to collaborate with your fellow students on problem sets and 
 
 ### Mode of instruction and scheduling conflicts
 
-The first two weeks of lectures and labs will be held live on Zoom. A link to the Zoom meeting will be distributed via bCourses, where the recordings will also appear.  After two weeks, will aim to resume the mode of instruction outlined below, though that will be moderated by any changes to campus policy.
+The first two weeks of lectures and labs will be held live on Zoom. A link to the Zoom meeting will be distributed via bCourses, where the recordings will also appear.  After two weeks, we plan to resume the mode of instruction outlined below, though that will be moderated by any changes to campus policy.
 
 Maintaining your health and that of the Berkeley community is of primary importance to course staff, so if you are feeling ill or have been exposed to illness, please do not come to class. Recordings of the lecture are available online and you will have the ability to join a make-up lab remotely.
 
@@ -88,9 +88,12 @@ The lecture recordings will be available on bCourses for a window of 24 hours af
 If you miss watching the lecture while it is available (say you're very busy with other classwork that day or you're ill), you are encouraged to read through the slides that will be published to the course website and watch the recording when it becomes available again for review prior to the exams.
 
 #### Labs
-Lab sections will be held in person and your attendance is important. We have designed the lab sessions so that they're the most efficient and effective way to work on your lab assignments. It will be difficult to complete all of the lab assignments if you do not attend lab regularly. Please attend the lab section for which you are registered.
+Lab sections will be held in person and your attendance is important It will be difficult to complete all of the lab assignments if you do not attend lab regularly. Please attend the lab section for which you are registered.
 
-If you are ill or have been exposed to illness, please do not come to lab and instead join the remote lab (link available on Ed). This lab is meant only for students who cannot be on campus due to illness.
+If you are ill or have been exposed to illness, please do not come to lab and instead join the satellite lab (link available on Ed). This lab is meant only for students who cannot be on campus due to illness.
+
+Unfortunately, with a class of this size, we are unable to keep track of and grade late submissions of labs, so late labs will not be accepted. To make up for this inflexibility, we have pushed back each lab due date so that you will have four days, spanning two evening study sessions, to complete the labs. 
+
 
 ### Joining the course late
 
