@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Arbuthnot’s Christening Records</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Arbuthnot’s Christening Records
+### STAT 20 UC Berkeley
+
+---
+
+
+
+
+class: middle, center
+
+## What is the chance that a child born tomorrow is a girl, i.e. assigned female?
+
+???
+Most students will volunteer 50\%. Follow up with:
+
+&gt; Why do you think it's 50\%? How did you come to that number?
+- Did you read it somewhere? 
+- Did you hear it from someone? 
+
+&gt; If you wanted to confirm it was 50% what would you do?
+- [likely answer: google it]
+
+&gt; What source for that number would you likely come across if you kept digging?
+- ultimately, maybe some scientific article.
+
+&gt; What would their evidence for that claim of 50\%?
+- likely vast amounts of demographic / census data
+
+???
+
+# Statistical concepts
+- Reevaluate an accepted empirical claim and consider the evidence that's used to support it.
+- Categorical data can be summarized with counts and proportions
+- Data collected over time is well displayed using a line plot
+- The choice of scale in a visualization can drastically change the interpretation
+
+# R Skills
+- Selecting variables from a data frame with `select()`
+- Creating new variables using `mutate()` and saving them
+- Building and modifying a plot using `ggplot()`
+- Linking functions with a pipe `%&gt;%`
+
+# Suggested timeline
+- [5 - 10 min] Introduce question and data using slides
+- [15 min] Allow students to read the instructions and work on their own or together while you walk around and answer questions
+- [10 min] Come back together as a class and check in on answers to first three questions and address main questions/issues that came up
+- [15 min] Allow them to continue working on the remaining questions, walking around and answering questions and bringing the class together for check-ins when useful
+
+# General advice
+- Students are still very new to computing, so be sure to verbalize several things you may take for granted
+  - what a function is
+  - what matters and what doesn't in r code
+  - file management: where their
+- Knitr early and often. It's probably safest to do this lab entirely in Rmd documents and not use the console.
+- Encourage them to try to break things and see what changes
+
+---
+## What is the chance that a child born tomorrow is assigned female?
+
+&gt; 50%?
+
+--
+
+## What evidence do we ultimately rely upon?
+
+&gt; Vast amounts of data
+
+???
+Now consider the case of a scientist who tackled this question long before google was around.
+
+---
+# Dr. John Arbuthnot
+
+.pull-left[
+- 1667 - 1735
+- Scottish physician, mathematician, satirist
+- Interested in the question of the ratio of boys to girls at birth
+]
+
+.pull-right[
+&lt;img src="assets/images/arbuthnot-portrait.png" width="277" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Please read a bit about Arbuthnot online to learn some of his backstory.
+
+---
+# Arbuthnot's London
+
+.pull-left-narrow[
+- 1710, St. Paul's Cathedral completed
+- Very few paved streets
+- Definitely no google
+]
+
+.pull-right-wide[
+&lt;img src="assets/images/thames.png" width="812" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+#### What evidence would people rely upon?
+
+???
+&gt; Arbuthnot was living in London while thinking about this problem. It was a period of rapid growth and modernization for the city but it still had no google.
+
+Main point to get across here: what we take for granted in terms of how we reason from data was nearly absent from life in 18th century UK. Most people would reason from direct experience, anecdote, appeals to tradition or religion, etc.
+
+&gt; If you were Dr. Arbuthnot and you tell the person on the street: "My wife will soon be giving birth. What are the chances it's a girl?", what sort of answer do you think he might get? What type of information might that person be relying upon?
+- their own experience (the ratio of girls born in their family)
+- anecdotes that they've heard from others
+
+You may want to note that even our notion of "chance" and probability was not wide spread at the time.
+
+&gt; Arbuthnot's work is notable because he takes the big step of realizing that an individual can learn a lot by pooling the experiences / anecdotes of others in a systematic way.
+
+---
+class: middle, center, inverse
+
+## Where could Arbuthnot find vast amounts on systematically collected data regarding births?
+
+--
+
+The church.
+
+---
+
+&lt;img src="assets/images/christening-records.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+The church is the only organization that is collecting systematic demographic data in this era.
+
+---
+
+&lt;img src="assets/images/christening-records-zoom.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+&gt;Most children, shortly after they're born, are taken to the nearby parish church and "christened" - given a name in the church. The parish churches record the name and date of each of these christenings.
+
+&gt;Arbuthnot went from parish church to parish church in London, pored over these records and tallied the number of boys and girls. He then combined these counts across all of the parishes and created a data set that we can read into R today.
+
+---
+
+
+```r
+library(stat20data)
+data(arbuthnot)
+arbuthnot
+```
+
+```
+## # A tibble: 82 × 3
+##     year  boys girls
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  1629  5218  4683
+##  2  1630  4858  4457
+##  3  1631  4422  4102
+##  4  1632  4994  4590
+##  5  1633  5158  4839
+##  6  1634  5035  4820
+##  7  1635  5106  4928
+##  8  1636  4917  4605
+##  9  1637  4703  4457
+## 10  1638  5359  4952
+## # … with 72 more rows
+```
+
+---
+
+# Goal of Lab 2
+
+Use Arbuthnot's data to answer: "What is the chance that a child born tomorrow is assigned female?
+
+### R Skills
+- Selecting variables from a data frame with `select()`
+- Creating and saving new variables using `mutate()`
+- Building and modifying a plot using `ggplot()`
+- Linking functions with a pipe `%&gt;%`,
+
+???
+At this point, you can set students loose to work you'll want to monitor their progress and check-in several times throughout the hour. Some suggested check-ins are below. The answers to the first three problems are in the slides, but you may also want to do them directly in a new Rmd and project that just to show students what your Rmd looks like (namely, that it contains only code and answers to the questions, not the intermediate code used throughout).
+
+---
+class: middle, center, inverse
+
+# Check-ins
+
+---
+## Question 1
+
+What command would you use to extract just the counts of girls christened?
+
+--
+
+
+```r
+library(tidyverse)
+library(stat20data)
+data(arbuthnot)
+select(arbuthnot, girls)
+```
+
+--
+
+
+```
+## # A tibble: 82 × 1
+##    girls
+##    &lt;int&gt;
+##  1  4683
+##  2  4457
+##  3  4102
+##  4  4590
+##  5  4839
+##  6  4820
+##  7  4928
+##  8  4605
+##  9  4457
+## 10  4952
+## # … with 72 more rows
+```
+
+
+---
+## Question 2
+
+Is there an apparent trend in the number of girls christened over the years? 
+How would you describe it?
+
+.pull-left[
+&lt;img src="arbuthnot-slides_files/figure-html/q2-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+The number of girls generally increased between 1629 and 1710, though there was year-to-year variability and a big decrease between 1640 and 1660.
+]
+
+???
+Does anyone know what was happening in London around this time period that might be causing this drop?
+
+---
+
+&lt;img src="arbuthnot-slides_files/figure-html/q2b-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+- 1642 - 1651 English Civil War
+- 1665 - 1666 Great Plague of London
+- 1666 Great Fire of London, 80% of city destroyed
+- 1704?
+
+???
+Many of the dips correspond to period of political instability or natural disasters.
+
+---
+## Question 3
+
+Generate a plot of the proportion of boys born over time. What do you see?
+
+--
+
+
+```r
+arbuthnot &lt;- arbuthnot %&gt;%
+  mutate(total = boys + girls) %&gt;%
+  mutate(p_boys = boys / total)
+ggplot(arbuthnot, aes(x = year, y = p_boys)) +
+  geom_line()
+```
+
+---
+## Question 3
+
+
+.pull-left[
+&lt;img src="arbuthnot-slides_files/figure-html/unnamed-chunk-7-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+It appears to be a very erratic trend in the proportion of boys born over time.
+
+&gt; or is it?
+]
+
+---
+
+Same data, same plot, but with the y-axis rescaled.
+
+
+
+--
+
+&lt;img src="arbuthnot-slides_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

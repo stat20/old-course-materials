@@ -1,16 +1,17 @@
 ---
-title: "Intro to R"
-subtitle: "Arbuthnot's Christening Records"
+title: "Arbuthnot's Christening Records"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
-    lib_dir: libs
+    css: stat20.css
+    lib_dir: assets/libs
     nature:
       highlightStyle: atelier-forest-light
       highlightLines: true
       highlightSpans: true
+      ratio: 16:9
       countIncrementalSlides: false
+      slideNumberFormat: "%current%"
 ---
 
 ```{r setup, include=FALSE, warning=FALSE}
@@ -22,11 +23,28 @@ knitr::opts_chunk$set(message = FALSE,
 
 library(tidyverse)
 library(xaringanthemer)
-source("https://raw.githubusercontent.com/stat-20/stat-20-website/main/xaringan-theme.R")
-ggplot2::theme_set(ggplot2::theme_gray(base_size = 18))
+source("https://raw.githubusercontent.com/stat20/course-materials/master/stat20-style.r")
 ```
 
+class: middle, center
+
+## What is the chance that a child born tomorrow is a girl, i.e. assigned female?
+
 ???
+Most students will volunteer 50\%. Follow up with:
+
+> Why do you think it's 50\%? How did you come to that number?
+- Did you read it somewhere? 
+- Did you hear it from someone? 
+
+> If you wanted to confirm it was 50% what would you do?
+- [likely answer: google it]
+
+> What source for that number would you likely come across if you kept digging?
+- ultimately, maybe some scientific article.
+
+> What would their evidence for that claim of 50\%?
+- likely vast amounts of demographic / census data
 
 # Statistical concepts
 - Reevaluate an accepted empirical claim and consider the evidence that's used to support it.
@@ -55,27 +73,6 @@ ggplot2::theme_set(ggplot2::theme_gray(base_size = 18))
 - Encourage them to try to break things and see what changes
 
 ---
-class: middle, center
-
-## What is the chance that a child born tomorrow is a girl, i.e. assigned female?
-
-???
-Most students will volunteer 50\%. Follow up with:
-
-> Why do you think it's 50\%? How did you come to that number?
-- Did you read it somewhere? 
-- Did you hear it from someone? 
-
-> If you wanted to confirm it was 50% what would you do?
-- [likely answer: google it]
-
-> What source for that number would you likely come across if you kept digging?
-- ultimately, maybe some scientific article.
-
-> What would their evidence for that claim of 50\%?
-- likely vast amounts of demographic / census data
-
----
 ## What is the chance that a child born tomorrow is assigned female?
 
 > 50%?
@@ -100,7 +97,7 @@ Now consider the case of a scientist who tackled this question long before googl
 
 .pull-right[
 ```{r echo=FALSE, out.height="100%"}
-knitr::include_graphics("figs/arbuthnot-portrait.png")
+knitr::include_graphics("assets/images/arbuthnot-portrait.png")
 # Credit: Godfrey Kneller, Public domain, via Wikimedia Commons
 ```
 ]
@@ -119,7 +116,7 @@ Please read a bit about Arbuthnot online to learn some of his backstory.
 
 .pull-right-wide[
 ```{r echo=FALSE, out.height="100%"}
-knitr::include_graphics("figs/thames.png")
+knitr::include_graphics("assets/images/thames.png")
 # Giovanni Antonio Canal, il Canaletto - The River Thames with St. Paul's Cathedral on Lord Mayor's Day, detail, 1746-47
 ```
 ]
@@ -153,7 +150,7 @@ The church.
 ---
 
 ```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("figs/christening-records.png")
+knitr::include_graphics("assets/images/christening-records.png")
 # Credit: Unknown author, Public domain, via Wikimedia Commons
 ```
 
@@ -163,7 +160,7 @@ The church is the only organization that is collecting systematic demographic da
 ---
 
 ```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("figs/christening-records-zoom.png")
+knitr::include_graphics("assets/images/christening-records-zoom.png")
 # Credit: Unknown author, Public domain, via Wikimedia Commons
 ```
 
