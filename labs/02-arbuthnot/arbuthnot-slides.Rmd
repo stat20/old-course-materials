@@ -3,7 +3,7 @@ title: "Arbuthnot's Christening Records"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
-    css: stat20.css
+    css: ../assets/css/stat-375-slides.css
     lib_dir: assets/libs
     nature:
       highlightStyle: atelier-forest-light
