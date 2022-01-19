@@ -1,0 +1,49 @@
+---
+title: "Welcome to Class Mini"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/stat20-style.r")
+```
+
+## Group Discussion
+
+In breakout rooms, please `r emo::ji("camera_flash")` turn your camera on and...
+
+1. Take turns introducing yourselves with your
+  - name
+  - year at Cal
+  - major
+  - most delicious food you ate over winter break
+
+2. Formulate at least **three** possible explanations for what's going on in the picture.  
+
+3. Enter them at [pollev.com/stat20](pollev.com/stat20) or upvote existing explanations if they are very similar to your own.
+
+.right[You will have **5 minutes**.]
+
+---
+
+background-image: url("assets/images/shoebill-1.png")
+background-size: contain
