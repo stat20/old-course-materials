@@ -1,5 +1,5 @@
 ---
-title: "Arbuthnot's Christening Records"
+title: "Arbuthnots Christening Records"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
