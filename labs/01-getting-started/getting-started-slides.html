@@ -4,12 +4,10 @@
     <title>Lab 1: Getting Started</title>
     <meta charset="utf-8" />
     <meta name="author" content="STAT 20 UC Berkeley, Spring ’22" />
-    <script src="assets/libs/header-attrs-2.10/header-attrs.js"></script>
-    <link href="assets/libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="assets/libs/panelset-0.2.6/panelset.js"></script>
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
     <link href="assets/libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
     <script src="assets/libs/countdown-0.3.5/countdown.js"></script>
-    <link rel="stylesheet" href="assets/css/stat-375-slides.css" type="text/css" />
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -48,7 +46,7 @@ class: center, middle, inverse, title-slide
 
 3. After each student shares, group tries to guess which is the lie
 
-<div class="countdown" id="timer_61e20f0d" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_61e8d381" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -56,7 +54,7 @@ class: center, middle, inverse, title-slide
 ## What is Stat 20 Lab?
 
 .pull-left[
-**Who**: 25 students + GSI
+**Who**: 25-30 students + GSI
 
 **What**: applying the concepts from lecture by working with real data  
 
@@ -73,15 +71,57 @@ class: center, middle, inverse, title-slide
 **How**: When doing data analysis, for our computational tool we'll be using R.
 ]
 
+---
+class: center, middle
+
+# Course Communication
+
+Demo of Ed
+
+---
+## Edstem.org
+
+Please
+
+1. reply to the post with one true thing about yourself to share with the entire class,
+
+2. like someone's post.
+
+
+---
+class: center, middle
+
+# Writing and turning in Assignments in RStudio
+
+Demo of RStudio and Gradescope
+
+???
+1. Students first see Rstudio in lecture as a way to write their first assignment. They're not shown how to access it, just what it generally looks like and how it can be used like Word.
+1. In lab students are shown
+    - The four panels of RStudio, with a focus for now on files and editor.
+    - How to create and save a new problem set Rmd from a template.
+    - How to knit to pdf, where the pdf shows up, and what the conceptual link is between source and final product.
+    - Header vs Markdown
+    - In the header, the following fields
+        - title
+        - author
+        - output
+    - In the markdown
+        - normal text
+        - headings
+        - bold and italics
+        - bulleted list
+    ii. then left on their own to create their own document that answers a few questions (those question will show up only on the website as an html document).
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"slideNumberFormat": "%current%",
-"highlightStyle": "solarized-light",
+"highlightStyle": "atelier-forest-light",
 "highlightLines": true,
+"highlightSpans": true,
 "ratio": "16:9",
-"countIncrementalSlides": true
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
