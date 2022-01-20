@@ -101,10 +101,9 @@ class: center, middle
 Demo of RStudio and Gradescope
 
 ???
-1. Students first see Rstudio in lecture as a way to write their first assignment. They're not shown how to access it, just what it generally looks like and how it can be used like Word.
-1. In lab students are shown
+Students are shown
     - The four panels of RStudio, with a focus for now on files and editor.
-    - How to create and save a new problem set Rmd from a template.
+    - How to create and save a new assignment Rmd.
     - How to knit to pdf, where the pdf shows up, and what the conceptual link is between source and final product.
     - Header vs Markdown
     - In the header, the following fields
@@ -117,3 +116,4 @@ Demo of RStudio and Gradescope
         - bold and italics
         - bulleted list
     ii. then left on their own to create their own document that answers a few questions (those question will show up only on the website as an html document).
+    - How to download and submit their pdf to Gradescope.
