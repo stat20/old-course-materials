@@ -6,7 +6,7 @@ output: pdf_document
 
 This first lab has only one question:
 
-> Where are you from *or* where would you live to visit?
+> Where are you from *or* where would you like to visit?
 
 Please submit a one page pdf that answers that question. Your answer should contain three components:
 
