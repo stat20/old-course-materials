@@ -23,7 +23,7 @@ knitr::opts_chunk$set(message = FALSE,
 
 library(tidyverse)
 library(xaringanthemer)
-source("https://raw.githubusercontent.com/stat20/course-materials/master/stat20-style.r")
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
 ```
 
 ## Agenda 
@@ -50,10 +50,6 @@ source("https://raw.githubusercontent.com/stat20/course-materials/master/stat20-
 --
 
 3. After each student shares, group tries to guess which is the lie
-
-```{r echo = FALSE}
-countdown::countdown(1)
-```
 
 ---
 ## What is Stat 20 Lab?
