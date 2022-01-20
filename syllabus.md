@@ -81,7 +81,7 @@ The following texts are valuable supplementary texts and will be drawn upon for 
 - [Hands-on Programming with R](https://rstudio-education.github.io/hopr/), Grolemund
 - [R for Data Science](https://r4ds.had.co.nz/), Wickham and Grolemund
 
-The software that we'll be using for our data analysis is the free and open-source language called R that we'll be interacting with via software called RStudio. As a Berkeley student, you have your own version of RStudio waiting you for at: [http://r.datahub.berkeley.edu](http:\\r.datahub.berkeley.edu). Most students taking Stat 20 have no experience programming; we'll teach you everything you need to know!
+The software that we'll be using for our data analysis is the free and open-source language called R that we'll be interacting with via software called RStudio. As a Berkeley student, you have your own version of RStudio waiting you for at: [http://stat20.datahub.berkeley.edu](http://stat20.datahub.berkeley.edu). Most students taking Stat 20 have no experience programming; we'll teach you everything you need to know!
 
 
 ### Course communication
