@@ -1,5 +1,5 @@
 ---
-title: "R Workshop"
+title: "Slide Template"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
