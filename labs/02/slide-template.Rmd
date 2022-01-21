@@ -37,7 +37,7 @@ Lecture will be begin on Berkeley time 11:10 am
 ---
 ## This is a slide with a list
 
-1. hi
+1. hello
 2. hi
 3. hey there
 
