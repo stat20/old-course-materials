@@ -25,6 +25,39 @@ Your work should feature writing that is clear and in full sentences. Your docum
 
 ## Skills from the R Workshop
 
+#### RStudio Terminology
+- Console
+- Environment
+- Editor
+- File Directory
+
+#### R/RStudio Concepts
+- Printing to the console vs saving to the environment
+- R scripts as final draft of code, console as the sandbox
+<!-- Things to not teach: paths!-->
+
+#### R Functions
+- `+`, `-`, `*`, `/`, `^`
+- `<-`
+- `?`
+- `library()`
+- `c()`
+- `class()`
+- `sum()`
+- `mean()`
+
+- `data()`
+- `tibble()`
+- `select()`
+- `arrange()`
+- `mutate()`
+
+## R from Thurs lab
+
+- loading arbuthnot
+- loading tidyverse
+- making line plot using dplyr
+
 ## Concepts from the Lab
 
 - Identification of the unit of observation and the names and types of variables.

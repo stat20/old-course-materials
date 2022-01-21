@@ -8,7 +8,11 @@ Please answer these questions in a Google Doc, with plots copied and pasted from
 
 ## Preparation: R Workshop
 
-Please include the R code used to create the final data frame from the workshop.
+Please provide the R code that will generate a data frame (in `tidyverse`, these are known as "tibbles") with the following characteristics:
+- Three variables: Name, Favorite Color, Favorite Number
+- 5 observations
+
+The code should save this data frame in an object called `my_classmates`.
 
 ## Part I: Understanding the Context of the Data
 
@@ -21,27 +25,25 @@ Please include the R code used to create the final data frame from the workshop.
 
 ## Part II: Computing on the Data
 
-2. What is the unit of observation in the data frame used by John Arbuthnot? What are the names of the variables and what is the type of each one?
+4. What is the unit of observation in the data frame used by John Arbuthnot? What are the names of the variables and what is the type of each one?
 
-2. What is the time frame covered by Arbuthnot's data?
+5. What is the time frame covered by Arbuthnot's data?
 
-2. Which year saw the greatest number of children christened?
+6. Which year saw the greatest number of children christened?
 
-2. What is the proportion of girls christened in 1700?
+7. What is the proportion of girls christened in 1700?
 
-3. What is the trend over time in the total number of children christened? Please answer with a plot and written interpretation.
+8. What is the trend over time in the total number of children christened? Please answer with a plot and written interpretation.
 
-3. What is the trend over time in the proportion of girls christened? Please answer with a plot and written interpretation.
+9. What is the trend over time in the proportion of girls christened? Please answer with a plot and written interpretation.
 
 ## Part III: Extensions
 
-2. What is the time frame covered by the present-day data?
+10. What is the time frame covered by the present-day data?
 
-2. In terms of general magnitude (size), how do the counts in Arbuthnot's data compare to the counts in the present-day data?
+12. In terms of general magnitude (size), how do the counts in Arbuthnot's data compare to the counts in the present-day data?
 
-3. What is the trend over time in the total number of children christened? Please answer with a plot and written interpretation.
+13. What is the trend over time in the proportion of girls christened? Please answer with a plot and written interpretation.
 
-3. What is the trend over time in the proportion of girls christened? Please answer with a plot and written interpretation.
-
-4. Based on these two data sets, what claim are you prepared to make about John Arbuthnot's original question? What reservations, if any, do you have about using this data to make the claim?
+14. Based on these two data sets, what claim are you prepared to make about John Arbuthnot's original question? What reservations, if any, do you have about using this data to make the claim?
 
