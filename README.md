@@ -1,5 +1,5 @@
 # Course Materials
-## Stat 20 at UC Berkeley
+## Introduction to Probability and Statistics at UC Berkeley
 
 Source code for learning objectives, lecture slides, lab questions and materials, and problem sets for Stat 20: Introduction to Probability and Statistics.
 
