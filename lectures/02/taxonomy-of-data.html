@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Taxonomy of Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="assets/libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Good Morning!
+
+While you're waiting, please send a browser tab to `pollev.com/stat20` or download the Poll Everywhere app to your phone.
+
+---
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# The Taxonomy of Data
+
+## Stat 20 UC Berkeley
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/w2_77CbvYwObTLTpLSJxShBLdDezpNCzjFDvDAs5KQ5GB98zK1gtC3_BMtrsni5go9i9K7b3Q0x8Fm1nBwtnQQ?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://pollev-embeds.com/stat20" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/8oEFRRX8Euxw2zAICxgQv?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+class: middle
+
+&gt; Whenever you’re learning a new tool, for a long time you’re going to suck… But the good news is that is typical, that’s something that happens to everyone, and it’s only temporary.
+
+.right[-Hadley Wickham]
+
+---
+
+## Announcements
+--
+
+1. How to stay in the loop with this class
+
+  - Ed forum
+  - Course website
+
+--
+
+2. Getting Help
+
+  - Evening Help: Monday, Thursday 6:30 - 8:30 pm. Details will be posted to Ed.
+  - Office Hours: See Ed.
+
+---
+
+## Agenda
+
+1. The Taxonomy of Data
+2. The Data Frame
+
+
+---
+
+class: middle, center
+
+# Last Lecture
+
+---
+
+background-image: url("assets/images/shoebill-1.png")
+background-size: contain
+
+---
+background-image: url("assets/images/Stat 20 Sketches For Slides-5.jpg")
+background-size: contain
+
+.center[.adage[To learn how to critique and construct]]
+.center[.adage[claims made using data.]]
+
+
+---
+
+## Data defined
+
+
+**Data:**
+--
+ (n) An item of (chiefly numerical) information, esp. one obtained by scientific work, a number of which are typically collected together for reference, analysis, or calculation.
+--
+ From latin *datum*: that which is given.
+--
+ Facts.
+ 
+--
+
+**Variable:**
+--
+ A characteristic of an object / unit that can be measured / recorded.
+
+--
+
+**Observations**: the collection of objects / units that are being measured / recorded.
+
+---
+# Taxonomy
+--
+
+.pull-left[
+&lt;img src="assets/images/plant-taxonomy.jpeg" width="378" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+Carl Linnaeus, *Systema Naturae*, 1735.
+]
+
+---
+
+???
+Draw data Taxonomy on Board
+
+---
+## The Taxonomy of Data
+
+&lt;img src="assets/images/taxonomy-of-data.png" width="1280" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;center&gt;
+&lt;iframe src="https://pollev-embeds.com/surveys/RLvpphDN7ld3jpY2o3Dz7/respond" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+
+## Types of Variables
+--
+
+**Numerical**:
+--
+ Variables that take numbers as values that are sensible to add, subtract, etc.
+ 
+--
+
+**Categorical**:
+--
+ Variables that take categories as values (called *levels*).
+
+--
+
+**Continuous**:
+--
+ A numerical variable that takes values on an interval of the real number line.
+ 
+--
+
+**Discrete**:
+--
+ A numerical variable that takes values that have jumps between them (i.e. an ordered countable set).
+ 
+--
+
+**Ordinal**:
+--
+ A categorical variable with levels that have a natural ordering.
+ 
+--
+
+**Nominal**:
+--
+ A categorical variable with levels with no ordering.
+
+---
+
+&lt;center&gt;
+&lt;iframe src="https://pollev-embeds.com/surveys/65n7SrPLCOaRV50IR9VKJ/respond" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+
+class: middle, center
+
+.adage[The **type** of variable informs the way it should be **visualized** and **analyzed**.]
+
+---
+
+Questions from Ed?
+
+---
+class: middle, center
+
+# The Data Frame
+
+---
+## Observing Penguins
+--
+
+&lt;img src="assets/images/palmer-station.jpeg" width="60%" style="display: block; margin: auto;" /&gt;
+
+### Palmer Station, Antarctica
+
+*Size measurements for adult foraging penguins near Palmer Station, Antarctica*, K. Gorman 2020.
+
+---
+## Variables: Beak Length, Beak Depth
+--
+
+&lt;img src="assets/images/culmen_depth.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; These are *continuous* variables.
+
+---
+## Variable: Species
+--
+
+&lt;img src="assets/images/lter_penguins.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; This is a nominal variable.
+
+---
+## The Data Frame
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; bill_depth_mm &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; bill_length_mm &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; species &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 21.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 46.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 42.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+A **data frame** is an array that associates the *observations* (downs the rows) with the *variables* measured on each observation (across the columns). Each cell storse a **value** observed for a variable on an observation.
+
+--
+
+**Unit of observation**:
+--
+ The type of the object on which the variables are observed.
+ 
+--
+&gt; Here: an adult foraging *penguin* near Palmer Station, Antarctica
+
+---
+## Non-tidy Data Frames
+--
+
+From Wikipedia, a *contingency table* of sex and handedness.
+
+&lt;img src="assets/images/non-tidy-contingency-table.png" width="379" style="display: block; margin: auto;" /&gt;
+
+.task[
+What is the unit of observation?
+
+What are the variables?
+]
+
+---
+## Non-tidy Data Frames
+
+From the `stat20.org`, the schedule.
+
+&lt;img src="assets/images/non-tidy-schedule.png" width="693" style="display: block; margin: auto;" /&gt;
+
+.task[
+What is the unit of observation?
+
+What are the variables?
+]
+
+---
+## Non-tidy Data Frames
+
+From the World Bank, the number of hospital beds.
+
+&lt;img src="assets/images/non-tidy-world-bank.png" width="788" style="display: block; margin: auto;" /&gt;
+
+.task[
+What is the unit of observation?
+
+What are the variables?
+]
+
+---
+## For next time
+
+.pull-left[
+1. Take the survey and "turn it in" to Gradescope by Monday 8 pm.
+
+2. Get help on Lab 1 in at Evening Study Session, at office hours, on Ed.
+
+3. Take a look at the readings for next week.
+]
+
+--
+
+.pull-right[
+&lt;iframe src="https://giphy.com/embed/Of40xPqggQrde" width="480" height="315" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
