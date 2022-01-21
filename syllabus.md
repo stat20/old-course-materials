@@ -8,7 +8,7 @@ show_title_as_headline: true
 
 **Instructor**: Andrew Bray  
 
-Welcome to the Age of Data, where claims made using data are all around us: in the news, in the pages of scientific journals, in the policies of government, and in the board rooms of companies across the world. In this course you will explore the forms of claims that are made using data. Some of these are subtle claims about the structure of the data at hand. Others are grand claims of scientific truths or predictions of what will happen in the future. This course will train your to critique and begin to construct such arguments made using data.
+Welcome to the Age of Data, where claims made using data are all around us: in the news, in the pages of scientific journals, in the policies of government, and in the board rooms of companies across the world. In this course you will explore the forms of claims that are made using data. Some of these are subtle claims about the structure of the data at hand. Others are grand claims about scientific truths or predictions of what will happen in the future. This course will train your ability to critique and construct such arguments made using data.
 
 Selection of topics:
 
