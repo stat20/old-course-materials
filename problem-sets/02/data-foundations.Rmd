@@ -1,6 +1,239 @@
 ---
 title: "PS 1"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
-To be filled in...
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE)
+```
+
+
+1.  **Marvel Cinematic Universe films.**
+The data frame below contains information on Marvel Cinematic Universe films through the Infinity saga (a movie storyline spanning from Ironman in 2008 to Endgame in 2019). 
+Box office totals are given in millions of US Dollars.
+
+    ```{r}
+    library(openintro)
+    library(tidyverse)
+    library(knitr)
+    library(kableExtra)
+    
+    mcu_films_scaled <- mcu_films %>%
+      mutate(
+        opening_weekend_us = round(opening_weekend_us / 1000000, 2),
+        gross_us = round(gross_us / 1000000, 2),
+        gross_world = round(gross_world / 1000000, 2),
+      ) %>%
+      rownames_to_column() %>%
+      rename(
+        ` ` = rowname,
+        Title = movie,
+        Hrs = length_hrs,
+        Mins = length_min,
+        `Release Date` = release_date,
+        `Opening Wknd US` = opening_weekend_us,
+        US = gross_us,
+        World = gross_world
+      )
+    
+    mcu_films_1_to_5 <- mcu_films_scaled %>%
+      slice(n = 1:10) %>%
+      mutate(across(everything(), as.character))
+    
+    mcu_films_n <- mcu_films_scaled %>%
+      slice(n = (nrow(mcu_films)-1):nrow(mcu_films)) %>%
+      mutate(across(everything(), as.character))
+    
+    mcu_films_filler <- mcu_films_scaled %>%
+      slice(n = 1) %>%
+      mutate(across(everything(), str_replace, ".*", "..."))
+    
+    mcu_films_1_to_5 %>%
+      bind_rows(mcu_films_filler) %>%
+      bind_rows(mcu_films_n) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "clcccccc") %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position") %>%
+      add_header_above(c(" " = 2, "Length" = 2, " " = 2, "Gross" = 2)) %>%
+      column_spec(2, width = "10em")
+    ```
+    
+    a. How many observations and how many variables does this data frame have? What is the observational unit (what each row corresponds to)?
+    b. (Required for Marvel fans) Which movie on the list made the most money during the opening week? Which made the least? Does this outcome surprise you? What could be the possible reasons?
+
+
+1. **Smoking habits of UK residents.** 
+A survey was conducted to study the smoking habits of 1,691 UK residents. Below is a data frame displaying a portion of the data collected in this survey. 
+A blank cell indicates that data for that variable was not available for a given respondent.^[The [`smoking`](http://openintrostat.github.io/openintro/reference/smoking.html) data used in this exercise can be found in the [**openintro**](http://openintrostat.github.io/openintro) R package.] 
+
+    ```{r echo=FALSE, message=FALSE}
+    library(openintro)
+    library(tidyverse)
+    library(knitr)
+    library(kableExtra)
+    
+    set.seed(456)
+    smoking_to_print <- smoking %>%
+      rename(sex = gender) %>%
+      select(sex, age, marital_status, gross_income, smoke, amt_weekends, amt_weekdays) %>%
+      slice_sample(n = nrow(smoking)) %>%
+      rownames_to_column() %>%
+      rename(
+        weekend = amt_weekends,
+        weekday = amt_weekdays,
+        ` ` = rowname
+        )
+    
+    smoking_1_to_5 <- smoking_to_print %>%
+      slice(n = 1:5) %>%
+      mutate(across(everything(), as.character))
+    
+    smoking_n <- smoking_to_print %>%
+      slice(n = nrow(smoking)) %>%
+      mutate(across(everything(), as.character))
+    
+    smoking_filler <- smoking_to_print %>%
+      slice(n = 1) %>%
+      mutate(across(everything(), str_replace, ".*", "..."))
+    
+    smoking_1_to_5 %>%
+      bind_rows(smoking_filler) %>%
+      bind_rows(smoking_n) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "llllclcccl") %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE) %>%
+      add_header_above(c(" " = 6, "amount" = 2))
+    ```
+
+    a.  What does each row of the data frame represent?
+
+    b.  How many participants were included in the survey?
+
+    c.  Indicate whether each variable in the study is numerical or categorical. If numerical, identify as continuous or discrete. If categorical, indicate if the variable is ordinal.
+    
+
+
+
+
+1.  **UK baby names.** 
+The visualization below shows the number of baby girls born in the United Kingdom (comprised of England & Wales, Northern Ireland, and Scotland) who were given the name "Fiona" over the years.^[The [`ukbabynames`](https://mine-cetinkaya-rundel.github.io/ukbabynames/reference/ukbabynames.html) data used in this exercise can be found in the [**ukbabynames**](https://mine-cetinkaya-rundel.github.io/ukbabynames/) R package.]
+
+    ```{r}
+    library(tidyverse)
+    library(openintro)
+    library(ukbabynames)
+    
+    ukbabynames %>%
+      filter(name == "Fiona", sex == "F", year >= 2000) %>%
+      ggplot(aes(x = year, y = n, group = nation, color = nation, linetype = nation)) +
+      geom_line() +
+      geom_point() +
+      scale_color_openintro("three") +
+      labs(
+        title = "Number of baby girls named Fiona",
+        x = "Year",
+        y = "Number of babies",
+        color = "Nation", linetype = "Nation"
+      ) +
+      theme(
+        legend.position = c(0.8, 0.7),
+        legend.background = element_rect(color = "white")
+      )
+    ```
+
+    a.  List the variables you believe were necessary to create this visualization.
+
+    b.  Indicate whether each variable in the study is numerical or categorical. If numerical, identify as continuous or discrete. If categorical, indicate if the variable is ordinal.
+    
+    \vspace{5mm}
+    
+    
+1. ***Space launches.** 
+The following summary table shows the number of space launches in the US by the type of launching agency and the outcome of the launch (success or failure).^[The data used in this exercise comes from the [JSR Launch Vehicle Database, 2019 Feb 10 Edition](https://www.openintro.org/go?id=textbook-space-launches-data&referrer=ims0_html).]
+
+    ```{r}
+    library(knitr)
+    library(kableExtra)
+    library(tidyverse)
+    
+    launches_1957_1999 <- tribble(
+      ~agency,   ~Failure, ~Success,
+      "Private", 13,       295,
+      "State",   281,      3751,
+      "Startup", 0,        0
+    ) %>%
+      pivot_longer(cols = -agency, names_to = "outcome", values_to = "n") %>%
+      mutate(year = "1957-1999") %>%
+      uncount(n)
+    
+    launches_2000_2018 <- tribble(
+      ~agency,   ~Failure, ~Success,
+      "Private", 10,       562,
+      "State",   33,       711,
+      "Startup", 5,        65
+    ) %>%
+      pivot_longer(cols = -agency, names_to = "outcome", values_to = "n") %>%
+      mutate(year = "2000-2018") %>%
+      uncount(n)
+    
+    launches_1957_1999 %>%
+      bind_rows(launches_2000_2018) %>%
+      count(year, agency, outcome) %>%
+      pivot_wider(names_from = outcome, values_from = n) %>%
+      pivot_wider(names_from = year, values_from = c("Failure", "Success"), values_fill = 0) %>%
+      select(agency, `Failure_1957-1999`, `Success_1957-1999`, `Failure_2000-2018`, `Success_2000-2018`) %>%
+      kbl(linesep = "", booktabs = TRUE, col.names = c("", "Failure", "Success", "Failure", "Success")) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE) %>%
+      add_header_above(c(" " = 1, "1957 - 1999" = 2, "2000-2018" = 2))
+    ```
+
+    a.  What variables were collected on each launch in order to create to the summary table above?
+
+    b.  State whether each variable is numerical or categorical. If numerical, state whether it is continuous or discrete. If categorical, state whether it is ordinal or not.
+
+    c.  Suppose we wanted to study how the success rate of launches vary between launching agencies and over time. In this analysis, which variable would be the response variable and which variable would be the explanatory variable?
+    
+
+1. ***Views on immigration.** 
+Nine-hundred and ten (910) randomly sampled registered voters from Tampa, FL were asked if they thought workers who have illegally entered the US should be (i) allowed to keep their jobs and apply for US citizenship, (ii) allowed to keep their jobs as temporary guest workers but not allowed to apply for US citizenship, or (iii) lose their jobs and have to leave the country. 
+The results of the survey by political ideology are shown below.
+
+    ```{r}
+    library(tools)
+    library(openintro)
+    library(tidyverse)
+    #library(janitor)
+    library(knitr)
+    library(kableExtra)
+    
+    immigration %>%
+      count(political, response) %>%
+      mutate(political = toTitleCase(as.character(political))) %>%
+      pivot_wider(names_from = political, values_from = n) %>%
+      rename(Response = response) %>%
+      #adorn_totals(where = c("row", "col")) %>%
+      kbl(linesep = "", booktabs = TRUE) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE)
+    ```
+
+    a.  What percent of these Tampa, FL voters identify themselves as conservatives?
+
+    b.  What percent of these Tampa, FL voters are in favor of the citizenship option?
+
+    c.  What percent of these Tampa, FL voters identify themselves as conservatives and are in favor of the citizenship option?
+
+    d.  What percent of these Tampa, FL voters who identify themselves as conservatives are also in favor of the citizenship option? What percent of moderates share this view? What percent of liberals share this view?
+
+    e.  Do political ideology and views on immigration appear to be associated? Explain your reasoning.
+    
+    f.  Conjecture other possible variables that might explain the potential relationship between these two variables.
