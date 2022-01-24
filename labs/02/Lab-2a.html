@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Slide Template</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.10/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Welcome to Stat 20!
+### Introduction to Probability and Statistics
+
+Lab 2
+
+---
+## Components of RStudio
+
+1. Console
+--
+
+
+2. Environment
+--
+
+
+3. Editor
+--
+
+4. File Directory
+--
+
+.task[
+Now we are going to switch over to datahub to understand these 4 components a bit better
+]
+
+---
+## R as a calculator 
+
+The basic mathemetical operators `+`, `-`, `*`, `/`, `^` can be used directly in the R console or a .R script or .RMD
+--
+
+
+```r
+4 + 3
+```
+
+--
+
+
+```
+## [1] 7
+```
+
+--
+
+
+```r
+2 ^ 3
+```
+
+--
+
+
+```
+## [1] 8
+```
+
+---
+## Assignment and Help Operators
+
+The assignment operator `&lt;-` is a way to assign variables in R. It is the equivalent of `=` in other programming languages. 
+--
+
+
+```r
+var &lt;- "hello"
+```
+
+--
+
+
+
+--
+
+The help operator is a convenient way to get more information in RStudio on a function of interest
+
+1. `?mean`
+2. `help(mean)`
+
+---
+
+## Vectors and Tibbles (Data Frames)
+
+.pull-left[
+Vectors is the simplest data element used in R to store an individual variable. One way they can be created is using the `concatenate` operator:
+
+
+
+```r
+vector &lt;- c("a","b","C")
+print(vector)
+```
+
+
+```
+## [1] "a" "b" "C"
+```
+]
+
+--
+
+.pull-right[
+Tibbles / data frames are a collection of vectors in R that can contain multiple data types.
+
+`class()` can be used to see what data types are presents
+
+
+
+```r
+vector &lt;- c("a","b","C")
+class(vector)
+```
+
+
+```
+## [1] "character"
+```
+
+]
+
+---
+
+## Tibbles (Data Frames) Continued
+
+Ways to load pre-existing data frames into R is using 
+
+1. `data()`
+2. `tibble()`
+
+
+```r
+tibble(mtcars)
+```
+
+--
+
+
+```
+## # A tibble: 6 × 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4
+## 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+## 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+## 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+## 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+## 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+```
+
+---
+
+## Basic Functions on Vectors / Tibbles
+
+Functions can be called on vectors and columns in a tibble. For example `sum()` and `mean()`
+
+
+```r
+vector &lt;- c(1,2,3,4,5)
+sum(vector)
+mean(vector)
+```
+
+--
+
+
+```
+## [1] 15
+```
+
+```
+## [1] 3
+```
+
+---
+
+## Packages in R
+
+There are several additional "packages" in R that can be used to make frequently done tasks much easier. One such package is the `dplyr` package in `tidyverse`. 
+
+Packages can be loaded into R using `library()`
+
+
+```r
+library(tidyverse)
+```
+
+---
+
+## Data Manipulation using `tidyverse`
+
+There are several functions that can be used to manipulate tibbles easily: 
+
+* `select()` : subset columns 
+
+--
+
+
+* `arrange()` : sort columns 
+
+--
+
+
+* `mutate()` : create new columns from existing columns
+
+--
+
+---
+
+## Data Manipulation Example
+
+Using the functions that we have introduced, take some time to complete the following: 
+
+.task[Please provide the R code that will generate a tibble with the following characteristics: - Three variables: Name, Favorite Color, Favorite Number - 5 observations.]
+
+The code should save this tibble in an object called `my_classmates`.
+
+---
+
+
+## This is a slide with a list
+
+1. hello
+2. hi
+3. hey there
+
+---
+## This is a slide with two columns
+
+.pull-left[
+left side
+]
+
+.pull-right[
+right side
+]
+
+---
+## You can sequentially reveal slides with `--`
+
+part one
+--
+and then part two
+--
+and then part three
+
+--
+
+and FOUR!
+
+---
+## The best way to do images is with an r chunk
+
+&lt;img src="https://www.berkeley.edu/images/uploads/about_mega.jpg" width="10%" style="display: block; margin: auto;" /&gt;
+
+--
+
+
+&lt;img src="https://www.berkeley.edu/images/uploads/about_mega.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Here is R code
+
+
+```r
+rnorm(100)
+```
+
+```
+##   [1] -1.13332689 -0.10643873  0.93824519 -0.67104486  0.22077224 -1.51261018
+##   [7]  0.61579351  1.59881765 -0.31003651  1.04571191 -1.39913401  1.46066352
+##  [13] -0.06937160  0.54538165  0.09211966 -2.17868792  0.84824955  0.62696447
+##  [19] -0.91528640 -0.17593106 -1.51159488  0.72864229  0.89825031 -0.22389734
+##  [25]  1.70702454 -0.04284308  0.09701168  0.30461550 -0.53993977  0.50120722
+##  [31]  0.44743554 -0.03961419 -1.87741715 -1.19302031  0.46950525 -0.09578848
+##  [37]  1.90061391 -0.68972066  0.38099152  0.02625996  1.00035312 -0.10305587
+##  [43] -2.59848675  0.68295610  0.12165686 -0.03942914  0.80129525 -1.87125542
+##  [49] -1.16605943 -0.03356489  0.95561700 -0.25609357  1.58959238 -0.10187716
+##  [55] -0.89448211  0.43599380 -1.24287290 -0.11448616  1.13399701 -1.10861911
+##  [61] -0.26294787  0.53974744 -0.61795331  0.81942167 -0.81018446  0.50605812
+##  [67] -0.92304705 -1.30904298  0.33892508 -0.47767963 -2.75216829  0.59489714
+##  [73]  0.30130131  1.33505627 -0.81725669  0.13147114  0.77403107  0.95189086
+##  [79] -2.29035465  0.41468081 -0.54239909  0.36390878 -0.67402754 -0.05700665
+##  [85]  0.78322496 -0.18034578  2.00237154 -0.02918408  0.72859649 -0.35941568
+##  [91]  2.34331766 -0.13078036 -1.34960641  0.69016412 -2.36442047  2.09696559
+##  [97]  1.12787751 -0.56659710  0.83414906  0.69773606
+```
+
+---
+## Sometimes you want to take it slow
+
+--
+
+
+```r
+rnorm(100)
+```
+
+--
+
+
+```
+##   [1]  0.674184681  0.793270976  0.858695780  0.503673745 -0.199261665
+##   [6] -0.628025207  1.340829543  0.567272777  0.332362959 -0.002565177
+##  [11] -0.938816787 -2.224333692 -0.590585939 -0.555180791  2.280511468
+##  [16] -2.236900097  2.148765663  0.084026220 -0.863337863 -0.915200062
+##  [21] -1.981552520  1.163030052  0.714751404 -0.305628898 -1.526075890
+##  [26] -1.619197797  0.030428423  1.871894375  0.783866821 -0.596373863
+##  [31]  0.639868223 -1.005673269 -1.636405222  1.231623114  0.405490261
+##  [36] -0.940357762  0.042937696 -1.127789676 -1.223895830  0.276496463
+##  [41] -0.192098734  0.791206298 -0.320373225 -0.741361337 -0.540473551
+##  [46] -1.274128971  0.181190814 -1.668738985  0.503628066 -0.454818628
+##  [51] -1.167600641  0.546038027 -0.583765622 -0.751638204  1.195840726
+##  [56] -0.565886178  0.804498203  1.262073839 -0.011079750 -0.582746646
+##  [61]  2.100622643 -0.228365007 -2.009070818  1.904912348  0.137882576
+##  [66] -2.081123171 -0.484018368 -0.418070844 -0.744859913 -0.758908686
+##  [71]  0.135974364  0.642264013  0.617047477  1.192657734  0.292560822
+##  [76]  1.140134499  0.034464947 -0.118555710  0.425152177  0.559229728
+##  [81]  0.070410393 -1.141294700 -0.970319755  0.173938905 -1.148723610
+##  [86] -0.909875845 -2.076533889  0.758585528  0.905759182 -2.367534629
+##  [91]  1.294462175 -1.593607222  0.782068319 -0.546837742  1.290526721
+##  [96]  0.329822037  0.942181330 -0.599629112 -1.197132492  0.665106231
+```
+
+---
+## Here is a way to flag student action
+
+herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up.
+
+.task[
+See if you can figure out how to ...
+]
+
+
+---
+## And to keep things structured
+
+herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up. herei s my problme set up.
+
+--
+
+.task[
+See if you can figure out how to ...
+]
+
+
+--
+
+
+
+---
+## Emojis
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
