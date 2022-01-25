@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="assets/libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Introduction to R
+## Stat 20 UC Berkeley
+
+---
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Good Morning!
+
+While you're waiting, please send a browser tab to `pollev.com/stat20` or download the Poll Everywhere app to your phone.
+
+---
+## Agenda
+--
+
+1. RStudio and R
+
+2. R as a calculator
+
+3. Saving objects
+
+4. Creating vectors
+
+5. Functions
+
+6. The Taxonomy of Data in R
+
+6. Data Frames
+
+
+---
+background-image: url(assets/images/stat20-sketch-07.jpg)
+background-size: contain
+
+
+---
+background-image: url(assets/images/stat20-sketch-08.jpg)
+background-size: contain
+
+
+---
+background-image: url(assets/images/stat20-sketch-09.jpg)
+background-size: contain
+
+
+---
+background-image: url(assets/images/stat20-sketch-10.jpg)
+background-size: contain
+
+---
+background-image: url(assets/images/stat20-sketch-11.jpg)
+background-size: contain
+
+
+---
+## RStudio vs R
+--
+
+.pull-left[
+&lt;img src="assets/images/rstudio.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+**RStudio**: a program used to write markdown documents, R code, and more.
+
+Waiting for you at `stat20.datahub.berkeley.edu`.
+
+]
+
+--
+
+.pull-right[
+&lt;img src="assets/images/r-project.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+**R language**: an open-source language for statistical computing.
+
+]
+
+---
+## This is where R lives in RStudio
+
+&lt;img src="assets/images/hopr_0101.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, middle, center
+
+# R as a Calculator
+
+demo
+
+???
+
+Demonstrate +, -, *, /, ^ at the console.
+
+---
+## R as a calculator
+
+R allows all of the standard arithmetic operations.
+
+.pull-left[
+
+**Addition**
+
+```r
+1 + 2
+```
+
+```
+## [1] 3
+```
+
+**Subtraction**
+
+```r
+1 - 2
+```
+
+```
+## [1] -1
+```
+
+]
+
+--
+
+.pull-right[
+**Multiplication**
+
+```r
+1 * 2 
+```
+
+```
+## [1] 2
+```
+
+**Division**
+
+```r
+1 / 2
+```
+
+```
+## [1] 0.5
+```
+
+
+]
+
+
+---
+## R as a calculator, cont.
+
+R allows all of the standard arithmetic operations.
+
+.pull-left[
+
+**Exponents**
+
+```r
+2 ^ 3
+```
+
+```
+## [1] 8
+```
+]
+
+.pull-right[
+
+**Parentheses for Order of Ops.**
+
+```r
+2 ^ 3 + 1
+```
+
+```
+## [1] 9
+```
+
+
+```r
+2 ^ (3 + 1)
+```
+
+```
+## [1] 16
+```
+
+]
+
+---
+## Saving Objects
+
+When you type a line of code (here: math) at the console and press `enter`, R will:
+
+1. Run the code / evaluate the expression
+2. *Print* the output to the console
+
+--
+
+If instead you want R to
+
+1. Run the code / evaluate the expression
+2. Save the output to an *object*
+
+--
+
+You can use the **assignment operator**.
+
+
+```r
+&lt;-
+```
+
+(less than symbol, hyphen)
+
+---
+class: center, middle
+
+## Saving objects
+
+demo
+
+???
+
+Run stuff like `a &lt;- 1 + 2`, `b &lt;- 2 * 3`, and `a + b`, `a + 1`.
+
+---
+## Saving objects
+--
+
+
+
+&lt;img src="assets/images/hopr_0102.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Naming objects
+
+In order to be recognized as a valid object name, you have to certain conventions; namely, the object name should begin with a letter.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; good names &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; names that cause errors &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1trial &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $ &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FOO &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ^mean &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; my_var &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; my var &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+### What will happen here?
+
+
+```r
+a &lt;- 1 + 2
+a + 1
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/xHREV2UiheaEaavBoEAsX?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+
+What will happen here?
+
+
+```r
+a &lt;- 1 + 2
+a + 1
+```
+
+```
+## [1] 4
+```
+
+--
+
+To update an object, you can overwrite it by assigning it to the same name.
+
+--
+
+
+```r
+a &lt;- 1 + 2
+a &lt;- a + 1
+a
+```
+--
+
+```
+## [1] 4
+```
+
+
+---
+## Creating a Vector
+
+One of the core data structure in R is the *vector*, a one-dimensional ordered set of values.
+--
+ You can create a vector using a function called `c()` for *combine* or *concatenate*.
+
+--
+
+demo
+
+---
+## Creating a Vector
+
+One of the core data structure in R is the *vector*, a one-dimensional ordered set of values. You can create a vector using a function called `c()` for *combine* or *concatenate*.
+ 
+
+```r
+c(1, 2, 3)
+```
+
+```
+## [1] 1 2 3
+```
+
+--
+
+
+```r
+a &lt;- c(1, 2, 3)
+```
+
+---
+## Math on Vectors
+--
+
+Arithmetic on vectors happens element-by-element.
+
+--
+
+.pull-left[
+&lt;img src="assets/images/vector-math.png" width="305" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+a &lt;- c(1, 2, 3, 4, 5, 6)
+b &lt;- c(1, 2, 3, 4, 5, 6)
+a * b
+```
+
+```
+## [1]  1  4  9 16 25 36
+```
+]
+
+---
+## Functions
+--
+
+You can do operations on R objects by using *functions*.
+
+---
+background-image: url(assets/images/stat20-sketch-12.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+
+---
+background-image: url(assets/images/stat20-sketch-13.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+&gt; Each function has a name followed by parentheses.
+
+---
+background-image: url(assets/images/stat20-sketch-14.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+&gt; Inside the parenthesis you put the object you'd like to operate on, called the *argument* of the function.
+
+---
+background-image: url(assets/images/stat20-sketch-15.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+&gt; When you provide the argument to the function and run it, you can capture the output with an object (or print it to the console).
+
+???
+Demo running this line of code, then running `?mean`
+
+---
+## Getting help
+--
+
+One of the most useful commands in R is `?`.
+
+.pull-left[
+
+
+```r
+?mean
+```
+
+&lt;img src="assets/images/help-mean.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+Look for:
+- Which arguments are available
+- What kind of output the function will return (called the "Value")
+- Look at the examples at the bottom
+]
+
+???
+Demo
+
+a &lt;- c(-5, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+mean(a)
+mean(a, trim = .1)
+a_no_extremes &lt;- c(2, 3, 4, 5, 6, 7, 8, 9)
+mean(a_no_extremes)
+
+---
+## Multiple arguments
+
+
+```r
+a &lt;- c(-5, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+mean(x = a, trim = .1)
+```
+
+```
+## [1] 5.5
+```
+
+A few notes:
+
+--
+
+1. Functions can take multiple arguments separated by a comma: `,`
+
+--
+
+2. Arguments have names that you can specify or leave blank
+
+--
+
+3. Some arguments have default values that will be used if you specify something different
+
+
+---
+## So many functions...
+
+There are many functions in R, most of them named sensibly.
+
+
+```r
+a &lt;- c(1, 2, 3, 4)
+mean(a)
+```
+
+```
+## [1] 2.5
+```
+
+```r
+sum(a)
+```
+
+```
+## [1] 10
+```
+
+```r
+length(a)
+```
+
+```
+## [1] 4
+```
+
+---
+## Functions on vectors
+--
+
+Many of them will operate element-by-element if given a vector argument.
+
+--
+
+
+```r
+a &lt;- c(1, 2, 3, 4)
+sqrt(a)
+```
+
+```
+## [1] 1.000000 1.414214 1.732051 2.000000
+```
+
+```r
+log(a)
+```
+
+```
+## [1] 0.0000000 0.6931472 1.0986123 1.3862944
+```
+
+```r
+abs(a)
+```
+
+```
+## [1] 1 2 3 4
+```
+
+--
+
+Note: `log()` is the natural log by default (log base `\(e = 2.71\)`).
+
+---
+### What will happen here?
+
+
+```r
+a &lt;- c(1, 2, 3, 4)
+sqrt(log(a))
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/oqF9U8G8xfOerNeTaYGN5?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+### What will happen here?
+
+
+```r
+a &lt;- c(1, 2, 3, 4)
+sqrt(log(a))
+```
+
+```
+## [1] 0.0000000 0.8325546 1.0481471 1.1774100
+```
+
+--
+
+Functions can be *nested* and will evaluate from the inside out.
+
+
+---
+## The Taxonomy of Data
+
+--
+
+&lt;img src="assets/images/taxonomy-of-data.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+--
+
+Every vector in R has a *type* that defines the way that it is stored and a *class* that determines how it will behave.
+
+---
+## Common classes of vectors: `numeric`
+--
+
+You can ask R for the class of an object using the `class()` function.
+
+--
+
+
+```r
+a &lt;- c(1, 2, 3)
+class(a)
+```
+
+```
+## [1] "numeric"
+```
+
+--
+
+`numeric` objects map directly to *numeric variables*, with no strong distinction between continuous and discrete.
+
+--
+
+- You may also see related types such as `integer` and `dbl` (for double precision).
+
+---
+## Common classes of vectors: `character`
+--
+
+`character` vectors contain *strings*, identified by being enclosed in quotation marks.
+
+
+```r
+greetings &lt;- c("hello", "hola", "ni hao", "heisann")
+greetings
+```
+
+```
+## [1] "hello"   "hola"    "ni hao"  "heisann"
+```
+
+--
+
+
+```r
+class(greetings)
+```
+
+```
+## [1] "character"
+```
+
+---
+### What will happen here?
+
+
+```r
+1 + "one"
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/3tjbFQaZ8RaQOF7Iv1cLS?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+### What will happen here?
+
+
+```r
+1 + "one"
+```
+
+```
+## Error in 1 + "one": non-numeric argument to binary operator
+```
+
+--
+
+Most functions (included arithmetic operators) will only work on objects of a certain class.
+
+A function that only operates on character vectors:
+
+--
+
+
+```r
+greetings &lt;- c("hello", "hola", "ni hao", "heisann")
+toupper(greetings)
+```
+
+```
+## [1] "HELLO"   "HOLA"    "NI HAO"  "HEISANN"
+```
+
+
+---
+## Common classes of vectors: `factor`
+--
+
+`factor` vectors contain categorical data where we expect there to be multiple observations at the same level. You will find them often in pre-loaded data set but you can construct them using `factor()`.
+
+
+```r
+greetings &lt;- factor(c("hello", "hello", "ni hao"))
+greetings
+```
+
+```
+## [1] hello  hello  ni hao
+## Levels: hello ni hao
+```
+
+--
+
+
+```r
+class(greetings)
+```
+
+```
+## [1] "factor"
+```
+
+--
+
+`factor` is a natural class for *categorical variables*.
+
+---
+## The Taxonomy of Data in R
+
+--
+
+&lt;img src="assets/images/taxonomy-of-data.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+--
+
+In R you will generally see:
+- `numeric` for *continuous* and *discrete* numerical variables
+- `factor` and `character` for *nominal* categorical variables
+- There is an `ordered` factor for *ordinal* variables
+
+---
+class: center middle
+
+# Building Data Frames
+
+---
+## Recall from last lecture...
+--
+
+&lt;img src="assets/images/lter_penguins.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+Kristen Gorman set out to record and publish observations made on adult penguins near Palmer Station, Antarctica.
+
+---
+## Penguins data frame
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; bill_depth_mm &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; bill_length_mm &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; species &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 15.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gentoo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 15.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gentoo &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+.task[
+What is the unit of observation?  
+What are the types of variables in the Taxonomy of Data?  
+What classes do those correspond to in R?  
+]
+
+--
+
+&gt; Let's see if we can build this data frame...
+
+---
+
+Demo
+
+---
+## Building a data frame
+
+You can combine vectors into a data frame using the `tibble()` function from the extension library of R that we'll be using called the `tidyverse`.
+
+
+```r
+bill_depth_mm &lt;- c(15.0, 17.1, 18.7, 18.9)
+bill_length_mm &lt;- c(47.5, 40.2, 39.0, 35.3)
+species &lt;- c("Gentoo", "Adelie", "Adelie", "Adelie")
+```
+
+--
+
+
+```r
+library(tidyverse)
+penguins_df &lt;- tibble(bill_depth_mm, bill_length_mm, species)
+```
+
+---
+## The penguins data frame
+--
+
+
+```r
+penguins_df
+```
+
+```
+## # A tibble: 4 × 3
+##   bill_depth_mm bill_length_mm species
+##           &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;  
+## 1          15             47.5 Gentoo 
+## 2          17.1           40.2 Adelie 
+## 3          18.7           39   Adelie 
+## 4          18.9           35.3 Adelie
+```
+
+
+---
+## Looking Ahead
+--
+
+.pull-left[
+- Tuesday lab: R Workshop
+
+- PS 2, Lab 2 released Tuesday morning
+
+- PS 1, Lab 1 due tonight 10 pm
+
+- Evening Study Session 6:30 - 8:30 pm. See Ed for links.
+]
+
+--
+
+.pull-right[
+&lt;img src="assets/images/r_first_then.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## References
+
+Images from Hands on Programming with R by Garret Grolemund. Art by Alison Horst.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
