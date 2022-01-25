@@ -13,15 +13,25 @@ links:
   url: https://stat20.org/labs/02/slides-2A.html
 ---
 
-## Intro and instructions
+**Due on Gradescope Monday 1/31 at 10 PM**
 
-Part I calls for speculation. There may not be a single correct answer, but some are more reasonable and thoughtful than others.
+Please answer the questions linked above in a Google Doc, with plots copied and pasted from RStudio where appropriate. Download that Google Doc as a pdf using File > Download > PDF Document and upload it to Gradescope.
 
-Part II
+Tuesday's lab session is an R Workshop where you'll prepare your answer to the Preparation portion and practice the skills needed for the rest of the lab. In Thursdays lab session you'll work on the questions found in Part I and Part II. Materials used in the lab sessions will be linked above.
 
-Part III
+Part III you will be doing outside of class. We encourage you to complete your lab at the evening study sessions held Monday and Thursday evening.
+
+## The Stucture of Lab Assignments
+
+Questions in Part I deal with the context in which Arbuthnot collected his data. These questions should should be answered before you have looked at the data itself. In general, in Part I you will identify the question of interest, consider the manner in which it arose, and set expectations for the shape and structure of the data.
+
+Part II is where you get your hands on the data and consider where it aligns with and diverges from your expections from Part I. Part III features extensions of the ideas in Part I and Part II, often to a new data set.
 
 Your work should feature writing that is clear and in full sentences. Your document should be formatted cleanly, with appropriate use of headers, body text, and lists. Your code should be clear and simple, with no extraneous code.
+
+Certain questions on the labs in this class call for speculation or for your opinion. There may not be a single correct answer, but some are more reasonable and thoughtful than others. You're encouraged to talk these questions through with your peers and course staff during lab sessions, evening study session, and office hours.
+
+* * *
 
 ## Skills from the R Workshop
 
