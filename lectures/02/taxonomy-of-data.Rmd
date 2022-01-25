@@ -52,13 +52,6 @@ knitr::include_graphics("assets/images/stat20-hex.png")
 class: middle
 
 <center>
-<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/w2_77CbvYwObTLTpLSJxShBLdDezpNCzjFDvDAs5KQ5GB98zK1gtC3_BMtrsni5go9i9K7b3Q0x8Fm1nBwtnQQ?controls=none&short_poll=true" width="800px" height="600px"></iframe>
-</center>
-
----
-class: middle
-
-<center>
 <iframe src="https://pollev-embeds.com/stat20" width="800px" height="600px"></iframe>
 </center>
 
