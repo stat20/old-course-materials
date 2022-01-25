@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/01/taxonomy-of-data.Rmd
+  url: https://stat20.org/lectures/02/taxonomy-of-data.html
 ---
 
 Data can take a vast diversity of forms. The Taxonomy of Data brings together types of variables by their shared attributes to help inform the way those variables are visualized and analyzed.

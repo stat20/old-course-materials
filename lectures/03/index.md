@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/03/intro-to-r.Rmd
+  url: https://stat20.org/lectures/03/intro-to-r.html
 ---
 
 Understanding, visualizing, and drawing conclusions from large and diverse requires a powerful computational tool. The R language for statistical computing is one such tool designed explicitly with this goal in mind.

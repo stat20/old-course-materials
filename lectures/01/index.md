@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/01/taxonomy-of-data.Rmd
+  url: https://stat20.org/lectures/01/welcome-to-class.html
 ---
 
 Welcome to STAT 20: Introduction to Probability at Statistics! In this first lecture we'll consider the different ways in which we use data to reason about the world.
