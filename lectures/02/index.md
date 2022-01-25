@@ -22,7 +22,5 @@ links:
 - Unit of observation
 - Data frame
 
-
-
 ### Additional Readings
 - [Structural size measurements and isotopic signatures of foraging among adult male and female Adélie penguins (Pygoscelis adeliae) nesting along the Palmer Archipelago near Palmer Station, 2007-2009](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-pal.219.5), Kristen Gorman, 2020.

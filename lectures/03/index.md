@@ -1,6 +1,7 @@
 ---
 title: "Lecture 3: Introduction to R"
 subtitle: "An introduction to the R language for statistical computing"
+summary: "An introduction to the R language for statistical computing"
 layout: single
 links:
 - icon: images

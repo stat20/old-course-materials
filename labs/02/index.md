@@ -6,11 +6,11 @@ links:
 - icon: file-pdf
   icon_pack: fas
   name: Lab
-  url: https://stat20.org/labs/01/getting-started.pdf
+  url: https://stat20.org/labs/02/arbuthnot.pdf
 - icon: images
   icon_pack: fas
-  name: Slides
-  url: https://stat20.org/labs/01/getting-started-slides.html
+  name: Slides I
+  url: https://stat20.org/labs/02/slides-2A.html
 ---
 
 ## Intro and instructions
@@ -34,7 +34,7 @@ Your work should feature writing that is clear and in full sentences. Your docum
 #### R/RStudio Concepts
 - Printing to the console vs saving to the environment
 - R scripts as final draft of code, console as the sandbox
-<!-- Things to not teach: paths!-->
+<!-- Things to not teach: paths-->
 
 #### R Functions
 - `+`, `-`, `*`, `/`, `^`
@@ -51,6 +51,8 @@ Your work should feature writing that is clear and in full sentences. Your docum
 - `select()`
 - `arrange()`
 - `mutate()`
+
+<!-- Things to not teach: paths-->
 
 ## R from Thurs lab
 
