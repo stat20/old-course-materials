@@ -1,0 +1,673 @@
+---
+title: "Introduction to R"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+```{r echo = FALSE, out.width="20%"}
+knitr::include_graphics("assets/images/stat20-hex.png")
+```
+
+# R Workshop
+## Stat 20 UC Berkeley
+
+---
+## Agenda
+
+---
+
+.pull-right[
+```{r echo = FALSE, out.width="65%"}
+knitr::include_graphics("assets/images/r-project.png")
+```
+
+**R language**: an open-source language for statistical computing.
+
+]
+
+---
+## This is where R lives in RStudio
+
+```{r echo = FALSE, out.width="85%"}
+knitr::include_graphics("assets/images/hopr_0101.png")
+```
+
+---
+class: inverse, middle, center
+
+# R as a Calculator
+
+demo
+
+???
+
+Demonstrate +, -, *, /, ^ at the console.
+
+---
+## R as a calculator
+
+R allows all of the standard arithmetic operations.
+
+.pull-left[
+
+**Addition**
+```{r echo = TRUE}
+1 + 2
+```
+
+**Subtraction**
+```{r echo = TRUE}
+1 - 2
+```
+
+]
+
+--
+
+.pull-right[
+**Multiplication**
+```{r echo = TRUE}
+1 * 2 
+```
+
+**Division**
+```{r echo = TRUE}
+1 / 2
+```
+
+
+]
+
+
+---
+## R as a calculator, cont.
+
+R allows all of the standard arithmetic operations.
+
+.pull-left[
+
+**Exponents**
+```{r echo = TRUE}
+2 ^ 3
+```
+]
+
+.pull-right[
+
+**Parentheses for Order of Ops.**
+```{r echo = TRUE}
+2 ^ 3 + 1
+```
+
+```{r echo = TRUE}
+2 ^ (3 + 1)
+```
+
+]
+
+---
+## Saving Objects
+
+When you type a line of code (here: math) at the console and press `enter`, R will:
+
+1. Run the code / evaluate the expression
+2. *Print* the output to the console
+
+--
+
+If instead you want R to
+
+1. Run the code / evaluate the expression
+2. Save the output to an *object*
+
+--
+
+You can use the **assignment operator**.
+
+```{r echo = TRUE, eval = FALSE}
+<-
+```
+
+(less than symbol, hyphen)
+
+---
+class: center, middle
+
+## Saving objects
+
+demo
+
+???
+
+Run stuff like `a <- 1 + 2`, `b <- 2 * 3`, and `a + b`, `a + 1`.
+
+---
+## Saving objects
+--
+
+
+
+```{r echo = FALSE, out.width="85%", fig.align='center'}
+knitr::include_graphics("assets/images/hopr_0102.png")
+```
+
+
+---
+## Naming objects
+
+In order to be recognized as a valid object name, you have to certain conventions; namely, the object name should begin with a letter.
+
+```{r}
+library(knitr)
+library(kableExtra)
+tibble(`good names` = c("a", "b", "FOO", "my_var"), `names that cause errors` = c("1trial", "$", "^mean", "my var")) %>%
+  kbl()
+```
+
+---
+### What will happen here?
+
+```{r eval = FALSE, echo = TRUE}
+a <- 1 + 2
+a + 1
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/xHREV2UiheaEaavBoEAsX?controls=none&short_poll=true" width="800px" height="600px"></iframe></center>
+
+---
+
+What will happen here?
+
+```{r eval = TRUE, echo = TRUE}
+a <- 1 + 2
+a + 1
+```
+
+--
+
+To update an object, you can overwrite it by assigning it to the same name.
+
+--
+
+```{r update_a, echo = TRUE, eval = FALSE}
+a <- 1 + 2
+a <- a + 1
+a
+```
+--
+```{r ref.label = "update_a", echo = FALSE}
+```
+
+
+---
+## Creating a Vector
+
+One of the core data structure in R is the *vector*, a one-dimensional ordered set of values.
+--
+ You can create a vector using a function called `c()` for *combine* or *concatenate*.
+
+--
+
+demo
+
+---
+## Creating a Vector
+
+One of the core data structure in R is the *vector*, a one-dimensional ordered set of values. You can create a vector using a function called `c()` for *combine* or *concatenate*.
+ 
+```{r echo = TRUE}
+c(1, 2, 3)
+```
+
+--
+
+```{r echo = TRUE}
+a <- c(1, 2, 3)
+```
+
+---
+## Math on Vectors
+--
+
+Arithmetic on vectors happens element-by-element.
+
+--
+
+.pull-left[
+```{r}
+knitr::include_graphics("assets/images/vector-math.png")
+```
+]
+
+--
+
+.pull-right[
+```{r echo = TRUE}
+a <- c(1, 2, 3, 4, 5, 6)
+b <- c(1, 2, 3, 4, 5, 6)
+a * b
+```
+]
+
+---
+## Functions
+--
+
+You can do operations on R objects by using *functions*.
+
+---
+background-image: url(assets/images/stat20-sketch-12.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+
+---
+background-image: url(assets/images/stat20-sketch-13.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+> Each function has a name followed by parentheses.
+
+---
+background-image: url(assets/images/stat20-sketch-14.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+> Inside the parenthesis you put the object you'd like to operate on, called the *argument* of the function.
+
+---
+background-image: url(assets/images/stat20-sketch-15.jpg)
+background-size: contain
+
+## Functions
+
+You can do operations on R objects by using *functions*.
+> When you provide the argument to the function and run it, you can capture the output with an object (or print it to the console).
+
+???
+Demo running this line of code, then running `?mean`
+
+---
+## Getting help
+--
+
+One of the most useful commands in R is `?`.
+
+.pull-left[
+
+```{r echo = TRUE, eval = FALSE}
+?mean
+```
+
+```{r, out.width="80%"}
+knitr::include_graphics("assets/images/help-mean.png")
+```
+]
+
+--
+
+.pull-right[
+Look for:
+- Which arguments are available
+- What kind of output the function will return (called the "Value")
+- Look at the examples at the bottom
+]
+
+???
+Demo
+
+a <- c(-5, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+mean(a)
+mean(a, trim = .1)
+a_no_extremes <- c(2, 3, 4, 5, 6, 7, 8, 9)
+mean(a_no_extremes)
+
+---
+## Multiple arguments
+
+```{r echo = TRUE}
+a <- c(-5, 2, 3, 4, 5, 6, 7, 8, 9, 100)
+mean(x = a, trim = .1)
+```
+
+A few notes:
+
+--
+
+1. Functions can take multiple arguments separated by a comma: `,`
+
+--
+
+2. Arguments have names that you can specify or leave blank
+
+--
+
+3. Some arguments have default values that will be used if you specify something different
+
+
+---
+## So many functions...
+
+There are many functions in R, most of them named sensibly.
+
+```{r echo = TRUE}
+a <- c(1, 2, 3, 4)
+mean(a)
+sum(a)
+length(a)
+```
+
+---
+## Functions on vectors
+--
+
+Many of them will operate element-by-element if given a vector argument.
+
+--
+
+```{r echo = TRUE}
+a <- c(1, 2, 3, 4)
+sqrt(a)
+log(a)
+abs(a)
+```
+
+--
+
+Note: `log()` is the natural log by default (log base $e = 2.71$).
+
+---
+### What will happen here?
+
+```{r eval = FALSE, echo = TRUE}
+a <- c(1, 2, 3, 4)
+sqrt(log(a))
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/oqF9U8G8xfOerNeTaYGN5?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+---
+### What will happen here?
+
+```{r eval = TRUE, echo = TRUE}
+a <- c(1, 2, 3, 4)
+sqrt(log(a))
+```
+
+--
+
+Functions can be *nested* and will evaluate from the inside out.
+
+
+---
+## The Taxonomy of Data
+
+--
+
+```{r echo = FALSE, out.width="70%"}
+knitr::include_graphics("assets/images/taxonomy-of-data.png")
+```
+
+--
+
+Every vector in R has a *type* that defines the way that it is stored and a *class* that determines how it will behave.
+
+---
+## Common classes of vectors: `numeric`
+--
+
+You can ask R for the class of an object using the `class()` function.
+
+--
+
+```{r echo = TRUE}
+a <- c(1, 2, 3)
+class(a)
+```
+
+--
+
+`numeric` objects map directly to *numeric variables*, with no strong distinction between continuous and discrete.
+
+--
+
+- You may also see related types such as `integer` and `dbl` (for double precision).
+
+---
+## Common classes of vectors: `character`
+--
+
+`character` vectors contain *strings*, identified by being enclosed in quotation marks.
+
+```{r echo = TRUE}
+greetings <- c("hello", "hola", "ni hao", "heisann")
+greetings
+```
+
+--
+
+```{r echo = TRUE}
+class(greetings)
+```
+
+---
+### What will happen here?
+
+```{r eval = FALSE, echo = TRUE, error = TRUE}
+1 + "one"
+```
+
+.task[
+Answer at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/3tjbFQaZ8RaQOF7Iv1cLS?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+---
+### What will happen here?
+
+```{r eval = TRUE, echo = TRUE, error=TRUE}
+1 + "one"
+```
+
+--
+
+Most functions (included arithmetic operators) will only work on objects of a certain class.
+
+A function that only operates on character vectors:
+
+--
+
+```{r echo = TRUE}
+greetings <- c("hello", "hola", "ni hao", "heisann")
+toupper(greetings)
+```
+
+
+---
+## Common classes of vectors: `factor`
+--
+
+`factor` vectors contain categorical data where we expect there to be multiple observations at the same level. You will find them often in pre-loaded data set but you can construct them using `factor()`.
+
+```{r echo = TRUE}
+greetings <- factor(c("hello", "hello", "ni hao"))
+greetings
+```
+
+--
+
+```{r echo = TRUE}
+class(greetings)
+```
+
+--
+
+`factor` is a natural class for *categorical variables*.
+
+---
+## The Taxonomy of Data in R
+
+--
+
+```{r echo = FALSE, out.width="55%"}
+knitr::include_graphics("assets/images/taxonomy-of-data.png")
+```
+
+--
+
+In R you will generally see:
+- `numeric` for *continuous* and *discrete* numerical variables
+- `factor` and `character` for *nominal* categorical variables
+- There is an `ordered` factor for *ordinal* variables
+
+---
+class: center middle
+
+# Building Data Frames
+
+---
+## Recall from last lecture...
+--
+
+```{r echo = FALSE, out.width="55%"}
+knitr::include_graphics("assets/images/lter_penguins.png")
+```
+
+Kristen Gorman set out to record and publish observations made on adult penguins near Palmer Station, Antarctica.
+
+---
+## Penguins data frame
+
+```{r message = FALSE, echo = FALSE}
+library(knitr)
+library(kableExtra)
+library(palmerpenguins)
+penguins %>%
+  select(bill_depth_mm, bill_length_mm, species) %>%
+  sample_n(4) %>%
+  kbl()
+```
+
+--
+
+.task[
+What is the unit of observation?  
+What are the types of variables in the Taxonomy of Data?  
+What classes do those correspond to in R?  
+]
+
+--
+
+> Let's see if we can build this data frame...
+
+---
+
+Demo
+
+---
+## Building a data frame
+
+You can combine vectors into a data frame using the `tibble()` function from the extension library of R that we'll be using called the `tidyverse`.
+
+```{r echo = TRUE}
+bill_depth_mm <- c(15.0, 17.1, 18.7, 18.9)
+bill_length_mm <- c(47.5, 40.2, 39.0, 35.3)
+species <- c("Gentoo", "Adelie", "Adelie", "Adelie")
+```
+
+--
+
+```{r echo = TRUE}
+library(tidyverse)
+penguins_df <- tibble(bill_depth_mm, bill_length_mm, species)
+```
+
+---
+## The penguins data frame
+--
+
+```{r echo = TRUE}
+penguins_df
+```
+
+
+---
+## Looking Ahead
+--
+
+.pull-left[
+- Tuesday lab: R Workshop
+
+- PS 2, Lab 2 released Tuesday morning
+
+- PS 1, Lab 1 due tonight 10 pm
+
+- Evening Study Session 6:30 - 8:30 pm. See Ed for links.
+]
+
+--
+
+.pull-right[
+```{r echo = FALSE, out.width="90%"}
+knitr::include_graphics("assets/images/r_first_then.png")
+```
+]
+
+---
+## References
+
+Images from Hands on Programming with R by Garret Grolemund. Art by Alison Horst.

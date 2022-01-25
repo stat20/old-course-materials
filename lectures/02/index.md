@@ -1,7 +1,12 @@
 ---
 title: "Lecture 2: The Taxonomy of Data"
 subtitle: "Classifying variables and constructing data frames"
+summary: "Classifying variables and constructing data frames."
 layout: single
+publishdate: "2022-01-21" # when the page will be renderable
+date: "2022-01-21"        # when the lecture was given
+show_post_date: false
+featured: true
 links:
 - icon: images
   icon_pack: fas
@@ -9,7 +14,10 @@ links:
   url: https://stat20.org/lectures/01/taxonomy-of-data.Rmd
 ---
 
+Data can take a vast diversity of forms. The Taxonomy of Data brings together types of variables by their shared attributes to help inform the way those variables are visualized and analyzed.
+
 ### Terminology
+
 - Data
 - Variable
 - Observation
