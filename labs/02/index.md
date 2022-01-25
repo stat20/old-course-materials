@@ -1,7 +1,11 @@
 ---
 title: "Lab 2: Arbuthnot"
-subtitle: "Christening Records"
-layout: single
+summary: "Working with Christening Records. Working with Data Frames."
+summary: "Working with Christening Records. Working with Data Frames."
+publishdate: "2022-01-25"
+date: "2022-01-25"
+show_post_date: false
+featured: true
 links:
 - icon: file-pdf
   icon_pack: fas
@@ -21,7 +25,7 @@ Tuesday's lab session is an R Workshop where you'll prepare your answer to the P
 
 Part III you will be doing outside of class. We encourage you to complete your lab at the evening study sessions held Monday and Thursday evening.
 
-## The Stucture of Lab Assignments
+### The Stucture of Lab Assignments
 
 Questions in Part I deal with the context in which Arbuthnot collected his data. These questions should should be answered before you have looked at the data itself. In general, in Part I you will identify the question of interest, consider the manner in which it arose, and set expectations for the shape and structure of the data.
 
@@ -33,7 +37,7 @@ Certain questions on the labs in this class call for speculation or for your opi
 
 * * *
 
-## Skills from the R Workshop
+### Skills from the R Workshop
 
 #### RStudio Terminology
 - Console
@@ -64,11 +68,12 @@ Certain questions on the labs in this class call for speculation or for your opi
 
 <!-- Things to not teach: paths-->
 
-## R from Thurs lab
+### Skills from Thursday lab
 
-- loading arbuthnot
-- loading tidyverse
-- making line plot using dplyr
+- loading `arbuthnot`
+- loading `tidyverse`
+- practice with `select()`, `mutate()`, and `arrange()`
+- making a line plot using ggplot
 
 ## Concepts from the Lab
 
