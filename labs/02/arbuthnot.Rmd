@@ -8,7 +8,7 @@ Please answer these questions in a Google Doc, with plots copied and pasted from
 
 ## Preparation: R Workshop
 
-Please provide the R code that will generate a data frame (in `tidyverse`, these are known as "tibbles") with the following characteristics:
+Please provide the R code that will generate a data frame with the following characteristics:
 
 - Three variables: Name, Favorite Color, Favorite Number  
 - 5 observations
