@@ -29,6 +29,9 @@ Tuesday's lab session is an R Workshop where you'll prepare your answer to the P
 
 Part III you will be doing outside of class. We encourage you to complete your lab at the evening study sessions held Monday and Thursday evening.
 
+The data for this lab can be found in the `arbuthnot` and `present` data frames stored in the `stat20data` package.
+
+
 ### The Stucture of Lab Assignments
 
 Questions in Part I deal with the context in which Arbuthnot collected his data. These questions should should be answered before you have looked at the data itself. In general, in Part I you will identify the question of interest, consider the manner in which it arose, and set expectations for the shape and structure of the data.
