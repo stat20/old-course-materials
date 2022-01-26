@@ -15,6 +15,10 @@ links:
   icon_pack: fas
   name: Slides I
   url: https://stat20.org/labs/02/slides-2A.html
+- icon: images
+  icon_pack: fas
+  name: Slides II
+  url: https://stat20.org/labs/02/slides-2B.html
 ---
 
 **Due on Gradescope Monday 1/31 at 10 PM**
