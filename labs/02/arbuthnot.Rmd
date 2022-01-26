@@ -21,12 +21,12 @@ The code should save this data frame in an object called `my_classmates`.
 
 2. What is the unit of observation in the original christening records? What are the possible variables that may have been recorded?
 
-3. What do you think the probability is that a newborn child is recorded as a boy? What form of evidence or reasoning did you use to come to that determination?
+3. What do you think the probability is that a newborn child is recorded as a girl? What form of evidence or reasoning did you use to come to that determination?
 
 
 ## Part II: Computing on the Data
 
-4. What is the unit of observation in the data frame used by John Arbuthnot? What are the names of the variables and what is the type of each one?
+4. What does every row in the data frame published by John Arbuthnot correspond to? What are the names of the variables and what is the type of each one?
 
 5. What is the time frame covered by Arbuthnot's data?
 
