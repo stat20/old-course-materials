@@ -44,7 +44,7 @@ The code should save this data frame in an object called `my_classmates`.
 
 12. In terms of general magnitude (size), how do the counts in Arbuthnot's data compare to the counts in the present-day data?
 
-13. What is the trend over time in the proportion of girls christened? Please answer with a plot and written interpretation.
+13. What is the trend over time in the proportion of births that are girls? Please answer with a plot and written interpretation.
 
 14. Based on these two data sets, what claim are you prepared to make about John Arbuthnot's original question? What reservations, if any, do you have about using this data to make the claim?
 
