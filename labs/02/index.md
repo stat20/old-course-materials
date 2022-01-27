@@ -46,8 +46,8 @@ Certain questions on the labs in this class call for speculation or for your opi
 
 ### Concepts
 
-- Identification of the unit of observation and the names and types of variables.
 - Proposing a research question and articulating the evidence (data and other) that could bear on that question.
+- Identification of the unit of observation and the names and types of variables.
 - Creating a statistical graphic that can answer a research question and interpreting the observed structure in the data.
 - Assessing the degree to which a statistical graphic supports a claim / answers a question.
 
