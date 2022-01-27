@@ -52,6 +52,8 @@ jobs:
       - name: Commit and push changes to website repo
         run: |
           cd ./website/
+          git status
+          git log
           git config --global user.email "andrewbray@berkeley.edu"
           git config --global user.name "andrewpbray"
           git commit -a -m "copied over from course-materials"
