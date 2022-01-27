@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Checkout
+      - name: Checkout course materials
+        uses: actions/checkout@v2
+      - name: Checkout website
         uses: actions/checkout@v2
         with:
           repository: stat20/website
