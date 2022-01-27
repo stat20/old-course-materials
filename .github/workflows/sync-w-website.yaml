@@ -44,7 +44,7 @@ jobs:
           
       - name: Commit and push changes to website repo
         run: |
-          cd ./website/lectures/04
+          cd ./website/content/lectures/04
           ls
           # git status
           # git log
