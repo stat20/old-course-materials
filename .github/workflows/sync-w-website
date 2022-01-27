@@ -1,0 +1,43 @@
+name: Copy new and updated course content to website repo
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: stat20/website
+          path: '../website'
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: pwd
+             ls
+             ls ../website
+
+      # Runs a set of commands using the runners shell
+      #- name: Run a multi-line script
+      #  run: |
+      #    # copy lectures
+      #    for week in $(ls lectures); do
+      #     # make a new directory if needed (if not it will say it already exists, which should be fine)
+      #     mkdir /website/content/lec/${week}
+      #     # copy landing page
+      #     cp -p /course-materials/lectures/${week}/index.md /website/content/lec${week/.
+      #     # copy a directory and all its contents
+      #     cp -pr /some/path/lecs/${week}/assets /other/path/another/place/
+      #     # copy files ending in .html and .css
+      #     cp  /some/path/lecs/${week}/*.{html,css} /other/path/another/place/
+      #    done
