@@ -44,12 +44,13 @@ jobs:
           
       - name: Commit and push changes to website repo
         run: |
-          cd ./website/
-          git status
-          git log
-          git remote -v
-          git config --global user.email "andrewbray@berkeley.edu"
-          git config --global user.name "andrewpbray"
-          git add -A
-          git commit -a -m "copied over from course-materials"
-          git push https://${GITHUB_ACCESS_TOKEN}@github.com/stat20/website.git
+          cd ./website/lectures/04
+          ls
+          # git status
+          # git log
+          # git remote -v
+          # git config --global user.email "andrewbray@berkeley.edu"
+          # git config --global user.name "andrewpbray"
+          # git add lectures/04/index.md
+          # git commit -a -m "copied over from course-materials"
+          # git push https://${GITHUB_ACCESS_TOKEN}@github.com/stat20/website.git
