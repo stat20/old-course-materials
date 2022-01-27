@@ -44,6 +44,13 @@ Certain questions on the labs in this class call for speculation or for your opi
 
 * * *
 
+### Concepts
+
+- Identification of the unit of observation and the names and types of variables.
+- Proposing a research question and articulating the evidence (data and other) that could bear on that question.
+- Creating a statistical graphic that can answer a research question and interpreting the observed structure in the data.
+- Assessing the degree to which a statistical graphic supports a claim / answers a question.
+
 ### Skills from the R Workshop
 
 #### RStudio Terminology
@@ -82,10 +89,6 @@ Certain questions on the labs in this class call for speculation or for your opi
 - practice with `select()`, `mutate()`, and `arrange()`
 - making a line plot using ggplot
 
-## Concepts from the Lab
-
-- Identification of the unit of observation and the names and types of variables.
-- 
 
 <!--## Additional Readings
 - John Arbuthnot's Manuscript ([original](https://royalsocietypublishing.org/doi/pdf/10.1098/rstl.1710.0011), [transcribed](https://www.york.ac.uk/depts/maths/histstat/arbuthnot.pdf)). Originally entitled *An argument for divine providence, taken from the constant regularity observ'd in the births of both sexes.*, his publication in the proceedings of the Royal Society in 1710 stand out as much for the theogical argument that he makes prescient statistical methods.-->
