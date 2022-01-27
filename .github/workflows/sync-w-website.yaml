@@ -35,7 +35,7 @@ jobs:
              mkdir ./website/content/${week}
            fi
            # copy landing page
-           #cp -p ${week}/index.md ./website/content/${week}/
+           cp -p ${week}/index.md ./website/content/${week}/
            # copy a directory and all its contents
            #cp -pr /some/path/lecs/${week}/assets /other/path/another/place/
            # copy files ending in .html and .css
