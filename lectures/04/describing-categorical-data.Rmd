@@ -206,15 +206,15 @@ Proportions/percents can take three forms:
 
 --
 
-**Marginal**: A proportion of the level of a single variable, ignoring the other. Eg: "7/16" of all penguins are Adelie".
+**Marginal**: the proportion of the total count that occurs in one level of a single variable, ignoring the others. Eg: "7/16" of all penguins are Adelie".
 
 --
 
-**Joint**: A proportion out of the total the combination of levels of two variables. Eg: "3/16 of all penguins are Adelie from Biscoe".
+**Joint**: the proportion of the total count that occur in a combination of levels of two variables. Eg: "3/16 of all penguins are Adelie from Biscoe".
 
 --
 
-**Conditional**: A proportion of the level of one variable out of the proportion of a level of the other variable. Eg: "3/7 of the Adelie penguins are from Biscoe".
+**Conditional**: the proportion of the count in one level of one variable that occur in a level of a second variable. Eg: "3/7 of the Adelie penguins are from Biscoe".
 
 --
 
