@@ -1,6 +1,6 @@
 ---
 title: "Lab 2: Arbuthnot"
-summary: "Working with Christening Records. Working with Data Frames."
+subtitle: "Working with Christening Records. Working with Data Frames."
 summary: "Working with Christening Records. Working with Data Frames."
 publishdate: "2022-01-25"
 date: "2022-01-25"
