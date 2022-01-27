@@ -36,7 +36,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           # copy lectures located in dirs with leading digit
-          for week in $(ls lectures/[0-9]*); do
+          for week in $(ls -d lectures/[0-9]*); do
            # make a new directory if needed (if not it will say it already exists, which should be fine)
            mkdir ./website/content/${week}
            echo ${week}
