@@ -41,7 +41,6 @@ jobs:
            if [ ! -d "./website/content/${week}" ]; then
              mkdir ./website/content/${week}
            fi
-           echo ${week}
            # copy landing page
            #cp -p ${week}/index.md ./website/content/${week}/
            # copy a directory and all its contents
@@ -53,5 +52,7 @@ jobs:
       - name: Commit and push changes to website repo
         run: |
           cd ./website/
+          git config --global user.email "andrewbray@berkeley.edu"
+          git config --global user.name "andrewpbray"
           git commit -a -m "copied over from course-materials"
           git push https://${GITHUB_ACCESS_TOKEN}@github.com/stat20/website.git
