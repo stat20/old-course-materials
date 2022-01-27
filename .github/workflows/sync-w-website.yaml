@@ -54,6 +54,7 @@ jobs:
           cd ./website/
           git status
           git log
+          git remote -v
           git config --global user.email "andrewbray@berkeley.edu"
           git config --global user.name "andrewpbray"
           git commit -a -m "copied over from course-materials"
