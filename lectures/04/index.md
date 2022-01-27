@@ -3,7 +3,7 @@ title: "Lecture 4: Describing Categorical Data"
 subtitle: "From Data Frames to Tables. From Tables to Charts."
 summary: "From Data Frames to Tables. From Tables to Charts."
 layout: single
-publishdate: "2022-01-26" # when the page will be renderable
+publishdate: "2022-01-26" # when the page will be renderable  
 date: "2022-01-26"        # when the lecture was given
 show_post_date: false
 featured: true
