@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/05/describing-numerical-data.html
+  url: https://stat20.org/lectures/05/summarizing-numerical-data.html
 ---
 
 Whenever you have more than a few observations, it becomes useful to have techniques to summarize the most important characteristics of the data. The two primary classes of tools are numerical summaries (statistics!) and graphics.
