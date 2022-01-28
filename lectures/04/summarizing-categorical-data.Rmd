@@ -1,5 +1,5 @@
 ---
-title: "Describing Categorical Data"
+title: "Summarizing Categorical Data"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
@@ -34,7 +34,7 @@ class: center, middle
 knitr::include_graphics("assets/images/stat20-hex.png")
 ```
 
-# Describing Categorical Data
+# Summarizing Categorical Data
 ## Stat 20 UC Berkeley
 
 ---
