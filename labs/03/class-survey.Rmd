@@ -1,0 +1,42 @@
+---
+title: "Lab X: Title"
+author: "STAT 20 Spring 2022"
+output: pdf_document
+---
+
+## Part I: Understanding the Context of the Data
+
+1. What is the unit of observation in our survey data?
+
+2. What is the data type of X, Y, and Z?
+
+3. What values would you expect `major` to take? Do you anticipate any challenges analyzing this data?
+
+4. Please sketch the relationship between X and Y, being sure to label the axes and the axis tick marks. What aesthetic mappings did you use? Which geometry?
+
+5. Please sketch the relationship between X and Y, being sure to label the axes and the axis tick marks. What aesthetic mappings did you use? Which geometry?
+
+## Part II: Computing on the Data
+
+1. What is the relationship between year (first year vs second/third/fourth year) and favorite boba place?
+
+1. What is the relationship between favorite season and preference for beach or mountains? 
+
+1. Among those who have had previous coding experience, what languages are most common? Do the proportions of languages used differ by major?
+
+1. Which boba place is the most popular among students who prefer tea over coffee?
+
+1. We are back on campus starting Jan 31. Based on the survey, do you think most students expected this outcome? Why? 
+
+1. Among students whose favorite season is winter, which Winter Olympic sport do they enjoy the most? Which do they enjoy the least? Justify your answer with visualization.
+
+1. Group the students based on whether they believe hotdogs are sandwiches. What proportion of each group prefer fighting a horse-sized duck? Do you think the two questions are associated?
+
+1. How many second-year students gave an opinion of 7 or above to the Cryptocurrency statement?
+
+1. What is the relationship between major (Health/Pre-Med and non Health/Pre-Med) and degree of belief that COVID will keep us remote for two weeks plus?
+
+2. 
+## Part III: Extensions
+
+
