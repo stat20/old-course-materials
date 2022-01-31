@@ -31,16 +31,20 @@ jobs:
         run: |
           # sync lectures located in dirs with leading digit
           for week in $(ls -d lectures/[0-9]*); do
-           # make a new directory if needed (if not it will say it already exists, which should be fine)
+           # make a new dirs if needed
            if [ ! -d "./website/content/${week}" ]; then
              mkdir ./website/content/${week}
            fi
+           if [ ! -d "./website/static/${week}" ]; then
+             mkdir ./website/static/${week}
+           fi
            # sync landing page
            cp -p ${week}/index.md ./website/content/${week}/
-           # copy a directory and all its contents
-           #cp -pr /some/path/lecs/${week}/assets /other/path/another/place/
            # copy files ending in .html and .css
-           #cp  /some/path/lecs/${week}/*.{html,css} /other/path/another/place/
+           cp ${week}/*.{html,css} .website/static/${week}/
+           # copy a directory and all its contents
+           cp -pr ${week}/assets .website/static/${week}/
+           cp -pr ${week}/*_files .website/static/${week}/
           done
           
       - name: Commit and push changes to website repo
