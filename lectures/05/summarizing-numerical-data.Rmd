@@ -503,7 +503,6 @@ knitr::include_graphics("assets/images/heat-dome-2.png")
 ```
 
 ---
-
 ## While you're waiting...
 
 > As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has an average of only 10 riders".
