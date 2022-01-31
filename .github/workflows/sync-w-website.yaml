@@ -53,5 +53,5 @@ jobs:
           git config --global user.name "andrewpbray"
           git add content/lectures/04/index.md
           git commit -am "copied over from course-materials"
-          git remote set-url --push origin https://your_username:$GITHUB_TOKEN@github.com/stat20/website
+          git remote set-url --push origin https://andrewpbray:$GITHUB_TOKEN@github.com/stat20/website
           git push
