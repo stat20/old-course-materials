@@ -1,0 +1,157 @@
+---
+title: "PS 3"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE)
+```
+
+1. **Raise taxes.** 
+A random sample of registered voters nationally were asked whether they think it's better to raise taxes on the rich or raise taxes on the poor. 
+The survey also collected information on the political party affiliation of the respondents. [@survey:raiseTaxes:2015]
+
+    ```{r fig.asp = 0.4}
+    library(tidyverse)
+    library(scales)
+    library(openintro)
+    
+    raise_taxes_survey <- tribble(
+       ~"Opinion",                ~"Democrat", ~"Republican", ~"Independent/Other",
+       "Raise taxes on the rich", 91,	       47,            49,
+       "Raise taxes on the poor",  4,	       10,            11,
+       "Not sure",                 5,	       43,            40
+    )
+    
+    raise_taxes_survey %>%
+      pivot_longer(
+            cols = -Opinion,
+            names_to = "Party",
+            values_to = "Proportion"
+      ) %>%
+      mutate(Opinion = fct_relevel(Opinion, 
+                                   "Raise taxes on the rich", 
+                                   "Raise taxes on the poor", 
+                                   "Not sure")) %>%
+      ggplot(aes(y = Party, x = Proportion, fill = Opinion)) +
+      geom_col() +
+      scale_fill_manual(values = c(IMSCOL["blue", "full"], 
+                                   IMSCOL["red", "full"], 
+                                   IMSCOL["lgray", "full"])) +
+      scale_x_continuous(labels = label_percent(scale = 1)) +
+      labs(x = NULL) +
+      theme(legend.position = "bottom") +
+      guides(fill = guide_legend(reverse = TRUE))
+    ```
+
+    a. Based on the stacked bar plot shown above, do views on raising taxes and political affiliation appear to be associated? Explain your reasoning.
+
+    b. Conjecture other possible variables that might explain the potential association between these two variables.
+
+
+2. **Associations.**
+Indicate which of the plots show (a) a positive association, (b) a negative association, or (c) no association. Also determine if the positive and negative associations are linear or nonlinear. Each part may refer to more than one plot.
+
+    ```{r fig.asp=0.5}
+    library(tidyverse)
+    set.seed(2306)
+    
+    # create x
+    x <- seq(0, 10, 0.1)
+    
+    # create y_poslin: positive linear with x
+    y_poslin <- x * runif(1, min = 0, max = 10) + 
+      rnorm(length(x), mean = 0, sd = runif(1, min = 3, max = 10)) - 
+      runif(1, min = 0, max = 3)
+    
+    # create y_neglin: negative linear with x
+    y_neglin <- x * -runif(1, min = 0, max = 5) + 
+      rnorm(length(x), mean = 0, sd = runif(1, min = 3, max = 10)) - 
+      runif(1, min = 0, max = 5)
+    
+    # create y_poscur: curved positive with x
+    y_poscur <- x^2 + rnorm(length(x), mean = -3, sd = runif(1, min = 3, max = 4))
+    
+    # create y_none: no association with x
+    y_none <- x + rnorm(length(x), mean = 0, sd = runif(1, min = 30, max = 40))
+    
+    # data frame
+    tibble(
+      x = x,
+      poslin = y_poslin,
+      neglin = y_neglin,
+      poscur = y_poscur,
+      none   = y_none
+    ) %>%
+      pivot_longer(cols = -x, names_to = "type", values_to = "y") %>%
+      arrange(type) %>%
+      mutate(
+        type_num = case_when(
+          type == "poslin" ~ "(1)",
+          type == "neglin" ~ "(4)",
+          type == "poscur" ~ "(3)",
+          type == "none"   ~ "(2)"
+        ),
+        type_num = as.factor(type_num)
+        ) %>%
+      ggplot(aes(x = x, y = y)) +
+      geom_point(alpha = 0.5) +
+      facet_grid(~type_num) +
+      theme(
+        axis.text = element_blank()
+      ) +
+      labs(x = NULL, y = NULL)
+    ```
+  
+\newpage  
+    
+3. **Infant mortality.** 
+
+The infant mortality rate is defined as the number of infant deaths per 1,000 live births. This rate is often used as an indicator of the level of health in a country. 
+The relative frequency histogram below shows the distribution of estimated infant death rates for 224 countries for which such data were available in 2014.
+
+```{r}
+    library(ggplot2)
+    library(scales)
+    library(openintro)
+    
+    ggplot(subset(cia_factbook, !is.na(cia_factbook$infant_mortality_rate)), aes(x = infant_mortality_rate)) +
+      geom_histogram(aes(y = stat(count) / sum(count)),
+        binwidth = 10
+      ) +
+      labs(
+        x = "Infant mortality (per 1,000 live births)", 
+        y = "Proportion") + theme_minimal()
+```
+
+    a.  Estimate Q1, the median, and Q3 from the histogram.
+
+    b.  Would you expect the mean of this dataset to be smaller or larger than the median? Explain your reasoning.
+
+\newpage
+  
+4. **Median vs. mean.** 
+Estimate the median for the 400 observations shown in the histogram and note whether you expect the mean to be higher or lower than the median.
+
+    ```{r}
+    library(tidyverse)
+    library(openintro)
+    
+    set.seed(9823)
+    df <- tibble(x = (100 * rbeta(400, 12, 3)))
+    
+    ggplot(df, aes(x = x)) +
+      geom_histogram(binwidth = 5) +
+      labs(x = "", y = "") +
+      scale_y_continuous(breaks = seq(0, 80, 20)) + theme_minimal()
+    ```
+
+
+5. **R code** 
+
+Using ggplot in R code: plot the histogram of mpg of mtcars, and detemine whether the median is larger, smaller, or equal to the mean. (Show your code)
