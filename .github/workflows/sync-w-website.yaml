@@ -13,17 +13,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    env:
-      GITHUB_ACCESS_TOKEN: ${{ secrets.SYNC_WEBSITE }}
+    #env:
+      #GITHUB_ACCESS_TOKEN: ${{ secrets.SYNC_WEBSITE }}
 
     steps:
       - name: Checkout course materials
-        uses: actions/checkout@v2
+          uses: actions/checkout@v1
+        # uses: actions/checkout@v2
       - name: Checkout website
-        uses: actions/checkout@v2
-        with:
-          repository: stat20/website
-          path: './website'
+          uses: actions/checkout@v2
+          with:
+            repository: stat20/website
+            path: './website'
+        # uses: actions/checkout@v2
+        # with:
+          # repository: stat20/website
+          # path: './website'
 
       # Runs a set of commands using the runners shell
       - name: Copy materials from course-materials to website
