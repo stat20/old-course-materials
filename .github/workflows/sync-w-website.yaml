@@ -20,7 +20,7 @@ jobs:
       - name: Checkout course materials
         uses: actions/checkout@v2
       - name: Checkout website
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           repository: stat20/website
           path: './website'
@@ -51,5 +51,6 @@ jobs:
           git config --global user.email "andrewbray@berkeley.edu"
           git config --global user.name "andrewpbray"
           git add content/lectures/04/index.md
+          git remote set-url origin https://x-access-token:${GITHUB_ACCESS_TOKEN}@github.com/stat20/website.git
           git commit -am "copied over from course-materials"
-          git push # https://${GITHUB_TOKEN}@github.com/stat20/website.git
+          git push # https://${GITHUB_ACCESS_TOKEN}@github.com/stat20/website.git

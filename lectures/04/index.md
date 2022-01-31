@@ -14,7 +14,7 @@ links:
   url: https://stat20.org/lectures/04/summarizing-categorical-data.html
 ---
 
-While the data frame is a natural format for storing categorical data for analysis, it makes it difficult to see broader trends. Counts and proportions can be used to summarize this form of data and they can be displayed effectively either in tables or bar charts.
+While the data frame is a natural format for storing categorical data for analysis, it makes it difficult to see broader trends. Counts and proportions can be used to summarize this form of data and they can be displayed effectively either in tables or bar charts.ts
 
 
 ### Key Questions
