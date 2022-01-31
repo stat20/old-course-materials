@@ -44,7 +44,9 @@ jobs:
            cp ${week}/*.{html,css} ./website/static/${week}/
            # copy a directory and all its contents
            cp -pr ${week}/assets ./website/static/${week}/
-           cp -pr ${week}/*_files ./website/static/${week}/
+           if [ ! -d "${week}/*_files" ]; then
+             cp -pr ${week}/*_files ./website/static/${week}/
+           fi
           done
           
       - name: Commit and push changes to website repo
