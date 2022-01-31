@@ -43,13 +43,14 @@ jobs:
            # copy files ending in .html and .css
            # cp ${week}/*.{html,css} ./website/static/${week}/
            # copy entire dir to static
-           cp -pr ${week} ./website/static/${week}/
+           cp -pr ${week} ./website/static/${week}
 
           done
           
       - name: Commit and push changes to website repo
         run: |
           cd ./website
+          git status
           git config --global user.email "andrewbray@berkeley.edu"
           git config --global user.name "andrewpbray"
           git commit -am "copied over from course-materials"
