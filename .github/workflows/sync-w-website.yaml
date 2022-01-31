@@ -24,7 +24,7 @@ jobs:
         with:
           repository: stat20/website
           path: './website'
-          GITHUB_TOKEN: ${{ secrets.SYNC_WEBSITE }}
+          token: ${{ secrets.SYNC_WEBSITE }}
 
       # Runs a set of commands using the runners shell
       - name: Copy materials from course-materials to website
@@ -53,5 +53,4 @@ jobs:
           git config --global user.name "andrewpbray"
           git add content/lectures/04/index.md
           git commit -am "copied over from course-materials"
-          git remote set-url --push origin https://andrewpbray:$GITHUB_TOKEN@github.com/stat20/website
           git push
