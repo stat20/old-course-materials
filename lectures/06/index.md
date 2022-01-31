@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/00/lecture-title.html
+  url: https://stat20.org/lectures/06/grammar-of-graphics.html
 ---
 
 There is a wide range of plot types that have been developed to summarize data in different ways. The Grammar of Graphics is one way to unite these diverse practices into a simple and powerful framework.
