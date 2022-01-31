@@ -1,0 +1,267 @@
+---
+title: "Lab: Arbuthnot"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+# Lab: Arbuthnot
+### Introduction to Probability and Statistics
+
+Welcome!
+
+---
+## The Goal of Lab Session
+
+- Best way to make progress on these assignments
+
+- You likely will need to work outside of class to finish the assignment
+
+- Visit Evening Study Session Thurs & Mon 6:30 - 8:30 pm to work with peers and get help from tutors
+
+- Also ask questions on the Lab thread on Ed
+
+---
+## Arbuthnot
+
+.pull-left[
+**Who**: John Arbuthnot, Scottish mathematician/physician  
+**When**: 1710  
+**Where**: London, England  
+**Why**: Try to determine the ratio of the sexes of children at birth; i.e. what is the chance that a newly born child is female?  
+**How**: Collecting christening records from all of the parish churches in London.
+]
+
+.pull-right[
+```{r}
+knitr::include_graphics("assets/images/thames.png")
+```
+]
+
+---
+## What is a christening record?
+--
+
+A Christening is a ceremony/rite in the Church of England where:
+
+1. The parents bring their new born child to a priest at the church.
+
+2. As part of the ceremony, the parents give a first name to the child before the child is baptized (inducted into the church).
+
+3. The name of the child and their parents are recorded in a ledger.
+
+--
+
+John Arbuthnot tabulated the total count of names in each year that were traditionally female and male names.
+
+---
+```{r}
+knitr::include_graphics("assets/images/christening-records.png")
+```
+
+---
+```{r}
+knitr::include_graphics("assets/images/christening-records-zoom.png")
+```
+
+
+---
+## Preparing your assignment
+
+.pull-left[
+1. Create a Google Doc with your code from Tuesday
+
+2. Add in blanks for the remaining questions
+
+3. Submit this assignment as a pdf by 10 pm Monday
+]
+
+.pull-right[
+```{r}
+knitr::include_graphics("assets/images/gdoc.png")
+```
+]
+
+---
+## Part I: Understanding the Context of the Data
+
+1. What question did John Arbuthnot set out to answer in collecting this data?
+
+2. What is the unit of observation in the original christening records? What are the possible variables that may have been recorded?
+
+3. What do you think the probability is that a newborn child is recorded as a girl? What form of evidence or reasoning did you use to come to that determination?
+
+```{r}
+countdown::countdown(3, font_size = "1.5em")
+```
+
+
+---
+class: middle
+
+# Computational Tools for Part II and III
+
+---
+## Loading Data from a Package
+
+R packages offer a convenient way to store data.
+
+```{r echo = TRUE}
+library(palmerpenguins)
+data(penguins)
+```
+
+--
+
+```{r echo = TRUE, eval = FALSE}
+?penguins
+```
+
+--
+
+- Load packages with `library()`
+- Load data with `data()`
+- Some data comes pre-loaded and doesn't require `data()` (e.g. `mtcars`)
+
+
+---
+## Functions on data frames
+
+The `tidyverse` package contains several functions used to manipulate data frames: 
+
+* `select()` : subset columns 
+
+--
+
+* `arrange()` : sort rows 
+
+--
+
+* `mutate()` : create a new column from existing column(s)
+
+---
+# Selecting columns
+--
+
+```{r select, echo = TRUE, eval = FALSE}
+select(penguins, species, island)
+```
+--
+```{r ref.label = "select", echo = FALSE}
+```
+
+
+---
+# Arranging the data frame by a column
+--
+
+```{r arrange, echo = TRUE, eval = FALSE}
+arrange(penguins, bill_length_mm)
+```
+--
+```{r ref.label = "arrange", echo = FALSE}
+```
+
+--
+
+> You can sort in descending order by wrapping the variable name in `desc()`.
+
+---
+# Mutating a new column
+--
+
+```{r mutate, echo = TRUE, eval = FALSE}
+mutate(penguins, bill_index = bill_depth_mm + bill_length_mm)
+```
+--
+```{r ref.label = "mutate", echo = FALSE}
+```
+
+--
+
+> Remember that you can nest functions.
+
+---
+# Mutating a new column
+--
+
+```{r mutate2, echo = TRUE, eval = FALSE}
+select(mutate(penguins, bill_index = bill_depth_mm + bill_length_mm), bill_index)
+```
+--
+```{r ref.label = "mutate2", echo = FALSE}
+```
+
+---
+# Part II: Computing on the Data
+--
+
+- Load the `arbuthnot` data frame in the `stat20data` package.
+
+```{r echo = TRUE}
+library(stat20data)
+data(arbuthnot)
+```
+
+- Work on questions 4 - 7, editing your Google Doc as you go.
+
+```{r}
+countdown::countdown(10, font_size = "1.5em")
+```
+
+
+---
+## Your first plot
+--
+
+A template for a line plot:
+
+```{r eval = FALSE, echo = TRUE, error = TRUE}
+ggplot(DATAFRAME, aes(x = XVARIABLE, y = YVARIABLE)) +
+  geom_line()
+```
+
+Where:
+
+- `DATAFRAME` is the name of your data frame
+- `XVARIABLE` is the name of the variable of that data frame that you want on the x-axis
+- `YVARIABLE` is the name of the variable of that data frmae that you want on the y-axis
+
+> These plots can be copy-and-pasted into your Google Doc by clicking on the "Export" button next to the plot in RStudio
+
+---
+## Part III: Extensions
+--
+
+How do trends in a more modern data set compare to Arbuthnot's data? Find out in the `present` data frame found in the `stat20data` package.
+
+```{r echo = TRUE, eval = FALSE}
+data(present)
+?present
+```
+
+

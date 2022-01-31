@@ -1,0 +1,57 @@
+name: Copy new and updated course content to website repo
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    #env:
+      #GITHUB_ACCESS_TOKEN: ${{ secrets.SYNC_WEBSITE }}
+
+    steps:
+      - name: Checkout course materials
+        uses: actions/checkout@v2
+      - name: Checkout website
+        uses: actions/checkout@v2
+        with:
+          repository: stat20/website
+          path: './website'
+          token: ${{ secrets.SYNC_WEBSITE }}
+
+      # Runs a set of commands using the runners shell
+      - name: Copy materials from course-materials to website
+        run: |
+          # sync lectures located in dirs with leading digit
+          for week in $(ls -d lectures/[0-9]*); do
+           # make a new dirs if needed
+           if [ ! -d "./website/content/${week}" ]; then
+             mkdir ./website/content/${week}
+           fi
+           if [ ! -d "./website/static/${week}" ]; then
+             mkdir ./website/static/${week}
+           fi
+           # sync landing page
+           cp -p ${week}/index.md ./website/content/${week}/
+           # copy files ending in .html and .css
+           # cp ${week}/*.{html,css} ./website/static/${week}/
+           # copy entire dir to static
+           cp -pr ${week} ./website/static/
+
+          done
+          
+      - name: Commit and push changes to website repo
+        run: |
+          cd ./website
+          git status
+          git config --global user.email "andrewbray@berkeley.edu"
+          git config --global user.name "andrewpbray"
+          git commit -am "copied over from course-materials"
+          git push

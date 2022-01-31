@@ -1,0 +1,15 @@
+---
+title: "Lab X: Title"
+author: "STAT 20 Spring 2022"
+output: pdf_document
+---
+
+## Part I: Understanding the Context of the Data
+
+
+## Part II: Computing on the Data
+
+
+## Part III: Extensions
+
+

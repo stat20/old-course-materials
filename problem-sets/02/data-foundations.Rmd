@@ -1,5 +1,5 @@
 ---
-title: "PS 1"
+title: "PS 2"
 output:
   pdf_document: default
   html_document:
@@ -64,12 +64,12 @@ Box office totals are given in millions of US Dollars.
     ```
     
     a. How many observations and how many variables does this data frame have? What is the observational unit (what each row corresponds to)?
-    b. (Required for Marvel fans) Which movie on the list made the most money during the opening week? Which made the least? Does this outcome surprise you? What could be the possible reasons?
+    b. (Required for Marvel fans) Which movie on the part of the list shown above made the most money during the opening week? Which made the least? Does this outcome surprise you? What could be the possible reasons?
 
 
 1. **Smoking habits of UK residents.** 
 A survey was conducted to study the smoking habits of 1,691 UK residents. Below is a data frame displaying a portion of the data collected in this survey. 
-A blank cell indicates that data for that variable was not available for a given respondent.^[The [`smoking`](http://openintrostat.github.io/openintro/reference/smoking.html) data used in this exercise can be found in the [**openintro**](http://openintrostat.github.io/openintro) R package.] 
+A cell with $NA$ indicates that data for that variable was not available for a given respondent.^[The [`smoking`](http://openintrostat.github.io/openintro/reference/smoking.html) data used in this exercise can be found in the [**openintro**](http://openintrostat.github.io/openintro) R package.] 
 
     ```{r echo=FALSE, message=FALSE}
     library(openintro)
@@ -115,10 +115,8 @@ A blank cell indicates that data for that variable was not available for a given
 
     b.  How many participants were included in the survey?
 
-    c.  Indicate whether each variable in the study is numerical or categorical. If numerical, identify as continuous or discrete. If categorical, indicate if the variable is ordinal.
+    c.  Identify the type of each variable (i.e. continuous, discrete, ordinal, nominal) in the Taxonomy of Data.
     
-
-
 
 
 1.  **UK baby names.** 
@@ -149,12 +147,12 @@ The visualization below shows the number of baby girls born in the United Kingdo
 
     a.  List the variables you believe were necessary to create this visualization.
 
-    b.  Indicate whether each variable in the study is numerical or categorical. If numerical, identify as continuous or discrete. If categorical, indicate if the variable is ordinal.
+    b.  Identify the type of each variable in the Taxonomy of Data.
     
     \vspace{5mm}
     
     
-1. ***Space launches.** 
+1. **Space launches.** 
 The following summary table shows the number of space launches in the US by the type of launching agency and the outcome of the launch (success or failure).^[The data used in this exercise comes from the [JSR Launch Vehicle Database, 2019 Feb 10 Edition](https://www.openintro.org/go?id=textbook-space-launches-data&referrer=ims0_html).]
 
     ```{r}
@@ -197,12 +195,12 @@ The following summary table shows the number of space launches in the US by the 
 
     a.  What variables were collected on each launch in order to create to the summary table above?
 
-    b.  State whether each variable is numerical or categorical. If numerical, state whether it is continuous or discrete. If categorical, state whether it is ordinal or not.
+    b.  Identify the type of each variable in the Taxonomy of Data.
 
     c.  Suppose we wanted to study how the success rate of launches vary between launching agencies and over time. In this analysis, which variable would be the response variable and which variable would be the explanatory variable?
     
 
-1. ***Views on immigration.** 
+1. **Views on immigration.** 
 Nine-hundred and ten (910) randomly sampled registered voters from Tampa, FL were asked if they thought workers who have illegally entered the US should be (i) allowed to keep their jobs and apply for US citizenship, (ii) allowed to keep their jobs as temporary guest workers but not allowed to apply for US citizenship, or (iii) lose their jobs and have to leave the country. 
 The results of the survey by political ideology are shown below.
 

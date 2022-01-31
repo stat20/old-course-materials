@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Summarizing Numerical Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="assets/libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+## While you're waiting...
+
+&gt; As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has a average of only 10 riders".
+
+&gt; Imagine you are a commuter in London and decide to try returning to using the train for your commute. You find that every time you ride, your train car is packed with far more than 10 riders.
+
+&gt; How can you explain this apparent paradox?
+
+.task[
+Write down one or two possible explanations. We'll share them later in lecture.
+]
+
+---
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Summarizing Numerical Data
+## Stat 20 UC Berkeley
+
+---
+## Announcements
+
+1. Next week:
+
+  - In-person Lecture (will be recorded)
+  - In-person Lab (will not be recorded, but satellite lab available)
+
+--
+
+2. Midterm in class Friday March 18th
+  - We will post time conflict form to Ed
+
+--
+
+3. Final: Lec 1 and Lec 2 in Exam Group 8, Lec 3 in  Exam Group 10
+
+--
+
+4. Evening Study Session: Monday 6:30 - 8:30 pm in Gather
+
+--
+
+5. My office hours: right after class in Gather
+
+
+---
+## Agenda
+
+- Constructing a Summary: Inclusion and omission
+- Graphical Summaries
+  - Dot plot
+  - Histogram
+  - Box Plot
+  - Describing the shape of distributions
+- Numerical Summaries: What is typical?
+  - Mean
+  - Median
+  - Mode
+
+
+---
+class: middle
+
+# Constructing a Summary
+## Inclusion and Omission
+
+---
+## Summarizing Data
+--
+
+Describing large and complex data most often involves a process of *summarization*.
+
+--
+
+.pull-left[
+### What should I **include**?
+
+- Relevant to claim I'm trying to make, question I'm trying to answer
+- Aligned with audience interest
+]
+
+--
+
+.pull-right[
+### What should I **omit**?
+
+- Distractions, deceptions
+- Replicate or assumed information
+]
+
+* * *
+
+&gt; We'll call the criteria used to construct your summary the *desiderata*.
+
+---
+## Summarizing `bill_length` with graphics
+--
+
+.pull-left-narrow[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; bill_length_mm &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 40.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 36.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 34.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 42.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 37.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 37.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 41.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 34.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 36.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.7 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right-wide[
+&lt;img src="assets/images/culmen_depth.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+**Desideratum**: all information must be preserved.
+
+* * * 
+--
+
+.pull-left-narrow[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; bill_length_mm &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 40.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 36.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 39.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 34.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 42.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 37.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 37.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 41.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 34.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 36.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 38.7 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right-wide[
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-5-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+&gt; This is called a **dot plot**.
+]
+
+---
+**Desideratum**: balance general trends in the distribution with fidelity to the individual observations.
+
+* * *
+--
+
+.pull-left-narrow[
+1. Divide range of x into bins
+2. Count number of obs. in each bin
+
+&gt; This is called a **histogram**.
+]
+
+.pull-right-wide[
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-6-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Histogram: choice of binwidth
+--
+
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /&gt;
+
+---
+**Desiderata**:  
+- Reveal summary statistics  
+- Flag outliers
+- Allow for easy comparisons between groups
+
+* * *
+--
+
+.pull-left[
+1. Center of box: median
+2. Edges of box: Q1, Q3
+3. Whiskers "most of the data"
+4. Dots: outliers
+
+&gt; This is called a **boxplot**.
+]
+
+.pull-right[
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+Wait on boxplots until after doing summary statistics to show you can make a graphics of summary statistics (like the nyt heat dome scatterplot of maxes)
+
+---
+## Boxplots for comparison
+--
+
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-9-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Describing the shape of distribution
+--
+
+**Modality**
+
+&lt;img src="assets/images/modality.png" width="800" style="display: block; margin: auto;" /&gt;
+
+--
+**Skewness**
+
+&lt;img src="assets/images/skewness.png" width="800" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Shape Question 1
+
+Which of these variables do you expect to be uniformly distributed?
+
+1. bill length of Gentoo penguins
+2. salaries of a random sample of people from California
+3. house sale prices in San Francisco
+4. birthdays of classmates (day of the month)
+
+.task[
+Please vote at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/TRiILsvQV3qxeV1F8qoAq?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+class: middle
+
+&lt;img src="summarizing-numerical-data_files/figure-html/unnamed-chunk-12-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+# Numerical Summaries
+## What is typical?
+
+--
+
+`$$8, 11, 7, 7, 8, 11,  9,  6,  10,  7,  9$$`
+
+
+---
+**Desideratum**: Synthesize the magnitudes of all of the observations into a single typical value that isn't too far from any of the observations.
+
+* * *
+--
+
+1. Add up all of the observations.
+2. Divide by the number of observations.
+
+--
+
+$$
+\frac{8 + 11 + 7 + 7 + 8 + 11 + 9 + 6 + 10 + 7 + 9}{11} = \frac{93}{11} = 8.45
+$$
+
+--
+
+More generally:
+
+$$
+\bar{x} = \frac{x_1 + x_2 + \ldots + x_n}{n}
+$$
+
+--
+
+&gt; This is the **arithmetic mean** of the data.
+
+
+---
+**Desideratum**:  Select a single typical value from the middle of the data, ignoring magnitudes.
+
+* * * 
+
+1. Put the data in order
+2. Select the middle number
+3. Average the middle two if necessary
+
+--
+
+$$ 6 \quad 7 \quad 7 \quad  7 \quad 8 \quad {\Large 8} \quad 9 \quad 9 \quad 10 \quad 11  \quad 11$$
+
+--
+
+&gt; This is the **median**.
+
+---
+**Desideratum**:  Select the value that will most often be the same as one of the observations.
+
+--
+1. Select the most commonly observed value.
+
+--
+
+$$ 6 \quad {\Large 7 \quad 7 \quad  7} \quad 8 \quad 8 \quad 9 \quad 9 \quad 10 \quad 11  \quad 11$$
+
+--
+
+&gt; This is the **mode**.
+
+
+---
+class: middle, center
+
+# Which is best?
+
+--
+
+&gt; It depends on your desiderata: the nature of your data and what you seek to capture in your summary.
+
+--
+
+.task[
+Get out a piece of paper. You'll be watching a 3 minute video that discusses characteristics of a typical human. Note which numerical summaries are used and what for.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe width="1120" height="730" src="https://www.youtube.com/embed/4B2xOvKFFz4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+## General Advice
+--
+
+1. *Means* are often a good default for symmetric data.
+
+--
+
+2. *Means* are sensitive to very large and small values, so can be deceptive on skewed data.
+&gt; Use a median
+
+--
+
+3. *Modes* are often the only option for categorical data.
+
+--
+
+But there are other notions of typical...
+
+---
+class: middle
+
+&lt;img src="assets/images/max-temp.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+&lt;img src="assets/images/heat-dome-1.png" width="625" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+&lt;img src="assets/images/heat-dome-2.png" width="726" style="display: block; margin: auto;" /&gt;
+
+---
+
+## While you're waiting...
+
+&gt; As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has an average of only 10 riders".
+
+&gt; Imagine you live in London and decide to try returning to using the train for your commute. You find that every time you ride, your train car is packed with far more than 10 riders.
+
+&gt; How can you explain this apparent paradox?
+
+.task[
+Write down one or two possible explanations. We'll share them later in lecture.
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

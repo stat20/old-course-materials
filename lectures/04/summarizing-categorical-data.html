@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Summarizing Categorical Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="assets/libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="385" style="display: block; margin: auto;" /&gt;
+
+# Summarizing Categorical Data
+## Stat 20 UC Berkeley
+
+---
+## Announcements
+--
+
+1. Exams: TBA
+
+--
+
+2. My Office Hours: Fri 12-1, Weds 3-4 (starting 2/2)
+
+--
+
+3. Problem Sets
+
+--
+
+4. Quiz 1: Sunday 2/6 - Monday 2/7
+
+
+---
+## Agenda
+
+1. From Data Frames to Tables
+  - Summarizing with counts
+  - Summarizing with proportions
+  - Visualizing with barcharts
+  - Univariate and bivariate analyses
+
+4. Lab: Arbuthnot
+
+---
+class: middle, center
+
+.adage[How can we describe categorical data?]
+
+
+---
+class: middle
+
+## From Data Frames to Tables
+
+---
+
+From Wikipedia:
+
+&lt;img src="assets/images/non-tidy-contingency-table.png" width="379" style="display: block; margin: auto;" /&gt;
+
+.task[
+What does each row refer to? For a data frame, this is analogous to the question: what is the unit of observation?
+
+Vote at `pollev.com/stat20`
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/AiF5O1CbK3n5zIUqSOF0h?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+## Recall: the Data Frame
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; bill_depth_mm &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; bill_length_mm &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; species &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 42.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 17.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Adelie &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gentoo &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+A **data frame** is an array that associates the *observations* (downs the rows) with the *variables* measured on each observation (across the columns). Each cell stores a **value** observed for a variable on an observation.
+
+---
+
+Table of counts on one variable
+
+---
+background-image: url(assets/images/sketch-1.jpg)
+background-size: contain
+
+
+---
+## Summarizing `island`
+--
+
+.pull-left[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; island &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; biscoe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; dream &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; torgersen &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-5-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+Back to the board for a contingency table.
+
+---
+## Contingency Tables
+--
+
+A **contingency table** (also known as a *crosstab*) is a summary table of counts across the combination of levels in two or more variables.
+
+--
+
+When working with two variables, we define:
+
+**Response variable**: the variable of primary interest  
+**Explanatory variable**: the variable used to explain the response variable.
+
+---
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; biscoe &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; dream &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; torgersen &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; adelie &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; chinstrap &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; gentoo &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.task[
+Make one observation based on the counts in the table above.
+
+Example: "There are no Gentoos on Torgersen".
+
+Add an observation or up-vote someone else's at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/discourses/hwmDulkwNwfIDsCuTDdH5?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+## Pulling Proportions from Tables
+--
+
+Proportions/percents can take three forms:
+
+--
+
+**Marginal**: the proportion of the total count that occurs in one level of a single variable, ignoring the others. Eg: "7/16" of all penguins are Adelie".
+
+--
+
+**Joint**: the proportion of the total count that occur in a combination of levels of two variables. Eg: "3/16 of all penguins are Adelie from Biscoe".
+
+--
+
+**Conditional**: the proportion of the count in one level of one variable that occur in a level of a second variable. Eg: "3/7 of the Adelie penguins are from Biscoe".
+
+--
+
+If the *conditional proportions* vary from one level to the next, there is an *association* between those variables in the table.
+
+---
+background-image: url(assets/images/sketch-2.jpg)
+background-size: contain
+
+---
+## Stacked bar charts
+--
+
+Used to visualize counts across two variables.
+
+--
+.pull-left[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+--
+.pull-right[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+&gt; Useful with the overall magnitude of counts across groups matters.
+
+---
+## Side-by-side bar charts (aka "dodged")
+--
+
+Used to visualize counts across two variables.
+
+--
+.pull-left[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+--
+.pull-right[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Normalized stacked bar charts
+--
+
+Used to visualize condition proportions.
+
+--
+.pull-left[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+--
+.pull-right[
+&lt;img src="summarizing-categorical-data_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+&gt; Often the most useful for showing associations.
+---
+class: middle
+
+.center[.adage[How can we describe categorical data?]]
+
+--
+
+&gt; Using **counts**
+--
+ and **proportions**
+--
+, displayed in **tables**
+--
+ or as **bar charts**,
+--
+ with an eye towards the distinction between **univariate** and **multivariate** analyses.
+ 
+---
+class: middle
+
+# Lab: Arbuthnot
+
+
+---
+class: middle, center
+
+## What is the chance that a child born tomorrow is a girl, i.e. assigned female?
+
+???
+Most students will volunteer 50\%. Follow up with:
+
+&gt; Why do you think it's 50\%? How did you come to that number?
+- Did you read it somewhere? 
+- Did you hear it from someone? 
+
+&gt; If you wanted to confirm it was 50% what would you do?
+- [likely answer: google it]
+
+&gt; What source for that number would you likely come across if you kept digging?
+- ultimately, maybe some scientific article.
+
+&gt; What would their evidence for that claim of 50\%?
+- likely vast amounts of demographic / census data
+
+---
+## What is the chance that a child born tomorrow is assigned female?
+
+&gt; 50%?
+
+--
+
+## What evidence do we ultimately rely upon?
+
+&gt; Vast amounts of data
+
+???
+Now consider the case of a scientist who tackled this question long before google was around.
+
+---
+# Dr. John Arbuthnot
+
+.pull-left[
+- 1667 - 1735
+- Scottish physician, mathematician, satirist
+- Interested in the question of the ratio of boys to girls at birth
+]
+
+.pull-right[
+&lt;img src="assets/images/arbuthnot-portrait.png" width="277" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Please read a bit about Arbuthnot online to learn some of his backstory.
+
+---
+# Arbuthnot's London
+
+.pull-left-narrow[
+- 1710, St. Paul's Cathedral completed
+- Very few paved streets
+- Definitely no google
+]
+
+.pull-right-wide[
+&lt;img src="assets/images/thames.png" width="812" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+#### What evidence would people rely upon?
+
+???
+&gt; Arbuthnot was living in London while thinking about this problem. It was a period of rapid growth and modernization for the city but it still had no google.
+
+Main point to get across here: what we take for granted in terms of how we reason from data was nearly absent from life in 18th century UK. Most people would reason from direct experience, anecdote, appeals to tradition or religion, etc.
+
+&gt; If you were Dr. Arbuthnot and you tell the person on the street: "My wife will soon be giving birth. What are the chances it's a girl?", what sort of answer do you think he might get? What type of information might that person be relying upon?
+- their own experience (the ratio of girls born in their family)
+- anecdotes that they've heard from others
+
+You may want to note that even our notion of "chance" and probability was not wide spread at the time.
+
+&gt; Arbuthnot's work is notable because he takes the big step of realizing that an individual can learn a lot by pooling the experiences / anecdotes of others in a systematic way.
+
+---
+class: middle, center
+
+# Where could Arbuthnot find vast amounts on systematically collected data regarding births?
+
+--
+
+The church.
+
+---
+
+&lt;img src="assets/images/christening-records.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+The church is the only organization that is collecting systematic demographic data in this era.
+
+---
+
+&lt;img src="assets/images/christening-records-zoom.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+&gt;Most children, shortly after they're born, are taken to the nearby parish church and "christened" - given a name in the church. The parish churches record the name and date of each of these christenings.
+
+&gt;Arbuthnot went from parish church to parish church in London, pored over these records and tallied the number of boys and girls. He then combined these counts across all of the parishes and created a data set that we can read into R today.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
