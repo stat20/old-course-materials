@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      GITHUB_ACCESS_TOKEN: ${{ secrets.WEBSITE_TOKEN }}
+      GITHUB_ACCESS_TOKEN: ${{ secrets.WEBSITE_SYNC }}
 
     steps:
       - name: Checkout course materials
