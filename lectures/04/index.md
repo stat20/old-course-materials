@@ -16,9 +16,6 @@ links:
 
 While the data frame is a natural format for storing categorical data for analysis, it makes it difficult to see broader trends. Counts and proportions can be used to summarize this form of data and they can be displayed effectively either in tables or bar charts.
 
-This is a te
-
-
 ### Key Questions
 - What numerical and graphical methods are available for displaying categorical data?
 - What is the difference in the structure of data frames and contingency tables and what is each used for?
