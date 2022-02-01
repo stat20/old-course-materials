@@ -1,11 +1,9 @@
 ---
-title: "Untitled"
-author: "Your Name"
-date: '2022-01-28'
-output: html_document
+title: "Class Survey Data Frame"
+output: pdf_document
 ---
 
-```{r}
+```{r echo = FALSE}
 library(tidyverse)
 df <- read_csv("https://www.dropbox.com/s/qjnk887d0p69shq/stat20-survey.csv?dl=1")
 df <- df %>%
@@ -55,4 +53,13 @@ ind_cov3 <- which( between(unlist(df$covid_fall),0,1) == FALSE | is.na(between(u
 df$covid_fall[ind_cov3] <- "0"
 df$covid_fall <- as.numeric(unlist(df$covid_fall))
 ```
+
+```{r}
+library(kableExtra)
+set.seed(35)
+df %>%
+  slice(1:5) %>%
+  
+```
+
 
