@@ -30,10 +30,14 @@ links:
 
 #### R Functions
 - `summarize()`
+- `ggplot()`
+- `aes()`
 - `geom_hist()`
 - `geom_bar()`
 - `geom_point()`
 - `geom_jitter()`
+- `geom_boxplot()`
+- `facet_wrap()`
 
 #### RStudio Functionality
 - Creating a reproducible lab report with R Markdown
