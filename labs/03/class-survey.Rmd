@@ -6,7 +6,7 @@ output: pdf_document
 
 ## Part I: Understanding the Context of the Data
 
-1. What is the unit of observation in the class survey?
+1. What is the unit of observation in the survey of students in Stat 20?
 
 2. Where in the Taxonomy of Data are the variables that correspond to each of the following survey questions (i.e., what is their type)?
   - Question 6: What is your favorite thing about Cal?
@@ -15,7 +15,7 @@ output: pdf_document
 
 3. What values would you expect `major` to take? Do you anticipate any challenges when analyzing this data?
 
-To lay the groundwork for your analysis on the survey data set, you will make a plan for constructing plots and set your expectations for what you will see. For questions 4 - 7, please:
+Questions 4 - 7 can be answered using data visualization. To lay the groundwork for answering these questions using the survey data set, plan out your plots and set your expectations for what the data might look like. Please:
 
 - sketch (with paper and pencil) a plot that captures the distribution or relationship between the variables,
 - label the axis and add axis tick marks with plausible values,
@@ -25,34 +25,36 @@ To lay the groundwork for your analysis on the survey data set, you will make a 
   
 4. Do students prefer to spend time at the beach or in the mountains?
 
-5. How much coding experience do students have, ranked from 1 - 10?
+5. How much coding experience do students have?
 
 6. What are students' perceptions of the chance that we remain in remote learning for the entire semester?
 
-7. What is the relationship between students optimism for cryptocurrency and their skepticism of the effect of technology on interpersonal relationships?
+7. What is the relationship between students' optimism for cryptocurrency and their skepticism of the effect of technology on interpersonal relationships?
 
 
 ## Part II: Computing on the Data
 
-1. What is the relationship between year (first year vs second/third/fourth year) and favorite boba place?
+Using the real survey data, construct the plots that you proposed in Part I and calculate for the first three a measure of a typical observation (mean, median, mode). Use these summaries to answer the original question in a sentence or two, noting, where appropriate, the shape of the distribution and what a "typical" observation is.
 
-1. What is the relationship between favorite season and preference for beach or mountains? 
+8. Do students prefer to spend time at the beach or in the mountains?
 
-1. Among those who have had previous coding experience, what languages are most common? Do the proportions of languages used differ by major?
+9. How much coding experience do students have?
 
-1. Which boba place is the most popular among students who prefer tea over coffee?
+10. What are students' perceptions of the chance that we remain in remote learning for the entire semester?
 
-1. We are back on campus starting Jan 31. Based on the survey, do you think most students expected this outcome? Why? 
+11. What is the relationship between students' optimism for cryptocurrency and their skepticism of the effect of technology on interpersonal relationships?
 
-1. Among students whose favorite season is winter, which Winter Olympic sport do they enjoy the most? Which do they enjoy the least? Justify your answer with visualization.
 
-1. Group the students based on whether they believe hotdogs are sandwiches. What proportion of each group prefer fighting a horse-sized duck? Do you think the two questions are associated?
-
-1. How many second-year students gave an opinion of 7 or above to the Cryptocurrency statement?
-
-1. What is the relationship between major (Health/Pre-Med and non Health/Pre-Med) and degree of belief that COVID will keep us remote for two weeks plus?
-
-2. 
 ## Part III: Extensions
 
+Three variables appear in the survey data frame that were derived from the original `major` question: `health`, `tech`, and `business`. These variables indicate whether or not a student is in a health-related, technology-related, or business-related field, respectively.
 
+For the following questions, please answer with a plot and a sentence or two written response given the structure in the plot.
+
+12. Is there an association between students majoring in a technology field and their optimism for cryptocurrency?
+
+13. Is there an association between students majoring in a business field and their optimism for cryptocurrency?
+
+14. Propose your own question involving one or two variables and answer it using a plot with a written interpretation.
+
+15. Propose your own question involving two or three variables and answer it using a plot with a written interpretation.

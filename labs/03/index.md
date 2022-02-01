@@ -11,6 +11,10 @@ links:
   icon_pack: fas
   name: Lab
   url: https://stat20.org/labs/03/class-survey.pdf
+- icon: file-pdf
+  icon_pack: fas
+  name: Handout
+  url: https://stat20.org/labs/03/google-form-handout.pdf
 - icon: images
   icon_pack: fas
   name: Slides I
