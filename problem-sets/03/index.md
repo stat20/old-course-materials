@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 3"
-summary: "Summarizing Data"
+summary: "Summarizing Data."
 subtitle: "Summarizing Data"
 publishdate: "2022-02-01"
 show_post_date: false
@@ -9,7 +9,7 @@ layout: single
 links:
 - icon: file-pdf
   icon_pack: fas
-  name: Lab
+  name: PS
   url: https://stat20.org/problem-sets/03/summarizing-data.pdf
 ---
 
