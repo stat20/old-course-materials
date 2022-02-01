@@ -81,10 +81,140 @@ knitr::include_graphics("assets/images/google-form.png")
 ]
 
 ---
+## Part I Questions:
+--
+
+1. What is the unit of observation in the class survey?
+
+2. Where in the Taxonomy of Data are the variables that correspond to each of the following survey questions (i.e., what is their type)?
+  - Question 6: What is your favorite thing about Cal?
+  - Question 13: Where would you rather be?
+  - Question 20: What is the chance that we remain in remote learning for the entire semester?
+
+3. What values would you expect `major` to take? Do you anticipate any challenges when analyzing this data?
+
+---
+
+To lay the groundwork for your analysis on the survey data set, you will make a plan for constructing plots and set your expectations for what you will see. For questions 4 - 7, please:
+
+- sketch (with paper and pencil) a plot that captures the distribution or relationship between the variables,
+- label the axis and add axis tick marks with plausible values,
+- depict a shape that reflects your expectation of the phenomena. Also:
+- indicate the *aesthetic mappings* (the variables in use and which visual cues / aeshetic each one is mapped to) and
+- indicate the *geometry* of your plot.
+  
+4) Do students prefer to spend time at the beach or in the mountains?
+
+5) How much coding experience do students have, ranked from 1 - 10?
+
+
+---
+
+- Sketch (with paper and pencil) a plot that captures the distribution or relationship between the variables,
+- label the axis and add axis tick marks with plausible values,
+- depict a shape that reflects your expectation of the phenomena. Also:
+- indicate the *aesthetic mappings* (the variables in use and which visual cues / aeshetic each one is mapped to) and
+- indicate the *geometry* of your plot.
+
+6) What are students' perceptions of the chance that we remain in remote learning for the entire semester?
+
+7) What is the relationship between students optimism for cryptocurrency and their skepticism of the effect of technology on interpersonal relationships?
+
+---
+class: middle
+
+# Practice with the Grammar of Graphics
+
+
+---
+## Grammar of Graphics
+
+Wilkinson 1999: A statistical graphic is a **mapping** of **data** variables to **aesthetic** attributes of **geometric** objects.
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("assets/images/grammar-of-graphics.png")
+# source: http://bloggotype.blogspot.com/2016/08/holiday-notes2-grammar-of-graphics.html
+```
+
+
+---
+## Practice: Penguin Bill Lengths
+
+What are the **Data**, **Aesthetic Mapping**, and **Geometry** of the following plot?
+
+```{r}
+#| fig.width = 9,
+#| fig.height = 4
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(x = bill_length_mm)) +
+  geom_histogram(col = "white") +
+  theme_gray(base_size = 20)
+```
+
+---
+## Practice: Penguin Bill Lengths
+--
+
+.pull-left[
+- **Data**: `penguins`  
+- **Aesthetic Mapping**: map `bill_length_mm` to the x-axis
+- **Geometry**: express the observations as a histogram 
+
+```{r eval = FALSE, echo = TRUE}
+ggplot(penguins, aes(x = bill_length_mm)) +
+  geom_histogram()
+```
+]
+
+--
+
+.pull-right[
+```{r}
+#| fig.width = 9,
+#| fig.height = 4
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(x = bill_length_mm)) +
+  geom_histogram(col = "white") +
+  theme_gray(base_size = 20)
+```
+]
+
+---
+## Practice: Penguin Bill Lengths Again
+--
 
 ```{r}
 library(stat20data)
-data(survey)
-survey
+data(arbuthnot)
+arbuthnot <- mutate(arbuthnot, total = girls + boys)
 ```
 
+.pull-left[
+- **Data**: `penguins`  
+- **Aesthetic Mapping**: map `bill_length_mm` to the x-axis
+- **Geometry**: express the observations as a **bar chart** 
+
+```{r eval = FALSE, echo = TRUE}
+ggplot(penguins, aes(x = bill_length_mm)) +
+  geom_bar() #<<
+```
+
+> What will this do?
+
+]
+
+--
+
+.pull-right[
+```{r}
+#| fig.width = 9,
+#| fig.height = 4
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(x = bill_length_mm)) +
+  geom_bar() +
+  theme_gray(base_size = 20)
+```
+]
