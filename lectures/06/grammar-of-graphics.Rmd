@@ -623,7 +623,7 @@ Different `aes` available depending on geometry. For points:
 ---
 ## Practice: Penguin Bill Lengths
 
-What is are the **Data**, **Aesthetic Mapping**, and **Geometry** of the following plot?
+What are the **Data**, **Aesthetic Mapping**, and **Geometry** of the following plot?
 
 ```{r}
 #| fig.width = 9,
