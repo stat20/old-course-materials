@@ -39,7 +39,7 @@ class: center, middle
 knitr::include_graphics("assets/images/stat20-hex.png")
 ```
 
-# A Grammar of Graphics TEst
+# A Grammar of Graphics TEs
 ## Stat 20 UC Berkeley
 
 

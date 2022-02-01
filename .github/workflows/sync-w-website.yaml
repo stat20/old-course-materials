@@ -40,11 +40,11 @@ jobs:
            fi
            # sync landing page
            cp -p ${week}/index.md ./website/content/${week}/
-           # copy files ending in .html and .css
-           # cp ${week}/*.{html,css} ./website/static/${week}/
            # copy entire dir to static
-           cp -pr ${week}/assets ./website/static/${week}/
-           cp -pr ${week}/*_files ./website/static/${week}/
+           cp -pr ${week}/ ./website/static/${week}/
+           # remove index and Rmds
+           rm -f ./website/static/${week}/index.md
+           rm -f ./website/static/${week}/*.Rmd
 
           done
           
