@@ -10,15 +10,11 @@ links:
 - icon: file-pdf
   icon_pack: fas
   name: Lab
-  url: https://stat20.org/labs/03/arbuthnot.pdf
+  url: https://stat20.org/labs/03/class-survey.pdf
 - icon: images
   icon_pack: fas
   name: Slides I
-  url: https://stat20.org/labs/03/slides-2A.html
-- icon: images
-  icon_pack: fas
-  name: Slides II
-  url: https://stat20.org/labs/03/slides-2B.html
+  url: https://stat20.org/labs/03/slides-1.html
 ---
 
 * * *
@@ -34,7 +30,6 @@ links:
 
 #### R Functions
 - `summarize()`
-- `filter()`
 - `geom_hist()`
 - `geom_bar()`
 - `geom_point()`
