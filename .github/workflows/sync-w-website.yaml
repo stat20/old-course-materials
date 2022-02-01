@@ -41,7 +41,7 @@ jobs:
            # sync landing page
            cp -p ${week}/index.md ./website/content/${week}/
            # copy entire dir to static
-           cp -pr ${week}/ ./website/static/${week}/
+           cp -pr ${week} ./website/static/lectures/
            # remove index and Rmds
            rm -f ./website/static/${week}/index.md
            rm -f ./website/static/${week}/*.Rmd

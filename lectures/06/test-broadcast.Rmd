@@ -31,6 +31,7 @@ source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/
 xaringanExtra::use_broadcast()
 ```
 
+
 class: center, middle
 
 ```{r}
