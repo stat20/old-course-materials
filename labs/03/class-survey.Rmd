@@ -1,5 +1,5 @@
 ---
-title: "Lab X: Title"
+title: "Lab 3: Class Survey"
 author: "STAT 20 Spring 2022"
 output: pdf_document
 ---
