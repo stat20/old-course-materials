@@ -6,17 +6,42 @@ output:
     df_print: paged
 ---
 
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE)
 ```
 
-1. **Raise taxes.** 
-A random sample of registered voters nationally were asked whether they think it's better to raise taxes on the rich or raise taxes on the poor. 
-The survey also collected information on the political party affiliation of the respondents. [@survey:raiseTaxes:2015]
+1. **Measures of center and spread.** 
+The infant mortality rate is defined as the number of infant deaths per 1,000 live births. This rate is often used as an indicator of the level of health in a country. 
+The relative frequency histogram below (which displays proportions instead of counts) shows the distribution of estimated infant death rates for 224 countries for which such data were available in 2014.
 
-    ```{r fig.asp = 0.4}
+    ```{r fig.align="center", fig.width=3, fig.asp = .8}
+    library(ggplot2)
+    library(scales)
+    library(openintro)
+    
+    ggplot(subset(cia_factbook, !is.na(cia_factbook$infant_mortality_rate)), aes(x = infant_mortality_rate)) +
+      geom_histogram(aes(y = stat(count) / sum(count)),
+        binwidth = 10
+      ) +
+      labs(
+        x = "Infant mortality (per 1,000 live births)", 
+        y = "Proportion") +
+      theme_gray(base_size = 8) +
+  theme(plot.margin = margin(b = 1, unit = "cm"))
+    ```
+
+    a.  Estimate Q1, the median, and Q3 from the histogram.
+
+    b.  Would you expect the mean of this dataset to be smaller or larger than the median? Explain your reasoning.
+    
+    c. Would the sample standard deviation or the IQR do a better job of measuring the spread of this distribution? Why?
+
+2. **Associations in bar charts.** 
+A random sample of registered voters nationally were asked whether they think it's better to raise taxes on the rich or raise taxes on the poor. 
+The survey also collected information on the political party affiliation of the respondents.
+
+    ```{r fig.asp = 0.4, fig.width = 4, fig.align = "center"}
     library(tidyverse)
     library(scales)
     library(openintro)
@@ -46,18 +71,18 @@ The survey also collected information on the political party affiliation of the 
       scale_x_continuous(labels = label_percent(scale = 1)) +
       labs(x = NULL) +
       theme(legend.position = "bottom") +
-      guides(fill = guide_legend(reverse = TRUE))
+      guides(fill = guide_legend(reverse = TRUE)) +
+      theme_gray(base_size = 8)
     ```
 
     a. Based on the stacked bar plot shown above, do views on raising taxes and political affiliation appear to be associated? Explain your reasoning.
 
-    b. Conjecture other possible variables that might explain the potential association between these two variables.
+\newpage
 
-
-2. **Associations.**
+3. **Associations in scatterplots.**
 Indicate which of the plots show (a) a positive association, (b) a negative association, or (c) no association. Also determine if the positive and negative associations are linear or nonlinear. Each part may refer to more than one plot.
 
-    ```{r fig.asp=0.5}
+    ```{r fig.asp=0.3}
     library(tidyverse)
     set.seed(2306)
     
@@ -107,51 +132,44 @@ Indicate which of the plots show (a) a positive association, (b) a negative asso
       ) +
       labs(x = NULL, y = NULL)
     ```
-  
-\newpage  
-    
-3. **Infant mortality.** 
 
-The infant mortality rate is defined as the number of infant deaths per 1,000 live births. This rate is often used as an indicator of the level of health in a country. 
-The relative frequency histogram below shows the distribution of estimated infant death rates for 224 countries for which such data were available in 2014.
+4. **Practice with ggplot I**.
+The following three plots come from a data set called `mcu_films` inside the `openintro` package. Please write out the `ggplot2` code that will produce each one.
 
-```{r}
-    library(ggplot2)
-    library(scales)
-    library(openintro)
-    
-    ggplot(subset(cia_factbook, !is.na(cia_factbook$infant_mortality_rate)), aes(x = infant_mortality_rate)) +
-      geom_histogram(aes(y = stat(count) / sum(count)),
-        binwidth = 10
-      ) +
-      labs(
-        x = "Infant mortality (per 1,000 live births)", 
-        y = "Proportion") + theme_minimal()
+```{r echo = FALSE, message = FALSE, fig.height=2}
+library(tidyverse)
+library(openintro)
+library(patchwork)
+p1 <- ggplot(mcu_films, aes(x = gross_us)) +
+    geom_histogram() +
+      theme_gray(base_size = 8)
+p2 <- ggplot(mcu_films, aes(y = gross_world)) +
+    geom_boxplot() +
+      theme_gray(base_size = 8)
+p3 <- ggplot(mcu_films, aes(x = gross_us,
+                            gross_world)) +
+    geom_point() +
+      theme_gray(base_size = 8)
+p1 + p2 + p3
 ```
 
-    a.  Estimate Q1, the median, and Q3 from the histogram.
+5. **Practice with ggplot II**.The following three plots come from a data set called `penguins` inside the `palmerpenguins` package. Please write out the `ggplot2` code that will produce each one.
 
-    b.  Would you expect the mean of this dataset to be smaller or larger than the median? Explain your reasoning.
-
-\newpage
-  
-4. **Median vs. mean.** 
-Estimate the median for the 400 observations shown in the histogram and note whether you expect the mean to be higher or lower than the median.
-
-    ```{r}
-    library(tidyverse)
-    library(openintro)
-    
-    set.seed(9823)
-    df <- tibble(x = (100 * rbeta(400, 12, 3)))
-    
-    ggplot(df, aes(x = x)) +
-      geom_histogram(binwidth = 5) +
-      labs(x = "", y = "") +
-      scale_y_continuous(breaks = seq(0, 80, 20)) + theme_minimal()
-    ```
-
-
-5. **R code** 
-
-Using ggplot in R code: plot the histogram of mpg of mtcars, and detemine whether the median is larger, smaller, or equal to the mean. (Show your code)
+```{r echo = FALSE, message = FALSE, fig.height=2, warning = FALSE}
+library(palmerpenguins)
+p1 <- ggplot(penguins, 
+             aes(x = bill_length_mm)) +
+  geom_density() +
+      theme_gray(base_size = 8)
+p2 <- ggplot(penguins, 
+             aes(x = species)) +
+  geom_bar() +
+      theme_gray(base_size = 8)
+p3 <- ggplot(penguins,
+             aes(x = flipper_length_mm,
+                 y = body_mass_g,
+                 color = island)) +
+  geom_point() +
+      theme_gray(base_size = 8)
+p1 + p2 + p3
+```
