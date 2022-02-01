@@ -3,7 +3,7 @@ title: "Class Survey Data Frame"
 output: pdf_document
 ---
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 df <- read_csv("https://www.dropbox.com/s/qjnk887d0p69shq/stat20-survey.csv?dl=1")
 df <- df %>%
@@ -54,12 +54,11 @@ df$covid_fall[ind_cov3] <- "0"
 df$covid_fall <- as.numeric(unlist(df$covid_fall))
 ```
 
-```{r}
+```{r message = FALSE, warning = FALSE, echo = FALSE}
 library(kableExtra)
 set.seed(35)
 df %>%
-  slice(1:5) %>%
-  
+  glimpse()
 ```
 
 
