@@ -1,0 +1,81 @@
+---
+title: "Lab 3: Class Survey II"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+# Lab 3: Class Survey II
+### Introduction to Probability and Statistics
+
+
+---
+## Agenda
+
+1. Review of R Markdown
+
+2. R Markdown Practice
+
+3. Constructing plots with `survey`
+
+---
+class: middle
+
+slides from lecture about the structure of an R Markdown document coming soon.
+
+---
+class: middle
+
+# R Markdown Practice
+
+---
+## Creating, naming, and saving your Rmd
+--
+
+1. Click the green plus, select R Markdown.
+2. Select "From Template" in the left menu and scroll through the list until you see "Lab Report {stat20data}". Select it and click OK.
+3. One the second line of the template, change the title field to be the title of this lab.
+4. Click the Save button, then name the file something sensible like `lab-3-class-survey`.
+5. Click the knit button to see what the pdf of the lab template looks like.
+
+---
+## Uploading an image
+--
+
+1. Take a clear picture of your first sketched plot with your phone.
+2. Transfer the picture to your laptop.
+3. In RStudio, click the "Upload" button in the file tab in the lower right pane.
+4. Upload the picture to the same directory as your lab Rmd or to a new folder called something like "images".
+5. In the lab template, replace the words inside `"path-to-image"` with the name of your file. If you put it into "images", add `images/` to your file name.
+6. Knit!
+
+---
+class: middle
+
+# Constructing plots with `survey`
