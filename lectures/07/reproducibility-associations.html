@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Reproducible Science</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/js-cookie-3.0.0/js.cookie.js"></script>
+    <script src="assets/libs/peerjs-1.3.1/peerjs.min.js"></script>
+    <script src="assets/libs/tiny.toast-1.0.0/toast.min.js"></script>
+    <link href="assets/libs/xaringanExtra-broadcast-0.2.6/broadcast.css" rel="stylesheet" />
+    <script src="assets/libs/xaringanExtra-broadcast-0.2.6/broadcast.js"></script>
+    <link href="assets/libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="assets/libs/countdown-0.3.5/countdown.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Reproducible Science
+## Stat 20 UC Berkeley
+
+---
+# Announcements
+--
+
+1. Quiz 1
+  - Online on Gradescope
+  - 25 minutes
+  - Open Sunday 11 am - Monday 11 am
+  - Covers content since last quiz
+  - Retake will be available late next week
+
+---
+class: middle, center
+
+background-image: url(assets/images/rstudio-interface.png)
+background-size: contain
+
+
+--
+
+.large[😱]
+
+---
+class: center, middle
+
+# Why are we doing this?
+
+&lt;!-- https://www.cc.com/video/dcyvro/the-colbert-report-austerity-s-spreadsheet-error --&gt;
+
+---
+
+# Reproducible Science
+
+--
+
+An analysis is **reproducible** if another person can take the same source materials and recreate the same conclusion.
+
+--
+
+A finding is **replicable** if another person create the study in full, collecting new data, and come to the same conclusion.
+
+--
+
+To be reproducible, an analysis should
+
+- contain the **data**
+- contain the **code** that conducts the analysis
+- clearly **documents** the link between the output of the code and the conclusions drawn
+
+---
+
+# Not a new idea
+
+--
+
+.pull-left-narrow[
+**Royal Society**  
+Founded 1660 by Robert Boyle and others
+]
+
+--
+
+.pull-right[
+&lt;img src="assets/images/royal-society.png" width="454" height="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# What's changed?
+--
+
+Data used to be *rare, expensive, and small* and methods of analysis *simple and transparent* ...
+
+--
+
+.pull-left[
+&lt;img src="assets/images/arbuthnot-data-1.png" width="427" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="assets/images/arbuthnot-data-2.png" width="420" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# What's changed?
+
+Data used to be *rare, expensive, and small* and methods of analysis *simple and transparent* ...
+--
+but now data is *common, cheap, and large* and method of analysis have become increasingly *complex*.
+
+--
+
+.pull-left[
+&lt;img src="assets/images/data-deluge.png" width="160%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="assets/images/data-growth.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Tools up to the task
+--
+
+1. RMarkdown
+
+2. Jupyter Notebook
+
+3. Quarto
+
+---
+class: middle
+
+&lt;img src="assets/images/markdown-1.png" width="853" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+&lt;img src="assets/images/markdown-2.png" width="853" style="display: block; margin: auto;" /&gt;
+
+---
+
+Demo
+
+---
+## Tenets of a Reproducible Analysis
+
+An analysis is *reproducible* if another person can take the same source materials and recreate the same conclusion.
+
+--
+
+To be reproducible, an analysis should
+
+- contain the **data**
+- contain the **code** that conducts the analysis
+- clearly **documents** the link between the output of the code and the conclusions drawn
+
+---
+class: middle, center
+
+# For this class
+
+Every data analysis must be a reproducible data analysis
+
+--
+
+.adage[Nullius in Verba]
+
+---
+class: middle
+
+# Associations in Graphics
+
+---
+
+500 people are asked the following questions.
+
+1. What is your age?
+2. What is your annual income?
+3. What is your party affiliation? (Rep, Dem, or Ind)
+4. Which economic class do you consider yourself? (lower, working middle, upper)
+
+.task[
+Please sketch one plot that expresses the relationship between the data collected on `age` and `income` and a second plot that expresses the relationship between `party` affiliation and economic `class`.
+]
+
+--
+
+<div class="countdown" id="timer_61fad5b5" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+500 people are asked the following questions.
+
+1. What is your age?
+2. What is your annual income?
+3. What is your party affiliation? (Rep, Dem, or Ind)
+4. Which economic class do you consider yourself? (lower, working middle, upper)
+
+.task[
+Please sketch one plot that expresses the relationship between the data collected on `age` and `income` and a second plot that expresses the relationship between `party` affiliation and economic `class`.
+]
+
+&gt; Turn to your partner and share your sketches. Do they agree? I'll ask two pairs to share their answer.
+
+---
+## Age and Income
+
+
+---
+## Association
+--
+
+There is an **association** between two variables if the distribution of one variable is different as you move between levels of the second variable.
+
+--
+
+.right[... you've seen this before.]
+
+--
+
+&lt;img src="assets/images/past-slide.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Associations in Scatterplots
+--
+
+Three characteristics to note:
+
+--
+
+1. *Direction*: positive, negative
+
+--
+
+2. *Strength*: weak, moderate, strong, etc.
+
+--
+
+3. *Shape*: linear, non-linear
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-12-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Positive, strong, and linear.
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-13-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Positive, weak, and linear.
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-14-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Negative, moderate, and linear.
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-15-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Strong and non-linear.
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-16-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Negative, fairly strong, slightly curvilinear
+
+---
+
+What is the direction, strength, and shape of the association?
+
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-17-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+&gt; There is no association.
+
+
+---
+## Party and Class
+
+
+
+
+---
+## Party and Class
+--
+
+Using data collected from the General Social Survey,
+
+
+
+--
+
+.pull-left[
+
+```r
+ggplot(gss, aes(x = partyid, 
+                fill = class)) +
+  geom_()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-20-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Party and Class
+
+Using data collected from the General Social Survey,
+
+
+
+--
+
+.pull-left[
+
+```r
+ggplot(gss, aes(x = partyid, 
+                fill = class)) +
+* geom_(position = "fill")
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-23-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Party and Class
+
+Using data collected from the General Social Survey,
+
+
+
+--
+
+.pull-left[
+
+```r
+*ggplot(gss, aes(x = class,
+*               fill = partyid)) +
+  geom_(position = "fill")
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-26-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+## Age and Party
+--
+
+Using data collected from the General Social Survey, we can study only `age`.
+
+--
+
+.pull-left[
+
+```r
+ggplot(gss, aes(x = age)) +
+  geom_histogram()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-28-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+
+
+---
+## Age and Party
+
+Using data collected from the General Social Survey, we can study only `age`, or we can facet the distribution of `age` by `partyid`.
+
+--
+
+.pull-left[
+
+```r
+ggplot(gss, aes(x = age)) +
+  geom_histogram() +
+* facet_wrap(vars(partyid))
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-30-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+---
+## Facets
+
+&lt;img src="assets/images/grammar-of-graphics.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+*Facets* are multiple versions of the same plot, each using a different subset of the data determined by a categorical variable.
+
+--
+
+&lt;style type="text/css"&gt;
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+&lt;/style&gt;
+
+.huge[
+```
+facet_wrap(vars(&lt;VAR&gt;))
+```
+]
+
+---
+## Facetting Party and Class
+--
+
+Using data collected from the General Social Survey,
+
+
+
+--
+
+.pull-left[
+
+```r
+ggplot(gss, aes(x = class)) +
+  geom_bar() +
+  facet_wrap(vars(partyid))
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="reproducibility-associations_files/figure-html/unnamed-chunk-35-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Looking Ahead
+
+- Lab tomorrow
+  - Using RMarkdown
+  - Constructing plots with `ggplot2`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

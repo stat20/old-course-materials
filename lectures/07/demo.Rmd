@@ -1,0 +1,24 @@
+---
+title: "Lab 1"
+author: "Andrew Bray"
+date: '2022-02-02'
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center", fig.width = 4, fig.height = 2.5)
+```
+
+## My Home: San Diego Country, CA
+
+San Diego County, officially the County of San Diego, is a county in the southwestern corner of the state of California, in the United States. As of the 2020 census, the population was 3,298,634, making it California's second-most populous county and the fifth-most populous in the United States. Its county seat is San Diego, the second-most populous city in California and the eighth-most populous city in the United States. It is the southwesternmost county in the 48 contiguous United States, and is a border county.
+
+## My favorite spots
+
+1. Moonlight Beach
+2. Juanita's
+3. Pannikin Coffee and Tea
+
+## My favorite animals
+
+
