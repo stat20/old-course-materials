@@ -58,25 +58,47 @@ class: middle
 # R Markdown Practice
 
 ---
-## Creating, naming, and saving your Rmd
---
 
-1. Click the green plus, select R Markdown.
-2. Select "From Template" in the left menu and scroll through the list until you see "Lab Report {stat20data}". Select it and click OK.
-3. One the second line of the template, change the title field to be the title of this lab.
-4. Click the Save button, then name the file something sensible like `lab-3-class-survey`.
-5. Click the knit button to see what the pdf of the lab template looks like.
+<!-- --- -->
+<!-- ## Creating, naming, and saving your Rmd -->
+<!-- -- -->
+
+<!-- 1. Click the green plus, select R Markdown. -->
+<!-- 2. Select "From Template" in the left menu and scroll through the list until you see "Lab Report {stat20data}". Select it and click OK. -->
+<!-- 3. One the second line of the template, change the title field to be the title of this lab. -->
+<!-- 4. Click the Save button, then name the file something sensible like `lab-3-class-survey`. -->
+<!-- 5. Click the knit button to see what the pdf of the lab template looks like. -->
 
 ---
 ## Uploading an image
 --
 
-1. Take a clear picture of your first sketched plot with your phone.
-2. Transfer the picture to your laptop.
-3. In RStudio, click the "Upload" button in the file tab in the lower right pane.
-4. Upload the picture to the same directory as your lab Rmd or to a new folder called something like "images".
-5. In the lab template, replace the words inside `"path-to-image"` with the name of your file. If you put it into "images", add `images/` to your file name.
-6. Knit!
+<!-- 1. Take a clear picture of your first sketched plot with your phone. -->
+<!-- 2. Transfer the picture to your laptop. -->
+<!-- 3. In RStudio, click the "Upload" button in the file tab in the lower right pane. -->
+<!-- 4. Upload the picture to the same directory as your lab Rmd or to a new folder called something like "images". -->
+<!-- 5. In your R Markdown document, replace the words inside `"path-to-image"` with the name of your file. If you put it into "images", add `images/` to your file name. -->
+<!-- 6. Knit! -->
+
+Images can be loaded into your Rmd with a chunk like this:
+
+```{css, echo = FALSE}
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+```
+
+.huge[
+````markdown
+`r ''````{r echo = FALSE}
+knitr::include_graphics("image.png")
+```
+````
+]
+
+- Upload your `image.png` using the button at the top of the file directory
+- Be sure the file is in the same directory as your Rmd
+- Be sure the name inside the function is the name of your file
 
 ---
 class: middle
@@ -87,12 +109,6 @@ class: middle
 ## `summarize()`
 
 You can *summarize* the observations in a variable using `summarize()` and the function that you wish to apply to that variable.
-
-```{css, echo = FALSE}
-.huge .remark-code { /*Change made here*/
-  font-size: 150% !important;
-}
-```
 
 .huge[
 ```
