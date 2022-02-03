@@ -399,7 +399,7 @@ gss <- filter(gss, partyid %in% c("dem", "ind", "rep"))
 ```{r eval = FALSE, echo = TRUE}
 ggplot(gss, aes(x = partyid, 
                 fill = class)) +
-  geom_()
+  geom_bar()
 ```
 ]
 
@@ -431,7 +431,7 @@ gss <- filter(gss, partyid %in% c("dem", "ind", "rep"))
 ```{r eval = FALSE, echo = TRUE}
 ggplot(gss, aes(x = partyid, 
                 fill = class)) +
-  geom_(position = "fill") #<<
+  geom_bar(position = "fill") #<<
 ```
 ]
 
@@ -463,7 +463,7 @@ gss <- filter(gss, partyid %in% c("dem", "ind", "rep"))
 ```{r eval = FALSE, echo = TRUE}
 ggplot(gss, aes(x = class, #<<
                 fill = partyid)) + #<<
-  geom_(position = "fill")
+  geom_bar(position = "fill")
 ```
 ]
 

@@ -199,7 +199,7 @@ Please sketch one plot that expresses the relationship between the data collecte
 
 --
 
-<div class="countdown" id="timer_61fad5b5" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<div class="countdown" id="timer_61fc3b3a" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -335,7 +335,7 @@ Using data collected from the General Social Survey,
 ```r
 ggplot(gss, aes(x = partyid, 
                 fill = class)) +
-  geom_()
+  geom_bar()
 ```
 ]
 
@@ -359,7 +359,7 @@ Using data collected from the General Social Survey,
 ```r
 ggplot(gss, aes(x = partyid, 
                 fill = class)) +
-* geom_(position = "fill")
+* geom_bar(position = "fill")
 ```
 ]
 
@@ -383,7 +383,7 @@ Using data collected from the General Social Survey,
 ```r
 *ggplot(gss, aes(x = class,
 *               fill = partyid)) +
-  geom_(position = "fill")
+  geom_bar(position = "fill")
 ```
 ]
 
