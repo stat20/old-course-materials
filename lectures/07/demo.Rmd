@@ -21,4 +21,18 @@ San Diego County, officially the County of San Diego, is a county in the southwe
 
 ## My favorite animals
 
+I really like penguins. Let me show you some data visualization about their beak sizes.
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+                     color = island)) +
+  geom_point()
+```
+
+As you can see above, there is a generally positive association between bill length and bill depth in penguins found on each of the islands. Penguins from Biscoe have shorter bills than penguins on other islands.
+
 
