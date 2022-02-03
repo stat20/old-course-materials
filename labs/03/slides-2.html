@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta name="author" content="STAT 20 UC Berkeley" />
     <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="assets/libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="assets/libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="stat20.css" type="text/css" />
   </head>
   <body>
@@ -31,7 +33,8 @@ class: center, middle
 ---
 class: middle
 
-slides from lecture about the structure of an R Markdown document coming soon.
+&lt;img src="assets/images/markdown-2.png" width="853" style="display: block; margin: auto;" /&gt;
+
 
 ---
 class: middle
@@ -60,7 +63,134 @@ class: middle
 6. Knit!
 
 ---
-## Constructing plots with `survey`
+class: middle
+
+# Summarizing the class survey data
+
+---
+## `summarize()`
+
+You can *summarize* the observations in a variable using `summarize()` and the function that you wish to apply to that variable.
+
+&lt;style type="text/css"&gt;
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+&lt;/style&gt;
+
+.huge[
+```
+summarize(&lt;DATAFRAME&gt;, &lt;FUNCTION&gt;(&lt;VAR&gt;))
+```
+]
+
+--
+
+
+
+.pull-left[
+
+```r
+summarize(arbuthnot, sum(girls))
+```
+
+```
+## # A tibble: 1 × 1
+##   `sum(girls)`
+##          &lt;int&gt;
+## 1       453841
+```
+]
+
+--
+
+.pull-right[
+
+```r
+summarize(arbuthnot, total_g = sum(girls))
+```
+
+```
+## # A tibble: 1 × 1
+##   total_g
+##     &lt;int&gt;
+## 1  453841
+```
+]
+
+
+---
+## *Example from Lecture* Deliveries revisited
+
+.pull-left[
+&lt;img src="slides-2_files/figure-html/unnamed-chunk-6-1.png" width="864" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; service &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; range &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; IQR &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; var &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; cal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; oski &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+**Desiderata**
+- The statistic should be *low* when the numbers are the same or very similar to one another.
+- The statistic should be *high* when the numbers are very different.
+- The statistic should not grow or shrink with the sample size ( `\(n\)` ).
+
+]
+
+
+---
+## The code behind the table
+--
+
+
+```r
+summarize(oski, 
+          range = diff(range(time)),
+          IQR = IQR(time),
+          var = var(time),
+          sd = sd(time))
+```
+
+```
+## # A tibble: 1 × 4
+##   range   IQR   var    sd
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  6.54  3.87  4.34  2.08
+```
+
+
+
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

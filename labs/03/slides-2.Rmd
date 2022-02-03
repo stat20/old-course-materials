@@ -47,7 +47,10 @@ class: center, middle
 ---
 class: middle
 
-slides from lecture about the structure of an R Markdown document coming soon.
+```{r}
+knitr::include_graphics("assets/images/markdown-2.png")
+```
+
 
 ---
 class: middle
@@ -78,4 +81,111 @@ class: middle
 ---
 class: middle
 
-# Constructing plots with `survey`
+# Summarizing the class survey data
+
+---
+## `summarize()`
+
+You can *summarize* the observations in a variable using `summarize()` and the function that you wish to apply to that variable.
+
+```{css, echo = FALSE}
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+```
+
+.huge[
+```
+summarize(<DATAFRAME>, <FUNCTION>(<VAR>))
+```
+]
+
+--
+
+```{r echo = FALSE}
+library(stat20data)
+data(arbuthnot)
+```
+
+.pull-left[
+```{r echo = TRUE}
+summarize(arbuthnot, sum(girls))
+```
+]
+
+--
+
+.pull-right[
+```{r echo = TRUE}
+summarize(arbuthnot, total_g = sum(girls))
+```
+]
+
+
+---
+## *Example from Lecture* Deliveries revisited
+
+.pull-left[
+```{r}
+#| fig.height = 7.5,
+#| fig.width = 12
+
+set.seed(513)
+oski <- rnorm(23, 0, 2)
+oski <- oski + (29 - mean(oski))
+cal <- rnorm(23, 0, 8)
+cal <- cal +  (27 - mean(cal))
+df <- tibble(service = rep(c("oski", "cal"), each = 23),
+             time = c(oski, cal))
+deliveries <- df
+oski <- filter(deliveries, service == "oski")
+library(kableExtra)
+p1 <- ggplot(df, aes(x = time)) +
+  geom_histogram(col = "white") + 
+  facet_wrap(vars(service), nrow = 2) +
+  theme_gray(base_size = 20)
+p1 + 
+  geom_vline(xintercept = 27, color = "blue", lty = 1, lwd = 2) +
+  geom_vline(xintercept = 29, color = "goldenrod", lty = 1, lwd = 2)
+```
+]
+
+--
+
+.pull-right[
+```{r}
+df %>%
+  group_by(service) %>%
+  summarize(range = diff(range(time)),
+            IQR = IQR(time),
+            var = var(time),
+            sd = sd(time)) %>%
+  kbl(digits = 1)
+```
+
+**Desiderata**
+- The statistic should be *low* when the numbers are the same or very similar to one another.
+- The statistic should be *high* when the numbers are very different.
+- The statistic should not grow or shrink with the sample size ( $n$ ).
+
+]
+
+
+---
+## The code behind the table
+--
+
+```{r echo = TRUE}
+summarize(oski, 
+          range = diff(range(time)),
+          IQR = IQR(time),
+          var = var(time),
+          sd = sd(time))
+```
+
+
+
+
+
+
+
