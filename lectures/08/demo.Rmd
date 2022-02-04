@@ -1,0 +1,23 @@
+---
+title: "Demo"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+
+## Tinkering with settings
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm)) +
+  geom_point(color = "blue")
+
+
+
+
+
+
+
+
+```

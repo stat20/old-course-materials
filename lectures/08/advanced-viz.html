@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced Data Visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Advanced Data Visualization
+## Stat 20 UC Berkeley
+
+Welcome to Pimentel Hall!
+
+Please download the polleverywhere app to your phone or send a browser tab to `pollev.com/stat20`.
+
+---
+## Announcements
+
+- PS 2 solutions now posted to bCourses
+- Lab 2 grades soon on Gradescope
+- Short video on facets on bCourses by this evening
+- Quiz 1 will be open Sunday 11 am to Monday 11 am
+- Direct your questions during lecture to Ed post
+
+
+---
+## Agenda
+
+1. Mapping vs Setting
+2. Adding labels for clarity
+3. The importance of scale
+4. Overplotting
+5. Choosing a theme
+6. Annotations
+
+
+---
+class: middle
+
+
+---
+class: middle
+
+# Mapping vs Setting
+
+---
+
+.task[
+What will happen if I add color to this plot like this? Respond at `pollev.com/stat20`
+]
+
+
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm)) +
+  geom_point()
+```
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-4-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+*                    color = "blue")) +
+  geom_point()
+```
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-6-1.png" width="432" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/Vblf45fbOZweKM8qChhLP?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+---
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+*                    color = "blue")) +
+  geom_point()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+&gt; Does "blue" really not encode color? Let's find out.
+
+
+---
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+*                    color = "pimentel")) +
+  geom_point()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Mapping vs Setting
+--
+
+**Mapping** is the dynamic link between the values in a column of your data frame and an aesthetic attribute of your plot.
+
+--
+
+**Setting** is a static way to tweak the look of your plot that does *not* reference the data frame.
+
+--
+
+&gt; Mapping is done within `aes()`. Setting is done outside `aes()`, generally in a `geom_()`.
+
+
+---
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm)) +
+* geom_point(color = "blue")
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-12-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Which colors are available?
+--
+
+By default, R uses the following, but there are many packages that contain built-in palettes.
+
+
+```
+##   [1] "white"                "aliceblue"            "antiquewhite"        
+##   [4] "antiquewhite1"        "antiquewhite2"        "antiquewhite3"       
+##   [7] "antiquewhite4"        "aquamarine"           "aquamarine1"         
+##  [10] "aquamarine2"          "aquamarine3"          "aquamarine4"         
+##  [13] "azure"                "azure1"               "azure2"              
+##  [16] "azure3"               "azure4"               "beige"               
+##  [19] "bisque"               "bisque1"              "bisque2"             
+##  [22] "bisque3"              "bisque4"              "black"               
+##  [25] "blanchedalmond"       "blue"                 "blue1"               
+##  [28] "blue2"                "blue3"                "blue4"               
+##  [31] "blueviolet"           "brown"                "brown1"              
+##  [34] "brown2"               "brown3"               "brown4"              
+##  [37] "burlywood"            "burlywood1"           "burlywood2"          
+##  [40] "burlywood3"           "burlywood4"           "cadetblue"           
+##  [43] "cadetblue1"           "cadetblue2"           "cadetblue3"          
+##  [46] "cadetblue4"           "chartreuse"           "chartreuse1"         
+##  [49] "chartreuse2"          "chartreuse3"          "chartreuse4"         
+##  [52] "chocolate"            "chocolate1"           "chocolate2"          
+##  [55] "chocolate3"           "chocolate4"           "coral"               
+##  [58] "coral1"               "coral2"               "coral3"              
+##  [61] "coral4"               "cornflowerblue"       "cornsilk"            
+##  [64] "cornsilk1"            "cornsilk2"            "cornsilk3"           
+##  [67] "cornsilk4"            "cyan"                 "cyan1"               
+##  [70] "cyan2"                "cyan3"                "cyan4"               
+##  [73] "darkblue"             "darkcyan"             "darkgoldenrod"       
+##  [76] "darkgoldenrod1"       "darkgoldenrod2"       "darkgoldenrod3"      
+##  [79] "darkgoldenrod4"       "darkgray"             "darkgreen"           
+##  [82] "darkgrey"             "darkkhaki"            "darkmagenta"         
+##  [85] "darkolivegreen"       "darkolivegreen1"      "darkolivegreen2"     
+##  [88] "darkolivegreen3"      "darkolivegreen4"      "darkorange"          
+##  [91] "darkorange1"          "darkorange2"          "darkorange3"         
+##  [94] "darkorange4"          "darkorchid"           "darkorchid1"         
+##  [97] "darkorchid2"          "darkorchid3"          "darkorchid4"         
+## [100] "darkred"              "darksalmon"           "darkseagreen"        
+## [103] "darkseagreen1"        "darkseagreen2"        "darkseagreen3"       
+## [106] "darkseagreen4"        "darkslateblue"        "darkslategray"       
+## [109] "darkslategray1"       "darkslategray2"       "darkslategray3"      
+## [112] "darkslategray4"       "darkslategrey"        "darkturquoise"       
+## [115] "darkviolet"           "deeppink"             "deeppink1"           
+## [118] "deeppink2"            "deeppink3"            "deeppink4"           
+## [121] "deepskyblue"          "deepskyblue1"         "deepskyblue2"        
+## [124] "deepskyblue3"         "deepskyblue4"         "dimgray"             
+## [127] "dimgrey"              "dodgerblue"           "dodgerblue1"         
+## [130] "dodgerblue2"          "dodgerblue3"          "dodgerblue4"         
+## [133] "firebrick"            "firebrick1"           "firebrick2"          
+## [136] "firebrick3"           "firebrick4"           "floralwhite"         
+## [139] "forestgreen"          "gainsboro"            "ghostwhite"          
+## [142] "gold"                 "gold1"                "gold2"               
+## [145] "gold3"                "gold4"                "goldenrod"           
+## [148] "goldenrod1"           "goldenrod2"           "goldenrod3"          
+## [151] "goldenrod4"           "gray"                 "gray0"               
+## [154] "gray1"                "gray2"                "gray3"               
+## [157] "gray4"                "gray5"                "gray6"               
+## [160] "gray7"                "gray8"                "gray9"               
+## [163] "gray10"               "gray11"               "gray12"              
+## [166] "gray13"               "gray14"               "gray15"              
+## [169] "gray16"               "gray17"               "gray18"              
+## [172] "gray19"               "gray20"               "gray21"              
+## [175] "gray22"               "gray23"               "gray24"              
+## [178] "gray25"               "gray26"               "gray27"              
+## [181] "gray28"               "gray29"               "gray30"              
+## [184] "gray31"               "gray32"               "gray33"              
+## [187] "gray34"               "gray35"               "gray36"              
+## [190] "gray37"               "gray38"               "gray39"              
+## [193] "gray40"               "gray41"               "gray42"              
+## [196] "gray43"               "gray44"               "gray45"              
+## [199] "gray46"               "gray47"               "gray48"              
+## [202] "gray49"               "gray50"               "gray51"              
+## [205] "gray52"               "gray53"               "gray54"              
+## [208] "gray55"               "gray56"               "gray57"              
+## [211] "gray58"               "gray59"               "gray60"              
+## [214] "gray61"               "gray62"               "gray63"              
+## [217] "gray64"               "gray65"               "gray66"              
+## [220] "gray67"               "gray68"               "gray69"              
+## [223] "gray70"               "gray71"               "gray72"              
+## [226] "gray73"               "gray74"               "gray75"              
+## [229] "gray76"               "gray77"               "gray78"              
+## [232] "gray79"               "gray80"               "gray81"              
+## [235] "gray82"               "gray83"               "gray84"              
+## [238] "gray85"               "gray86"               "gray87"              
+## [241] "gray88"               "gray89"               "gray90"              
+## [244] "gray91"               "gray92"               "gray93"              
+## [247] "gray94"               "gray95"               "gray96"              
+## [250] "gray97"               "gray98"               "gray99"              
+## [253] "gray100"              "green"                "green1"              
+## [256] "green2"               "green3"               "green4"              
+## [259] "greenyellow"          "grey"                 "grey0"               
+## [262] "grey1"                "grey2"                "grey3"               
+## [265] "grey4"                "grey5"                "grey6"               
+## [268] "grey7"                "grey8"                "grey9"               
+## [271] "grey10"               "grey11"               "grey12"              
+## [274] "grey13"               "grey14"               "grey15"              
+## [277] "grey16"               "grey17"               "grey18"              
+## [280] "grey19"               "grey20"               "grey21"              
+## [283] "grey22"               "grey23"               "grey24"              
+## [286] "grey25"               "grey26"               "grey27"              
+## [289] "grey28"               "grey29"               "grey30"              
+## [292] "grey31"               "grey32"               "grey33"              
+## [295] "grey34"               "grey35"               "grey36"              
+## [298] "grey37"               "grey38"               "grey39"              
+## [301] "grey40"               "grey41"               "grey42"              
+## [304] "grey43"               "grey44"               "grey45"              
+## [307] "grey46"               "grey47"               "grey48"              
+## [310] "grey49"               "grey50"               "grey51"              
+## [313] "grey52"               "grey53"               "grey54"              
+## [316] "grey55"               "grey56"               "grey57"              
+## [319] "grey58"               "grey59"               "grey60"              
+## [322] "grey61"               "grey62"               "grey63"              
+## [325] "grey64"               "grey65"               "grey66"              
+## [328] "grey67"               "grey68"               "grey69"              
+## [331] "grey70"               "grey71"               "grey72"              
+## [334] "grey73"               "grey74"               "grey75"              
+## [337] "grey76"               "grey77"               "grey78"              
+## [340] "grey79"               "grey80"               "grey81"              
+## [343] "grey82"               "grey83"               "grey84"              
+## [346] "grey85"               "grey86"               "grey87"              
+## [349] "grey88"               "grey89"               "grey90"              
+## [352] "grey91"               "grey92"               "grey93"              
+## [355] "grey94"               "grey95"               "grey96"              
+## [358] "grey97"               "grey98"               "grey99"              
+## [361] "grey100"              "honeydew"             "honeydew1"           
+## [364] "honeydew2"            "honeydew3"            "honeydew4"           
+## [367] "hotpink"              "hotpink1"             "hotpink2"            
+## [370] "hotpink3"             "hotpink4"             "indianred"           
+## [373] "indianred1"           "indianred2"           "indianred3"          
+## [376] "indianred4"           "ivory"                "ivory1"              
+## [379] "ivory2"               "ivory3"               "ivory4"              
+## [382] "khaki"                "khaki1"               "khaki2"              
+## [385] "khaki3"               "khaki4"               "lavender"            
+## [388] "lavenderblush"        "lavenderblush1"       "lavenderblush2"      
+## [391] "lavenderblush3"       "lavenderblush4"       "lawngreen"           
+## [394] "lemonchiffon"         "lemonchiffon1"        "lemonchiffon2"       
+## [397] "lemonchiffon3"        "lemonchiffon4"        "lightblue"           
+## [400] "lightblue1"           "lightblue2"           "lightblue3"          
+## [403] "lightblue4"           "lightcoral"           "lightcyan"           
+## [406] "lightcyan1"           "lightcyan2"           "lightcyan3"          
+## [409] "lightcyan4"           "lightgoldenrod"       "lightgoldenrod1"     
+## [412] "lightgoldenrod2"      "lightgoldenrod3"      "lightgoldenrod4"     
+## [415] "lightgoldenrodyellow" "lightgray"            "lightgreen"          
+## [418] "lightgrey"            "lightpink"            "lightpink1"          
+## [421] "lightpink2"           "lightpink3"           "lightpink4"          
+## [424] "lightsalmon"          "lightsalmon1"         "lightsalmon2"        
+## [427] "lightsalmon3"         "lightsalmon4"         "lightseagreen"       
+## [430] "lightskyblue"         "lightskyblue1"        "lightskyblue2"       
+## [433] "lightskyblue3"        "lightskyblue4"        "lightslateblue"      
+## [436] "lightslategray"       "lightslategrey"       "lightsteelblue"      
+## [439] "lightsteelblue1"      "lightsteelblue2"      "lightsteelblue3"     
+## [442] "lightsteelblue4"      "lightyellow"          "lightyellow1"        
+## [445] "lightyellow2"         "lightyellow3"         "lightyellow4"        
+## [448] "limegreen"            "linen"                "magenta"             
+## [451] "magenta1"             "magenta2"             "magenta3"            
+## [454] "magenta4"             "maroon"               "maroon1"             
+## [457] "maroon2"              "maroon3"              "maroon4"             
+## [460] "mediumaquamarine"     "mediumblue"           "mediumorchid"        
+## [463] "mediumorchid1"        "mediumorchid2"        "mediumorchid3"       
+## [466] "mediumorchid4"        "mediumpurple"         "mediumpurple1"       
+## [469] "mediumpurple2"        "mediumpurple3"        "mediumpurple4"       
+## [472] "mediumseagreen"       "mediumslateblue"      "mediumspringgreen"   
+## [475] "mediumturquoise"      "mediumvioletred"      "midnightblue"        
+## [478] "mintcream"            "mistyrose"            "mistyrose1"          
+## [481] "mistyrose2"           "mistyrose3"           "mistyrose4"          
+## [484] "moccasin"             "navajowhite"          "navajowhite1"        
+## [487] "navajowhite2"         "navajowhite3"         "navajowhite4"        
+## [490] "navy"                 "navyblue"             "oldlace"             
+## [493] "olivedrab"            "olivedrab1"           "olivedrab2"          
+## [496] "olivedrab3"           "olivedrab4"           "orange"              
+## [499] "orange1"              "orange2"              "orange3"             
+## [502] "orange4"              "orangered"            "orangered1"          
+## [505] "orangered2"           "orangered3"           "orangered4"          
+## [508] "orchid"               "orchid1"              "orchid2"             
+## [511] "orchid3"              "orchid4"              "palegoldenrod"       
+## [514] "palegreen"            "palegreen1"           "palegreen2"          
+## [517] "palegreen3"           "palegreen4"           "paleturquoise"       
+## [520] "paleturquoise1"       "paleturquoise2"       "paleturquoise3"      
+## [523] "paleturquoise4"       "palevioletred"        "palevioletred1"      
+## [526] "palevioletred2"       "palevioletred3"       "palevioletred4"      
+## [529] "papayawhip"           "peachpuff"            "peachpuff1"          
+## [532] "peachpuff2"           "peachpuff3"           "peachpuff4"          
+## [535] "peru"                 "pink"                 "pink1"               
+## [538] "pink2"                "pink3"                "pink4"               
+## [541] "plum"                 "plum1"                "plum2"               
+## [544] "plum3"                "plum4"                "powderblue"          
+## [547] "purple"               "purple1"              "purple2"             
+## [550] "purple3"              "purple4"              "red"                 
+## [553] "red1"                 "red2"                 "red3"                
+## [556] "red4"                 "rosybrown"            "rosybrown1"          
+## [559] "rosybrown2"           "rosybrown3"           "rosybrown4"          
+## [562] "royalblue"            "royalblue1"           "royalblue2"          
+## [565] "royalblue3"           "royalblue4"           "saddlebrown"         
+## [568] "salmon"               "salmon1"              "salmon2"             
+## [571] "salmon3"              "salmon4"              "sandybrown"          
+## [574] "seagreen"             "seagreen1"            "seagreen2"           
+## [577] "seagreen3"            "seagreen4"            "seashell"            
+## [580] "seashell1"            "seashell2"            "seashell3"           
+## [583] "seashell4"            "sienna"               "sienna1"             
+## [586] "sienna2"              "sienna3"              "sienna4"             
+## [589] "skyblue"              "skyblue1"             "skyblue2"            
+## [592] "skyblue3"             "skyblue4"             "slateblue"           
+## [595] "slateblue1"           "slateblue2"           "slateblue3"          
+## [598] "slateblue4"           "slategray"            "slategray1"          
+## [601] "slategray2"           "slategray3"           "slategray4"          
+## [604] "slategrey"            "snow"                 "snow1"               
+## [607] "snow2"                "snow3"                "snow4"               
+## [610] "springgreen"          "springgreen1"         "springgreen2"        
+## [613] "springgreen3"         "springgreen4"         "steelblue"           
+## [616] "steelblue1"           "steelblue2"           "steelblue3"          
+## [619] "steelblue4"           "tan"                  "tan1"                
+## [622] "tan2"                 "tan3"                 "tan4"                
+## [625] "thistle"              "thistle1"             "thistle2"            
+## [628] "thistle3"             "thistle4"             "tomato"              
+## [631] "tomato1"              "tomato2"              "tomato3"             
+## [634] "tomato4"              "turquoise"            "turquoise1"          
+## [637] "turquoise2"           "turquoise3"           "turquoise4"          
+## [640] "violet"               "violetred"            "violetred1"          
+## [643] "violetred2"           "violetred3"           "violetred4"          
+## [646] "wheat"                "wheat1"               "wheat2"              
+## [649] "wheat3"               "wheat4"               "whitesmoke"          
+## [652] "yellow"               "yellow1"              "yellow2"             
+## [655] "yellow3"              "yellow4"              "yellowgreen"
+```
+
+---
+class: middle, center
+
+demo
+
+---
+## Settings for point geometry
+--
+
+.pull-left-narrow[
+Inside `geom_point()`
+
+- `color = "red"`
+- `size = 10`
+- `shape = 5`
+]
+
+--
+
+.pull-right-wide[
+Learning more:
+
+&lt;img src="assets/images/ggplot2-docs.png" width="956" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: middle, center
+
+## Takeaway
+
+--
+
+If you want to change the look of your plot because of structure in the data, you're thinking about *mapping*.
+
+--
+
+If you want to just fiddle with the look, you can adjust the *settings*.
+
+
+---
+class: middle
+
+# Adding labels for clarity
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-15-1.png" width="662.4" style="display: block; margin: auto;" /&gt;
+
+&gt; What is the main point of this plot?
+
+---
+## Adding a title with `labs()`
+--
+
+The *plot title* should convey the main point / story in the plot.
+
+--
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+                     color = species)) +
+  geom_point() +
+* labs(title = "Beak sizes differ between species")
+```
+]
+
+--
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-17-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Modifying axis labels
+--
+
+*Axis labels* should be clear and cleanly formatted.
+
+--
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+                     color = species)) +
+  geom_point() +
+  labs(title = "Beak sizes differ between species",
+*      x = "Bill length (mm)",
+*      y = "Bill depth (mm)",
+*      color = "Species")
+```
+]
+
+--
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-19-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+## Adding a caption
+--
+
+*Captions* can contain citations and/or expanded versions of the title.
+
+--
+
+.pull-left[
+
+```r
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm,
+                     color = species)) +
+  geom_point() +
+  labs(title = "Beak sizes differ between species",
+       x = "Bill length (mm)",
+       y = "Bill depth (mm)",
+       color = "Species",
+*      caption = "Source: Palmer Station LTER / palmerpenguins package")
+```
+]
+
+--
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-21-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, center
+
+## Takeaway
+
+--
+
+The plot title can be used to convey the main point.
+
+--
+
+Axis labels should be clear and clean.
+
+---
+class: middle
+
+# The Importance of Scale
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-22-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+.task[
+What is the most important feature of the trend here?
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/wcHnwPs7vMny1kZgqQL8m?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-23-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-25-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-26-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+## The Importance of Scale
+--
+
+You can alter the scale on which the data is presented by changing the limits of the axis.
+
+--
+
+- `xlim(&lt;LOWER&gt;, &lt;UPPER&gt;)`
+- `ylim(&lt;LOWER&gt;, &lt;UPPER&gt;)`
+
+--
+
+.pull-left[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-27-1.png" width="324" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-left[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-28-1.png" width="324" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+&lt;img src="assets/images/brexit.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+.cite[Source: Financial Times]
+
+---
+class: middle, center
+
+## Takeaway
+
+--
+
+The limits of the scales can dramatically alter the interpretation of the plot.
+
+---
+class: middle
+
+# Overplotting
+
+---
+
+## From the lab ...
+
+&gt; What is the relationship between students’ optimism for cryptocurrency and their skepticism of the effect of technology on interpersonal relationships?
+
+--
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-30-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+## Overplotting
+--
+
+.pull-left[
+**Overplotting** is a common effect where multiple observations overlap with one another in a plot.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-31-1.png" width="360" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+Selected fixes:
+
+1. Jittering the points
+
+2. Adding transparency
+
+3. Different geometries (hex plot, contour plots)
+]
+
+---
+## Jittering
+--
+
+**Jittered** points have random noise added to both coordinates to separate them from one another.
+
+--
+
+.pull-left[
+
+```r
+class_survey %&gt;%
+  ggplot(aes(x = tech_relationships,
+             y = crypto)) +
+* geom_jitter()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-33-1.png" width="468" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Transparency
+--
+
+Points can be made transparent by setting the **alpha** level. Alpha = 1: normal opaque points, Alpha = 0, fully transparent points.
+
+--
+
+.pull-left[
+
+```r
+class_survey %&gt;%
+  ggplot(aes(x = tech_relationships,
+             y = crypto)) +
+* geom_point(alpha = .1, size = 8)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-35-1.png" width="468" style="display: block; margin: auto;" /&gt;
+
+```
+## List of 93
+##  $ line                      :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.818
+##   ..$ linetype     : num 1
+##   ..$ lineend      : chr "butt"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ rect                      :List of 5
+##   ..$ fill         : chr "white"
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.818
+##   ..$ linetype     : num 1
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ text                      :List of 11
+##   ..$ family       : chr ""
+##   ..$ face         : chr "plain"
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 18
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : num 0
+##   ..$ lineheight   : num 0.9
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ title                     : NULL
+##  $ aspect.ratio              : NULL
+##  $ axis.title                : NULL
+##  $ axis.title.x              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 4.5points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x.top          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 4.5points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x.bottom       : NULL
+##  $ axis.title.y              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 4.5points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.y.left         : NULL
+##  $ axis.title.y.right        :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 4.5points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text                 :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr "grey30"
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 3.6points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x.top           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 3.6points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x.bottom        : NULL
+##  $ axis.text.y               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 1
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 3.6points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.y.left          : NULL
+##  $ axis.text.y.right         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 3.6points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.ticks                :List of 6
+##   ..$ colour       : chr "grey20"
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ axis.ticks.x              : NULL
+##  $ axis.ticks.x.top          : NULL
+##  $ axis.ticks.x.bottom       : NULL
+##  $ axis.ticks.y              : NULL
+##  $ axis.ticks.y.left         : NULL
+##  $ axis.ticks.y.right        : NULL
+##  $ axis.ticks.length         : 'simpleUnit' num 4.5points
+##   ..- attr(*, "unit")= int 8
+##  $ axis.ticks.length.x       : NULL
+##  $ axis.ticks.length.x.top   : NULL
+##  $ axis.ticks.length.x.bottom: NULL
+##  $ axis.ticks.length.y       : NULL
+##  $ axis.ticks.length.y.left  : NULL
+##  $ axis.ticks.length.y.right : NULL
+##  $ axis.line                 : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ axis.line.x               : NULL
+##  $ axis.line.x.top           : NULL
+##  $ axis.line.x.bottom        : NULL
+##  $ axis.line.y               : NULL
+##  $ axis.line.y.left          : NULL
+##  $ axis.line.y.right         : NULL
+##  $ legend.background         :List of 5
+##   ..$ fill         : NULL
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ legend.margin             : 'margin' num [1:4] 9points 9points 9points 9points
+##   ..- attr(*, "unit")= int 8
+##  $ legend.spacing            : 'simpleUnit' num 18points
+##   ..- attr(*, "unit")= int 8
+##  $ legend.spacing.x          : NULL
+##  $ legend.spacing.y          : NULL
+##  $ legend.key                :List of 5
+##   ..$ fill         : chr "grey95"
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ legend.key.size           : 'simpleUnit' num 1.2lines
+##   ..- attr(*, "unit")= int 3
+##  $ legend.key.height         : NULL
+##  $ legend.key.width          : NULL
+##  $ legend.text               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.text.align         : NULL
+##  $ legend.title              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.title.align        : NULL
+##  $ legend.position           : chr "right"
+##  $ legend.direction          : NULL
+##  $ legend.justification      : chr "center"
+##  $ legend.box                : NULL
+##  $ legend.box.just           : NULL
+##  $ legend.box.margin         : 'margin' num [1:4] 0cm 0cm 0cm 0cm
+##   ..- attr(*, "unit")= int 1
+##  $ legend.box.background     : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ legend.box.spacing        : 'simpleUnit' num 18points
+##   ..- attr(*, "unit")= int 8
+##  $ panel.background          :List of 5
+##   ..$ fill         : chr "grey92"
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ panel.border              : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.spacing             : 'simpleUnit' num 9points
+##   ..- attr(*, "unit")= int 8
+##  $ panel.spacing.x           : NULL
+##  $ panel.spacing.y           : NULL
+##  $ panel.grid                :List of 6
+##   ..$ colour       : chr "white"
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ panel.grid.major          : NULL
+##  $ panel.grid.minor          :List of 6
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ panel.grid.major.x        : NULL
+##  $ panel.grid.major.y        : NULL
+##  $ panel.grid.minor.x        : NULL
+##  $ panel.grid.minor.y        : NULL
+##  $ panel.ontop               : logi FALSE
+##  $ plot.background           :List of 5
+##   ..$ fill         : NULL
+##   ..$ colour       : chr "white"
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ plot.title                :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 1.2
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 9points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.title.position       : chr "panel"
+##  $ plot.subtitle             :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 9points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.caption              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : num 1
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 9points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.caption.position     : chr "panel"
+##  $ plot.tag                  :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 1.2
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.tag.position         : chr "topleft"
+##  $ plot.margin               : 'margin' num [1:4] 9points 9points 9points 9points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.background          :List of 5
+##   ..$ fill         : chr "grey85"
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ strip.background.x        : NULL
+##  $ strip.background.y        : NULL
+##  $ strip.placement           : chr "inside"
+##  $ strip.text                :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr "grey10"
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 7.2points 7.2points 7.2points 7.2points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.text.x              : NULL
+##  $ strip.text.y              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.switch.pad.grid     : 'simpleUnit' num 4.5points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.switch.pad.wrap     : 'simpleUnit' num 4.5points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.text.y.left         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  - attr(*, "class")= chr [1:2] "theme" "gg"
+##  - attr(*, "complete")= logi TRUE
+##  - attr(*, "validate")= logi TRUE
+```
+]
+
+---
+## Jittered and transparent
+--
+
+.pull-left[
+
+```r
+class_survey %&gt;%
+  ggplot(aes(x = tech_relationships,
+             y = crypto)) +
+* geom_jitter(alpha = .1, size = 8)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-37-1.png" width="468" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: middle, center
+
+## Takeaway
+
+--
+
+Plots with substantial overplotting are very misleading. It can be fixed with jittering, transparency, and geometries that aggregate.
+
+---
+class: middle
+
+# Choosing a Theme
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-38-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+&gt; What other design decisions were made in constructing this plot?
+
+---
+## Themes
+
+Many of the subtle visual design decisions - background colors, fonts, guidelines, axis tick marks, border boxes - are part of a plots **theme**. These can be changed easily by adding a new theme layer.
+
+--
+
+- `theme_&lt;NAME&gt;()`
+
+
+---
+## Themes in `ggplot2`
+--
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-39-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+&gt; Additional themes can be found in `ggthemes` (coming soon to the Stat 20 Datahub)
+
+---
+## Solarized
+
+`theme_solarized()` in the `ggthemes` package.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-40-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+## Wall Street Journal
+
+`theme_wsj()` in the `ggthemes` package.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-41-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+## Fivethirtyeight.com
+
+`theme_fivethirtyeight()` in the `ggthemes` package.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-42-1.png" width="504" style="display: block; margin: auto;" /&gt;
+---
+## The Economist
+
+`theme_economist()` in the `ggthemes` package.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-43-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+---
+## The Excel
+
+`theme_excel()` in the `ggthemes` package.
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-44-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+class: center, middle
+
+## Takeaways
+
+--
+
+Select a theme that coheres with what your audience will expect to see.
+
+
+---
+class:
+
+# Annotations
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-45-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+&gt; How would you describe this trend over time?
+
+---
+
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-46-1.png" width="720" style="display: block; margin: auto;" /&gt;
+
+---
+## Annotation
+
+You can **annotate** a plot with lines, text, points, to draw attention to important features.
+
+.pull-left[
+
+```r
+arbuthnot %&gt;%
+  mutate(total = girls + boys) %&gt;%
+  ggplot(aes(x = year,
+             y = total)) +
+  geom_line() +
+  annotate(geom = "segment", 
+           x = 1642, xend = 1642,
+           y = 5000, yend = 16000, 
+           color = "tomato") +
+  annotate(geom = "text", 
+           label = "Civil war begins",
+           x = 1648, y = 15500) +
+  labs(title = "Time trend in total christenings",
+       x = "Year",
+       y = "Total")
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="advanced-viz_files/figure-html/unnamed-chunk-48-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
