@@ -5,7 +5,6 @@ output:
   xaringan::moon_reader:
     css: stat20.css
     lib_dir: assets/libs
-    seal: false
     nature:
       highlightStyle: atelier-forest-light
       highlightLines: true
@@ -16,7 +15,7 @@ output:
 ---
 
 ```{r setup}
-#| include=FALSE
+#| include=FALSE,
 #| warning=FALSE
 knitr::opts_chunk$set(message = FALSE,
                       warning = FALSE,
@@ -29,14 +28,6 @@ library(xaringanthemer)
 source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
 ```
 
-class: center, middle
-
-# Welcome to Stat 20!
-### Introduction to Probability and Statistics
-
-Lecture will be begin on Berkeley time 11:10 am 
-
----
 ## This is a slide with a list
 
 1. hello
