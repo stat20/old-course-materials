@@ -1,0 +1,24 @@
+---
+output: pdf_document
+---
+
+```{r echo = FALSE, message = FALSE, warning=FALSE}
+library(stat20data)
+library(kableExtra)
+library(tidyverse)
+data(flights)
+flights %>%
+  select(1:10) %>%
+  slice(1:30) %>%
+  kbl("latex", caption = "First 10 columns of the flights data.") %>%
+  landscape()
+```
+
+
+```{r echo = FALSE, fig.align='center'}
+flights %>%
+  select(11:19) %>%
+  slice(1:30) %>%
+  kbl("latex", caption = "Last 9 columns of the flights data.") %>%
+  landscape()
+```
