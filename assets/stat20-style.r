@@ -89,13 +89,13 @@ xaringanthemer::style_duo_accent(
                                "float" = "left"),
     ".pull-right-wide" = list("width" = "70%",
                               "float" = "right"),
-    ".pull-left-forty" = list("width" = "40%",
+    ".pull-left-forty" = list("width" = "39%",
                               "float" = "left"),
-    ".pull-left-sixty" = list("width" = "60%",
+    ".pull-left-sixty" = list("width" = "59%",
                               "float" = "left"),
-    ".pull-right-forty" = list("width" = "40%",
+    ".pull-right-forty" = list("width" = "39%",
                               "float" = "right"),
-    ".pull-left-sixty" = list("width" = "60%",
+    ".pull-left-sixty" = list("width" = "59%",
                               "float" = "right"),
   )
 )
