@@ -96,6 +96,6 @@ xaringanthemer::style_duo_accent(
     ".pull-right-forty" = list("width" = "39%",
                               "float" = "right"),
     ".pull-left-sixty" = list("width" = "59%",
-                              "float" = "right"),
+                              "float" = "right")
   )
 )
