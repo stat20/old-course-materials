@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Lab 4: Flights</title>
+    <title>Lab 4: Flights II</title>
     <meta charset="utf-8" />
     <meta name="author" content="STAT 20 UC Berkeley" />
     <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
-    <link href="assets/libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
-    <script src="assets/libs/countdown-0.3.5/countdown.js"></script>
     <link rel="stylesheet" href="stat20.css" type="text/css" />
   </head>
   <body>
@@ -17,180 +15,79 @@
 
 class: center, middle
 
-# Lab 4: Flights
+# Lab 4: Flights II
 ### Introduction to Probability and Statistics
+
 
 ---
 ## Agenda
 
 --
 
-1. Introduction to the flights dataset
-  
---
-
-2. Part I: Understanding the Context and Structure of the Data
-    - Unit of observation, types of variables, unit of measures, patterns
-    
---
-
-3. Review logical operators and filtering
+1. Review group_by()  and summarize()
 
 --
 
-.task[
-You will not need a laptop for the first half of this lab.
-]
-
----
-background-image: url(assets/images/sf-chronicle.png)
-background-size: contain
-
----
-background-image: url(assets/images/bts.png)
-background-size: contain
-
----
-class: middle
-
-# Part I: Understanding the Context and Structure of the Data
-
----
-
-##Lab Part I
-
-1. What is the unit of observation in the data frame on the handout?
-
-2. Which variables are categorical? Which variables are numerical? Do any of the variable have ambiguous data types to you?
-
-3. Is there any discernible pattern to the manner in which the rows are ordered?
-
-4. What is your guess for the units/format used to record the departure time?
-
-5. What filter would you use to extract the flights that left in the springtime?
-
-
-.task[
-In pairs, please discuss the questions above.
-]
-
-<div class="countdown" id="timer_6201b88c" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-
-
----
-class: middle
-
-# Logic operators and filtering
-
----
-
-##Evaluating equivalence
-
---
-
-
-```r
-"fruit" == "vegetable"
-```
---
-
-```
-## [1] FALSE
-```
---
-
-```r
-"fruit" == "fruit"
-```
---
-
-```
-## [1] TRUE
-```
---
-
-```r
-"fruit" != "fruit"
-```
---
-
-```
-## [1] FALSE
-```
-
---
-
-.task[
-== evaluates equality, != evaluates inequality.
-]
-
----
-
-##Filtering rows
-
-`Filtering` is the act of reducing the rows of a data frame to those that meet certain criteria.
-
-&lt;style type="text/css"&gt;
-.huge .remark-code { /*Change made here*/
-  font-size: 150% !important;
-}
-&lt;/style&gt;
-
-.huge[
-```
-filter(&lt;DATAFRAME&gt;, &lt;LOGICAL VECTOR&gt;)
-```
-]
-
+2. Flights data with ggplot
 
 ---
 
 
 class: middle
 
-# Part II: Computing with the Data
+# group_by() and summarize()
 
 ---
 
-## Loading Flights Data
+## Flights by month
 
-Load the flights data from the stat20data package.
+Describe the steps to create the following summary from the flights data. Specify the functions and variables.
+
+--
 
 
-```r
-library(stat20data)
-data(flights)
+```
+## # A tibble: 12 × 2
+##    month `Number of Flights`
+##    &lt;dbl&gt;               &lt;int&gt;
+##  1     1               17780
+##  2     2               16748
+##  3     3               18415
+##  4     4                7224
+##  5     5                4399
+##  6     6                5756
+##  7     7                8697
+##  8     8                8815
+##  9     9                7786
+## 10    10                8257
+## 11    11                8296
+## 12    12                8432
 ```
 
 ---
 
-## One verb commands
+class: middle
 
-
-1. **filter()**: Filter the data set to contain only the flights that went to Portland, Oregon and print the first few rows of the data frame. How many were there in 2020?
-
-2. **mutate()**: Mutate a new variable called `avg_speed` that is the average speed of the plane during the flight, measured in miles per hour. (Look through the column names or the help file to find variables that can be used to calculate this.)
-
-
-
-<div class="countdown" id="timer_6201b71c" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
+# Part II: Computing with the Data - continued
 
 ---
+## Summarize the data
 
-## One verb commands
+16. Create a data frame that contains the median and interquartile range for departure delays, grouped by carrier. Which carrier has the lowest typical departure delay? Which one has the least variable departure delays?
 
-3. **arrange()**: Arrange the data set to figure out: which flight holds the record for longest departure delay (in hrs) and what was its destination? What was the destination and delay time (in hrs) for the flight that was least delayed, i.e. that left the most ahead of schedule?
+---
+## Simple ggplots
 
-4. **summarize()**: Confirm the records for departure delay from the question above by summarizing that variable by its maximum and its minimum value.
+7. Create a bar chart that shows the distribution by month of all the flights leaving the Bay Area (SFO and OAK). Do you any sign of an effect of the pandemic?
+
+---
+## dplyr + ggplot 
+
+12. Create a plot that captures the relationship of average speed vs. distance and describe the shape and structure that you see. What phenomena related to taking flights from the Bay Area might explain this structure?
+
+9. Add a new column to your data frame called before_times that takes values of TRUE and FALSE indicating whether the flight took place up through the end of March or after April 1st, respectively. Remake the histograms above, but now separated into two subplots: one with the departure delays from the before times, the other with the flights from afterwards. Can you visually detect any difference in the distribution of departure delays?
 
 
-<div class="countdown" id="timer_6201b671" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
