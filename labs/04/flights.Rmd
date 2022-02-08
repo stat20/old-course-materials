@@ -47,20 +47,6 @@ data(flights)
 
 9. Create a histogram showing the distribution of departure delays for all flights. Describe in words the shape and modality of the distribution and, using numerical summaries, (i.e. summary statistics) its center and spread. Be sure to use measures of center and spread that are most appropriate for this type of distribution. Also set the limits of the x-axis to focus on where most of the data lie.
 
-```{r}
-flights %>%
-  mutate(before_times = month <= 3) %>%
-  ggplot(aes(x = dep_delay)) + 
-  geom_histogram(binwidth = 15) +
-  facet_wrap(vars(before_times)) +
-  xlim(c(-50, 100))
-
-flights %>%
-  summarise(med_delay = median(dep_delay, na.rm = T),
-            iqr_delay = IQR(dep_delay, na.rm = T))
-
-Encourage them to spiff up this plot by zooming in on the x-axis. The statistical summaries should be median and IQR since it's a skewed distribution. The shape they should describe as unimodal and right skewed.
-```
 
 10. Add a new column to your data frame called `before_times` that takes values of `TRUE` and `FALSE` indicating whether the flight took place up through the end of March or after April 1st, respectively. Remake the histograms above, but now separated into two subplots: one with the departure delays from the before times, the other with the flights from afterwards. 
 
@@ -71,16 +57,6 @@ Encourage them to spiff up this plot by zooming in on the x-axis. The statistica
 13. What proportion of the flights left on or ahead of schedule?
 
 14. Create a plot that captures the relationship of average speed vs. distance and describe the shape and structure that you see. What phenomena related to taking flights from the Bay Area might explain this structure?
-
-```{r}
-flights <- flights %>%
-  mutate(avg_speed = distance/(air_time/60))
-
-ggplot(flights, aes(x = distance, y = avg_speed)) + 
-  geom_point()
-
-As the distance of a flight increases, so too does the average speed. The increase is roughly quadradratic in shape and levels out at an average maximum around 500 mph. Good job if they add alpha transparency.
-```
 
 <!-- 15.  What is the most common destination of the flights from the Bay Area? The most distant destination?  -->
 
@@ -104,56 +80,19 @@ As the distance of a flight increases, so too does the average speed. The increa
 
 16.  Create a data frame that contains the median and interquartile range for departure delays, grouped by carrier. Which carrier has the lowest typical departure delay? Which one has the least variable departure delays?
 
-```{r}
-flights %>%
-  group_by(carrier) %>%
-  summarise(med_delay = median(dep_delay, na.rm = TRUE), 
-            iqr_delay = IQR(dep_delay, na.rm = TRUE)) %>%
-  arrange(iqr_delay)
-
-Hawaiian Airlines has the least variable departure delays with an IQR of 7 minutes.
-```
 
 
 ## Part III: Extensions
 
 1. For flights leaving SFO, which month has the highest average departure delay? What about the highest median departure delay? Which of these measures is more reliable for deciding which month(s) to avoid flying if you particularly dislike flights that are severely delayed?
 
-```{r}
-flights %>%
-  filter(origin == "SFO") %>%
-  group_by(month) %>%
-  summarize(mean_delay = mean(dep_delay, na.rm = TRUE),
-            med_delay = median(dep_delay, na.rm = TRUE))
-
-Answers should be in full sentences. Median is the more useful metric since delays are heavily right skewed. They might point out that the winter months do have much higher means, suggesting the presence of high outliers.
-```
 
 2. Each individual airplane can be uniquely identified by its tailnumber in the same way that US citizens can be by their social security numbers. Which airplane flew the farthest during this year for which we have data? How many times around the planet does that translate to?
 
-```{r}
-flights %>%
-  group_by(tailnum) %>%
-  summarize(total_dist = sum(distance)) %>%
-  arrange(desc(total_dist))
-
-
-Students might have grabbed a different number for the denominator. It's fine if it's slightly different, but if it looks like it is in km, then its wrong because the numerator is in miles.
-```
 
 3. What is the tailnumber of the fastest plane in the dataset? What type of plane is it (google it!)? Be sure to be clear how you're defining fastest.
 
-```{r}
-flights %>%
-  mutate(speed = distance / air_time) %>%
-  group_by(tailnum) %>%
-  summarize(avg_speed = mean(speed),
-            cnt = n()) %>%
-  arrange(desc(cnt))
 
-
-There are several reasonable ways to define fastest, including fastest average time and fastest single flights. 
-```
 
 4.  Using the airport nearest your hometown, which day of the week and which airline seems best for 
 flying there from San Francisco (if you're from near SFO or OAK or from abroad, use Chicago as your hometown)? Be clear on how you're defining *best*. (note that there is no explicit weekday 
@@ -161,39 +100,9 @@ column in this data set, but there is sufficient information to piece it togethe
 can be added to your pipeline to create that new column. It uses functions in the `lubridate` package, so be 
 sure to load it in at the start of this exercise).
 
-```{r echo = TRUE}
-  mutate(day_of_week = wday(ymd(paste(year, month, day, set = "-")), label = T))
-```
-
-```{r}
-library(lubridate)
-flights %>%
-  mutate(day_of_week = wday(ymd(paste(year, month, day, set = "-")), label = T)) %>%
-  filter(origin == "SFO", dest == "LAX") %>%
-  group_by(day_of_week, carrier) %>%
-  summarise(med_delay = median(dep_delay, na.rm = T)) %>%
-  arrange(med_delay)
-
-This is the answer for Los Angeles - answers will vary. They may also come up with a different notion of "best" (here I used median departure delay) and they may do the grouping differently: decide on best first for one category, then separately for the other category.
-```
 
 5. The plot below shows a relationship between the number of flights going out of SFO and the average departure delay. It illustrates the hypothesis that more flights on a given day would lead to a more congested airport which would lead to greater delays on average (mean is used here specifically to capture the impact of the outliers - very long delays). Each point represents single day in 2020; there are 366 of them on the plot. Please form a single chain that will create this plot, starting with the raw data set.
 
-```{r eval = TRUE, fig.align='center', fig.width=7, fig.height=4}
-flights %>%
-  filter(origin == "SFO") %>%
-  group_by(month, day) %>%
-  summarize(avg_delay = mean(dep_delay, na.rm = TRUE),
-            n = n()) %>%
-  ggplot(aes(x = n,
-             y = avg_delay,
-             color = factor(month))) +
-  geom_point(alpha = .5) +
-  labs(title = "Days with more flights have more delays",
-       x = "Number of flights",
-       y = "Mean departure delay (min)",
-       color = "Month")
-```
 
 
 
