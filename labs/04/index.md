@@ -11,6 +11,10 @@ links:
   icon_pack: fas
   name: Lab
   url: https://stat20.org/labs/04/flights.pdf
+- icon: file-pdf
+  icon_pack: fas
+  name: Handout
+  url: https://stat20.org/labs/04/dataframe-handout.pdf
 - icon: images
   icon_pack: fas
   name: Slides I
