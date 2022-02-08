@@ -134,6 +134,39 @@ class: middle
 ]
 
 ---
+##Evaluating equivalence, cont.
+
+--
+
+```{r fruitvege1, echo = TRUE, eval = FALSE}
+c("fruit", "fruit", "vegetable") == "fruit"
+```
+--
+```{r ref.label = "fruitvege1", echo = FALSE}
+```
+--
+
+```{r fruitvege2, echo = TRUE, eval = FALSE}
+c("fruit", "fruit", "vegetable") != "fruit"
+```
+--
+```{r ref.label = "fruitvege2", echo = FALSE}
+```
+--
+
+```{r fruitvege3, echo = TRUE, eval = FALSE}
+c("fruit", "vegetable", "boba") %in% c("fruit", "vegetable")
+```
+--
+```{r ref.label = "fruitvege3", echo = FALSE}
+```
+
+--
+.task[
+%in% can be used to evaluate membership in a set.
+]
+
+---
 
 ##Filtering rows
 
