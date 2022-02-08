@@ -24,7 +24,7 @@ data(flights)
 
 5. Is there any discernible pattern to the manner in which the rows are ordered?
 
-6. What is your guess for the units/format used to record the departure time?
+6. What is your guess for the units/format used to record the departure time? Said another way, what would a value of 1517 represent?
 
 7. What filter would you use to extract the flights that left in the springtime?
 
