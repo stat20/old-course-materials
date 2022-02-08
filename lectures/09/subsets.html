@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Subsets</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Subsets
+## Stat 20 UC Berkeley
+
+---
+## While you're waiting...
+
+&gt; As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has a average of only 10 riders".
+
+&gt; Imagine you are a commuter in London and decide to try returning to using the train for your commute. You find that every time you ride, your train car is packed with far more than 10 riders.
+
+&gt; How can you explain this apparent paradox?
+
+.task[
+Write down one or two possible explanations. We'll share them later in lecture.
+]
+
+---
+## Announcements
+
+1. Optional Quiz 1 Again
+  - 11 am Thurs - 11 am Friday
+  - Same format
+  - Similar topics, different questions
+2. 
+
+
+---
+## Agenda
+
+1. Comparing values
+
+2. Filtering data using logical vectors
+
+3. Data Pipelines
+
+
+---
+class: middle
+
+# Comparing Values
+
+
+---
+
+&gt; 10. What are students’ perceptions of the chance that we remain in remote learning for the entire semester?
+
+.task[
+Do you think first year students would be *more* likely or *less* likely to think we would remain in remote learning for the entire semester?
+
+Answer at `pollev.com/stat20`.
+]
+
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/CLNfqXGxTkOSbfVHAbfzo?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+
+---
+## Describing `remote_sem`
+
+
+
+
+.pull-left-forty[
+
+```r
+ggplot(class_survey, aes(x = remote_sem)) +
+  geom_histogram()
+```
+]
+--
+.pull-right-sixty[
+&lt;img src="subsets_files/figure-html/unnamed-chunk-4-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-left-forty[
+Aside: *density plot*
+
+```r
+ggplot(class_survey, aes(x = remote_sem)) +
+* geom_density()
+```
+- .tiny[Replaces histogram with a smooth curve]
+- .tiny[Area under curve is 1]
+]
+--
+.pull-right-sixty[
+&lt;img src="subsets_files/figure-html/unnamed-chunk-6-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Describing `remote_sem`
+
+.pull-left-forty[
+
+```r
+ggplot(class_survey, aes(x = remote_sem)) +
+  geom_histogram()
+```
+]
+--
+.pull-right-sixty[
+&lt;img src="subsets_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+--
+.pull-left-forty[
+
+```r
+summarize(class_survey,
+          mean = mean(remote_sem),
+          med = median(remote_sem),
+          iqr = IQR(remote_sem),
+          sd = sd(remote_sem))
+```
+
+```
+## # A tibble: 1 × 4
+##    mean   med   iqr    sd
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.306  0.25   0.4 0.240
+```
+]
+--
+.pull-right[
+The distribution of probabilities of **all** students is right-skewed with a mean probability of 0.31 and a median probability of 0.25, an IQR of 0.4 and a SD of 0.24.
+]
+
+---
+
+---
+## Describing first year students
+
+How can we focus our analysis on just first year students?
+
+--
+
+**General goal**: Identify whether the *value* in a variable meets a *condition*.
+
+ &gt; Here: Is the value in `remote_sem` equal to `"I'm in my first year."`?
+ 
+--
+
+**Our Tool, Comparison operators**: A collection of operators that compare two values / vectors and return `TRUE` or `FALSE`.
+
+---
+## Evaluating equivalence
+--
+
+
+
+```r
+"fruit" == "vegetable"
+```
+--
+
+```
+## [1] FALSE
+```
+--
+
+```r
+"fruit" == "fruit"
+```
+--
+
+```
+## [1] TRUE
+```
+--
+
+```r
+"fruit" != "fruit"
+```
+--
+
+```
+## [1] FALSE
+```
+--
+&gt; `==` evaluates equality, `!=` evaluates inequality.
+
+
+---
+
+
+```r
+c("fruit", "fruit", "vegetable") == "fruit"
+```
+
+.task[
+What will this line of code return?
+
+Respond at `pollev.com/stat20`.
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/hRNUOmHThbrecK3PwauKs?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+## Evaluating equivalence, cont.
+--
+
+In R, this evaluation happens element-wise when operating on vectors.
+
+
+```r
+c("fruit", "fruit", "vegetable") == "fruit"
+```
+--
+
+```
+## [1]  TRUE  TRUE FALSE
+```
+--
+
+```r
+c("fruit", "fruit", "vegetable") != "fruit"
+```
+--
+
+```
+## [1] FALSE FALSE  TRUE
+```
+--
+
+```r
+c("fruit", "vegetable", "boba") %in% c("fruit", "vegetable")
+```
+--
+
+```
+## [1]  TRUE  TRUE FALSE
+```
+--
+
+&gt; `%in%` can be used to evaluate membership in a set.
+
+---
+## Adding a grouping variable
+--
+
+
+```r
+class_survey &lt;- mutate(class_survey,
+                       first_year = time_at_cal == "I'm in my first year.")
+class_survey
+```
+--
+
+```
+## # A tibble: 552 × 3
+##    time_at_cal            remote_sem first_year
+##    &lt;chr&gt;                       &lt;dbl&gt; &lt;lgl&gt;     
+##  1 I'm in my second year.        0.3 FALSE     
+##  2 I'm in my second year.        0.5 FALSE     
+##  3 I'm in my first year.         0   TRUE      
+##  4 I'm in my third year.         0.7 FALSE     
+##  5 I'm in my second year.        0.2 FALSE     
+##  6 I'm in my second year.        0.3 FALSE     
+##  7 I'm in my first year.         0.5 TRUE      
+##  8 I'm in my first year.         0.4 TRUE      
+##  9 I'm in my first year.         0.3 TRUE      
+## 10 I'm in my first year.         0.5 TRUE      
+## # … with 542 more rows
+```
+
+
+---
+class: middle
+
+# Filtering data using logical vectors
+
+
+---
+## Filtering rows
+--
+
+**Filtering** is the act of reducing the rows of a data frame to those that meet certain criteria.
+
+--
+
+&lt;style type="text/css"&gt;
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+&lt;/style&gt;
+
+.huge[
+```
+filter(&lt;DATAFRAME&gt;, &lt;LOGICAL VECTOR&gt;)
+```
+]
+
+---
+
+
+```r
+first_yr_df &lt;- filter(class_survey, first_year)
+first_yr_df
+```
+--
+
+```
+## # A tibble: 238 × 3
+##    time_at_cal           remote_sem first_year
+##    &lt;chr&gt;                      &lt;dbl&gt; &lt;lgl&gt;     
+##  1 I'm in my first year.       0    TRUE      
+##  2 I'm in my first year.       0.5  TRUE      
+##  3 I'm in my first year.       0.4  TRUE      
+##  4 I'm in my first year.       0.3  TRUE      
+##  5 I'm in my first year.       0.5  TRUE      
+##  6 I'm in my first year.       0.5  TRUE      
+##  7 I'm in my first year.       0.25 TRUE      
+##  8 I'm in my first year.       0.3  TRUE      
+##  9 I'm in my first year.       0.1  TRUE      
+## 10 I'm in my first year.       0.2  TRUE      
+## # … with 228 more rows
+```
+
+---
+## Describing `remote_sem` with statistics
+--
+
+.pull-left[
+Statistics from *all* students
+
+
+```r
+summarize(class_survey,
+          mean = mean(remote_sem),
+          med = median(remote_sem),
+          iqr = IQR(remote_sem),
+          sd = sd(remote_sem))
+```
+
+```
+## # A tibble: 1 × 4
+##    mean   med   iqr    sd
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.306  0.25   0.4 0.240
+```
+]
+--
+.pull-right[
+Statistics from *first year* students
+
+
+```r
+summarize(first_yr_df,
+          mean = mean(remote_sem),
+          med = median(remote_sem),
+          iqr = IQR(remote_sem),
+          sd = sd(remote_sem))
+```
+
+```
+## # A tibble: 1 × 4
+##    mean   med   iqr    sd
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.278   0.2 0.387 0.228
+```
+]
+
+---
+## Describing `remote_sem` with graphics
+--
+
+.pull-left[
+Histogram for *all* students
+
+
+```r
+ggplot(class_survey, aes(x = remote_sem)) +
+  geom_histogram()
+```
+
+&lt;img src="subsets_files/figure-html/unnamed-chunk-22-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+--
+.pull-right[
+Histograms from *first year* and non-first year students
+
+
+```r
+ggplot(class_survey, aes(x = remote_sem)) +
+  geom_histogram() +
+  facet_wrap(vars(first_year))
+```
+
+&lt;img src="subsets_files/figure-html/unnamed-chunk-23-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Comparison Operators
+--
+
+There are many comparisons that can be made for (usually) categorical data (`==`, `!=`, `%in%`) and for numerical data (`&lt;`, `&lt;=`, `&gt;`, `&gt;=`).
+
+&lt;img src="assets/images/comparison-operators.png" width="696" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Example 1
+--
+
+&gt; What is the mean probability of `remote_sem` for students who were very confident that we could engineer our way out of the effects of climate change (6 or above on `climate`)?
+
+
+
+--
+
+
+```r
+optimist_df &lt;- filter(class_survey, climate &gt;= 6)
+summarize(optimist_df, mean(remote_sem))
+```
+--
+
+```
+## # A tibble: 1 × 1
+##   `mean(remote_sem)`
+##                &lt;dbl&gt;
+## 1              0.316
+```
+--
+
+```r
+summarize(class_survey, mean(remote_sem))
+```
+--
+
+```
+## # A tibble: 1 × 1
+##   `mean(remote_sem)`
+##                &lt;dbl&gt;
+## 1              0.306
+```
+
+---
+## Example 2
+--
+
+&gt; What is the mean probability of `remote_sem` for **first-year** students who were very confident that we could engineer our way out of the effects of climate change (6 or above on `climate`)?
+
+
+
+--
+
+
+```r
+optimist_df &lt;- filter(class_survey,
+                      climate &gt;= 6,
+                      time_at_cal == "I'm in my first year.")
+summarize(optimist_df, mean(remote_sem))
+```
+--
+
+```
+## # A tibble: 1 × 1
+##   `mean(remote_sem)`
+##                &lt;dbl&gt;
+## 1              0.285
+```
+--
+
+&gt; You can string together conditions by adding them as arguments to `filter()` separated by commas. 
+--  
+&gt; What else can logical vectors be used for?
+
+---
+
+
+```r
+summarize(class_survey, mean(time_at_cal == "I'm in my first year."))
+```
+
+.task[
+What is will this line of code return?
+
+Respond at `pollev.com/stat20`.
+]
+
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/diI2wNFcHri5Ga0Wd7gdN?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+
+---
+## Boolean Algebra
+--
+
+Logical vectors have a dual representation as `TRUE` `FALSE` and `1`, `0`, so you can do math on logicals accordingly.
+
+--
+
+
+```r
+TRUE + TRUE
+```
+
+```
+## [1] 2
+```
+
+--
+
+
+```
+## [1] 1
+```
+
+--
+&gt; Taking the mean of a logical vector is equivalent to find the proportion of rows that are `TRUE` (i.e. the proportion of rows that meet the condition).
+
+
+---
+## The Taxonomy of Data, revisited
+
+
+---
+## The Taxonomy of Data, revisited
+
+&lt;img src="assets/images/taxonomy-w-logical.jpg" width="1940" style="display: block; margin: auto;" /&gt;
+
+
+---
+## While you're waiting...
+
+&gt; As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has a average of only 10 riders".
+
+&gt; Imagine you are a commuter in London and decide to try returning to using the train for your commute. You find that every time you ride, your train car is packed with far more than 10 riders.
+
+&gt; How can you explain this apparent paradox?
+
+.task[
+Please discuss with your neighbor and see if you can come up with at least two explanations.
+]
+
+---
+class: middle
+
+# Data Pipelines
+
+---
+
+---
+class: middle, center
+
+&lt;img src="assets/images/magritte.jpeg" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
