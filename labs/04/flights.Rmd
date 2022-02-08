@@ -43,7 +43,7 @@ data(flights)
 
 7. How many flights left SFO during April 2020?
 
-8. Create a bar chart that shows the distribution all of the flights leaving the Bay Area (SFO and OAK). Do you any sign of an effect of the pandemic?
+8. Create a bar chart that shows the distribution by month of all the flights leaving the Bay Area (SFO and OAK). Do you any sign of an effect of the pandemic?
 
 9. Create a histogram showing the distribution of departure delays for all flights. Describe in words the shape and modality of the distribution and, using numerical summaries, (i.e. summary statistics) its center and spread. Be sure to use measures of center and spread that are most appropriate for this type of distribution. Also set the limits of the x-axis to focus on where most of the data lie.
 
@@ -117,7 +117,7 @@ Hawaiian Airlines has the least variable departure delays with an IQR of 7 minut
 
 ## Part III: Extensions
 
-17. For flights leaving SFO, which month has the highest average departure delay? What about the highest median departure delay? Which of these measures is more reliable for deciding which month(s) to avoid flying if you particularly dislike flights that are severely delayed?
+1. For flights leaving SFO, which month has the highest average departure delay? What about the highest median departure delay? Which of these measures is more reliable for deciding which month(s) to avoid flying if you particularly dislike flights that are severely delayed?
 
 ```{r}
 flights %>%
@@ -129,7 +129,7 @@ flights %>%
 Answers should be in full sentences. Median is the more useful metric since delays are heavily right skewed. They might point out that the winter months do have much higher means, suggesting the presence of high outliers.
 ```
 
-18. Each individual airplane can be uniquely identified by its tailnumber in the same way that US citizens can be by their social security numbers. Which airplane flew the farthest during this year for which we have data? How many times around the planet does that translate to?
+2. Each individual airplane can be uniquely identified by its tailnumber in the same way that US citizens can be by their social security numbers. Which airplane flew the farthest during this year for which we have data? How many times around the planet does that translate to?
 
 ```{r}
 flights %>%
@@ -141,7 +141,7 @@ flights %>%
 Students might have grabbed a different number for the denominator. It's fine if it's slightly different, but if it looks like it is in km, then its wrong because the numerator is in miles.
 ```
 
-19. What is the tailnumber of the fastest plane in the dataset? What type of plane is it (google it!)? Be sure to be clear how you're defining fastest.
+3. What is the tailnumber of the fastest plane in the dataset? What type of plane is it (google it!)? Be sure to be clear how you're defining fastest.
 
 ```{r}
 flights %>%
@@ -155,7 +155,7 @@ flights %>%
 There are several reasonable ways to define fastest, including fastest average time and fastest single flights. 
 ```
 
-20.  Using the airport nearest your hometown, which day of the week and which airline seems best for 
+4.  Using the airport nearest your hometown, which day of the week and which airline seems best for 
 flying there from San Francisco (if you're from near SFO or OAK or from abroad, use Chicago as your hometown)? Be clear on how you're defining *best*. (note that there is no explicit weekday 
 column in this data set, but there is sufficient information to piece it together. The following line of code 
 can be added to your pipeline to create that new column. It uses functions in the `lubridate` package, so be 
@@ -177,7 +177,7 @@ flights %>%
 This is the answer for Los Angeles - answers will vary. They may also come up with a different notion of "best" (here I used median departure delay) and they may do the grouping differently: decide on best first for one category, then separately for the other category.
 ```
 
-21. The plot below shows a relationship between the number of flights going out of SFO and the average departure delay. It illustrates the hypothesis that more flights on a given day would lead to a more congested airport which would lead to greater delays on average (mean is used here specifically to capture the impact of the outliers - very long delays). Each point represents single day in 2020; there are 366 of them on the plot. Please form a single chain that will create this plot, starting with the raw data set.
+5. The plot below shows a relationship between the number of flights going out of SFO and the average departure delay. It illustrates the hypothesis that more flights on a given day would lead to a more congested airport which would lead to greater delays on average (mean is used here specifically to capture the impact of the outliers - very long delays). Each point represents single day in 2020; there are 366 of them on the plot. Please form a single chain that will create this plot, starting with the raw data set.
 
 ```{r eval = TRUE, fig.align='center', fig.width=7, fig.height=4}
 flights %>%
