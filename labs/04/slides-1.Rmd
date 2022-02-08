@@ -25,6 +25,8 @@ knitr::opts_chunk$set(message = FALSE,
                       fig.retina = 3)
 
 library(tidyverse)
+library(stat20data)
+data(class_survey)
 library(xaringanthemer)
 source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
 ```
@@ -37,11 +39,24 @@ class: center, middle
 ---
 ## Agenda
 
-test line for PR
+--
 
-1. About the data
+1. Introduction to the flights dataset
+  
+--
 
-2. Part I: Understanding the Context and Structure of the Datta
+2. Part I: Understanding the Context and Structure of the Data
+    - Unit of observation, types of variables, unit of measures, patterns
+    
+--
+
+3. Review logical operators and filtering
+
+--
+
+.task[
+You will not need a laptop for the first half of this lab.
+]
 
 ---
 background-image: url(assets/images/sf-chronicle.png)
@@ -54,92 +69,165 @@ background-size: contain
 ---
 class: middle
 
-# Understanding the Context and Structure of the Data
+# Part I: Understanding the Context and Structure of the Data
 
 ---
+
+##Lab Part I
 
 1. What is the unit of observation in the data frame on the handout?
 
 2. Which variables are categorical? Which variables are numerical? Do any of the variable have ambiguous data types to you?
 
-3. What is your guess for the units/format used to record the departure time?
+3. Is there any discernible pattern to the manner in which the rows are ordered?
 
-4. What filter would you use to extract the flights that left in the springtime?
+4. What is your guess for the units/format used to record the departure time?
+
+5. What filter would you use to extract the flights that left in the springtime?
+
 
 .task[
 In pairs, please discuss the questions above.
 ]
 
 ```{r}
-countdown::countdown(5, font_size = "2em")
+countdown::countdown(6, font_size = "2em")
 ```
 
 
 ---
 class: middle
 
+# Logic operators and filtering
+
+---
+
+##Evaluating equivalence
+
+--
+
+```{r vege, echo = TRUE, eval = FALSE}
+"fruit" == "vegetable"
+```
+--
+```{r ref.label = "vege", echo = FALSE}
+```
+--
+```{r fruit, echo = TRUE, eval = FALSE}
+"fruit" == "fruit"
+```
+--
+```{r ref.label = "fruit", echo = FALSE}
+```
+--
+```{r notfruit, echo = TRUE, eval = FALSE}
+"fruit" != "fruit"
+```
+--
+```{r ref.label = "notfruit", echo = FALSE}
+```
+
+--
+
+.task[
+== evaluates equality, != evaluates inequality.
+]
+
+---
+##Evaluating equivalence, cont.
+
+--
+
+```{r fruitvege1, echo = TRUE, eval = FALSE}
+c("fruit", "fruit", "vegetable") == "fruit"
+```
+--
+```{r ref.label = "fruitvege1", echo = FALSE}
+```
+--
+
+```{r fruitvege2, echo = TRUE, eval = FALSE}
+c("fruit", "fruit", "vegetable") != "fruit"
+```
+--
+```{r ref.label = "fruitvege2", echo = FALSE}
+```
+--
+
+```{r fruitvege3, echo = TRUE, eval = FALSE}
+c("fruit", "vegetable", "boba") %in% c("fruit", "vegetable")
+```
+--
+```{r ref.label = "fruitvege3", echo = FALSE}
+```
+
+--
+.task[
+%in% can be used to evaluate membership in a set.
+]
+
+---
+
+##Filtering rows
+
+`Filtering` is the act of reducing the rows of a data frame to those that meet certain criteria.
+
+```{css, echo = FALSE}
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+```
+
+.huge[
+```
+filter(<DATAFRAME>, <LOGICAL VECTOR>)
+```
+]
+
+
+---
+
+
+class: middle
+
 # Part II: Computing with the Data
 
 ---
-## One verb commands
 
-1. **mutate()**: Mutate a new variable called avg_speed that is the average speed of the plane during the flight, measured in miles per hour. (Look through the column names or the help file to find variables that can be used to calculate this.)
+## Loading Flights Data
 
-2. **arrange()**: Arrange the data set to figure out: which flight holds the record for longest departure delay (in hrs) and what was its destination? What was the destination and delay time (in hrs) for the flight that was least delayed, i.e. that left the most ahead of schedule?
+Load the flights data from the stat20data package.
 
-3. **summarize()**: Confirm the records for departure delay from the question above by summarizing that variable by its maximum and its minimum value.
-
-```{r}
-countdown::countdown(5, font_size = "2em")
-```
-
----
-## Simple ggplots
-
-7. Create a bar chart that shows the distribution by month of all of the flights leaving the Bay Area. (Search google, the ggplot2 cheat sheet, or ask on Ed for help making the axis marks show up correctly.)
-
-8. Create a histogram showing the distribution of departure delays for all flights. Describe in words the shape and modality of the distribution and, using numerical summaries, (i.e. summary statistics) its center and spread. Be sure to use measures of center and spread that are most appropriate for this type of distribution. Also set the limits of the x-axis to focus on where most of the data lie.
-
----
-## dplyr + ggplot 
-
-9. Add a new column to your data frame called before_times that takes values of TRUE and FALSE indicating whether the flight took place up through the end of March or after April 1st, respectively. Remake the histograms above, but now separated into two subplots: one with the departure delays from the before times, the other with the flights from afterwards.
-
-Can you visually detect any difference in the distribution of departure delays?
-
----
-## Rich visualization
-
-12. Create a plot that captures the relationship of average speed vs. distance and describe the shape that you see. What phenomena related to taking flights from the Bay Area might explain this structure? Make any modifications needed to help you see all of the data.
-
----
-## Challenging reverse engineering.
-
-22. .tiny[The plot below displays the relationship between the mean arrival 
-delay and the mean distance traveled by every plane in the data set. 
-It also shows the total number of flights made by each plane by the 
-size of the plotted circle. Please form a single chain that will 
-create this plot, starting with the raw data set. You will also want 
-to exclude the edge cases from your analysis, so focus on the
-planes that have logged more than 20 flights and flown an average
-distance of less than 2000 miles.]
-
-```{r eval = TRUE, fig.align='center', fig.width=9, fig.height=5.5}
-library(tidyverse)
+```{r echo = TRUE}
 library(stat20data)
 data(flights)
-flights %>%
-  group_by(tailnum) %>%
-  summarize(avg_delay = mean(arr_delay, na.rm = TRUE),
-            avg_dist = mean(distance, na.rm = TRUE),
-            n = n()) %>%
-  filter(n > 20,
-         n < 500,
-         avg_dist < 2000) %>%
-  ggplot(aes(x = avg_dist, y = avg_delay)) + 
-  geom_point(alpha = .1, aes(size = n)) +
-  labs(x = "average distance", 
-       y = "average delay",
-       size = "number of flights") +
-  theme_gray(base_size = 16)
 ```
+
+---
+
+## One verb commands
+
+
+1. **filter()**: Filter the data set to contain only the flights that went to Portland, Oregon and print the first few rows of the data frame. How many were there in 2020?
+
+2. **mutate()**: Mutate a new variable called `avg_speed` that is the average speed of the plane during the flight, measured in miles per hour. (Look through the column names or the help file to find variables that can be used to calculate this.)
+
+
+
+```{r}
+countdown::countdown(3, font_size = "2em")
+```
+
+---
+
+## One verb commands
+
+3. **arrange()**: Arrange the data set to figure out: which flight holds the record for longest departure delay (in hrs) and what was its destination? What was the destination and delay time (in hrs) for the flight that was least delayed, i.e. that left the most ahead of schedule?
+
+4. **summarize()**: Confirm the records for departure delay from the question above by summarizing that variable by its maximum and its minimum value.
+
+
+```{r}
+countdown::countdown(3,font_size = "2em")
+```
+
