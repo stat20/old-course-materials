@@ -1,0 +1,23 @@
+---
+title: "Demo"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(stat20data)
+data(class_survey)
+
+filter(class_survey, 
+       coding_exp_scale < 3,
+       olympics %in% c("Ice skating", "Speed skating"),
+       business != "No") %>%
+  select(coding_exp_scale,
+         olympics,
+         business,
+         covid_fall) %>%
+  summarize(covid_avg = mean(covid_fall))
+
+
+```
+

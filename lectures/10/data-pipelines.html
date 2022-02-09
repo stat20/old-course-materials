@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Pipelines</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link href="assets/libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="assets/libs/countdown-0.3.5/countdown.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+&lt;img src="assets/images/stat20-hex.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+# Data Pipelines
+## Stat 20 UC Berkeley
+
+
+---
+## Announcements
+--
+
+1. Asking and answering questions on Ed.
+
+
+---
+
+&lt;img src="assets/images/ed-tech.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://giphy.com/embed/fdLR6LGwAiVNhGQNvf" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+
+---
+## Good Practices for Ed
+
+.pull-left[
+**Asking**
+
+- Search forum before posting
+- Use public posts
+- Attach posts to existing threads
+- Provide the full context of your issue
+- Posting code snippets 👍
+- Posting full answers 👎
+- Be kind, be respectful, be professional
+]
+
+.pull-right[
+**Answering**
+
+- No need to wait for staff!
+- Reply with suggestion, answer, or sympathy
+- Posting code snippets 👍
+- Posting full answers 👎
+- Be kind, be respectful, be professional
+]
+
+---
+## Announcements
+
+1. Asking and answering questions on Ed.
+
+--
+
+2. Tutorials
+
+
+---
+
+&lt;img src="assets/images/madison.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="assets/images/jeremy.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Announcements
+
+1. Asking and answering questions on Ed.
+
+2. Tutorials
+
+--
+
+3. Quiz 1 Again
+  - 11 am Thursday - 11 am Friday
+
+--
+
+4. My Office Hours
+  - 3-4 pm Evans 415
+  
+
+---
+## Agenda
+--
+
+1. Filtering review
+
+--
+
+2. Building data pipelines
+
+--
+
+3. Aggregating subsets
+
+
+---
+class: middle
+
+# Filtering Review
+
+
+---
+
+&gt; As London emerged from a COVID lockdown in summer 2020, city officials were eager to encourage ridership on the Underground (the subway) by reassuring the public that it would not be crowded or unsafe. They advertized that, "each train car has a average of only 120 riders".
+
+&gt; Imagine you are a commuter in London and decide to try returning to using the train for your commute. You find that every time you ride, your train car is packed with far more than 120 riders.
+
+&gt; How can you explain this apparent paradox?
+
+.task[
+Discuss with your neighbor and try to come up with at least two possible explanations.
+]
+
+<div class="countdown" id="timer_62044405" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+
+
+---
+
+---
+## Filtering Review
+--
+
+**Filtering** is the act of reducing the rows of a data frame to those that meet certain criteria.
+
+--
+
+
+
+
+```r
+class_survey &lt;- mutate(class_survey, 
+                      first_year = time_at_cal == "It is my first year.")
+first_year_df &lt;- filter(class_survey, first_year)
+```
+
+is equivalent to
+
+
+```r
+first_year_df &lt;- filter(class_survey, time_at_cal == "It is my first year.")
+```
+
+
+---
+## Comparison Operators
+--
+
+There are many comparisons that can be made for (usually) categorical data (`==`, `!=`, `%in%`) and for numerical data (`&lt;`, `&lt;=`, `&gt;`, `&gt;=`).
+
+&lt;img src="assets/images/comparison-operators.png" width="696" style="display: block; margin: auto;" /&gt;
+
+
+---
+Which observations will be included in the following data frame?
+
+
+```r
+filter(class_survey, 
+       coding_exp_scale &lt; 3,
+       olympics %in% c("Ice skating", "Speed skating"),
+       business != "No")
+```
+
+.task[
+Please respond at `pollev.com/stat20`.
+]
+
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/28lvboIzDDmDYiWoxjff1?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;&lt;/center&gt;
+
+---
+
+
+```r
+filter(class_survey, 
+       coding_exp_scale &lt; 3,
+       olympics %in% c("Ice skating", "Speed skating"),
+       business != "No")
+```
+
+```
+## # A tibble: 75 × 27
+##    time_at_cal  major  coding_exp_words coding_exp_scale languages favorite_cal 
+##    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;        
+##  1 I'm in my f… Busin… None.                           1 &lt;NA&gt;      weather      
+##  2 I'm in my s… Molec… None.                           1 &lt;NA&gt;      The lively d…
+##  3 I'm in my f… Inten… None.                           2 &lt;NA&gt;      So far most …
+##  4 I'm in my s… Busin… Very little. I'…                2 R         The nature a…
+##  5 I'm in my f… econo… Very little. I'…                2 Java      the weather  
+##  6 I'm in my s… Busin… None.                           1 &lt;NA&gt;      Brilliant pr…
+##  7 I'm in my f… busin… None.                           1 &lt;NA&gt;      new opportun…
+##  8 I'm in my s… Busin… None.                           1 &lt;NA&gt;      The work har…
+##  9 I'm in my f… Appli… None.                           1 &lt;NA&gt;      It's cultura…
+## 10 I'm in my s… Busin… None.                           1 &lt;NA&gt;      the people   
+## # … with 65 more rows, and 21 more variables: piercings &lt;chr&gt;,
+## #   pets_and_sibs &lt;chr&gt;, diet &lt;chr&gt;, study_place &lt;chr&gt;, olympics &lt;chr&gt;,
+## #   season &lt;chr&gt;, mts_beach &lt;chr&gt;, coffee_tea &lt;chr&gt;, boba &lt;chr&gt;,
+## #   tech_relationships &lt;dbl&gt;, climate &lt;dbl&gt;, crypto &lt;dbl&gt;, more_remote &lt;dbl&gt;,
+## #   remote_sem &lt;dbl&gt;, covid_fall &lt;dbl&gt;, hotdogs &lt;chr&gt;, horse_duck &lt;chr&gt;,
+## #   health &lt;chr&gt;, tech &lt;chr&gt;, business &lt;chr&gt;, first_year &lt;lgl&gt;
+```
+
+
+---
+
+
+```r
+select(filter(class_survey, 
+              coding_exp_scale &lt; 3,
+              olympics %in% c("Ice skating", "Speed skating"),
+              business != "No"), 
+       coding_exp_scale,
+       olympics,
+       business,
+       covid_fall)
+```
+
+```
+## # A tibble: 75 × 4
+##    coding_exp_scale olympics      business covid_fall
+##               &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         &lt;dbl&gt;
+##  1                1 Ice skating   Yes            1   
+##  2                1 Ice skating   Yes            0.75
+##  3                2 Ice skating   Yes            0.5 
+##  4                2 Ice skating   Yes            0.9 
+##  5                2 Ice skating   Yes            0.5 
+##  6                1 Ice skating   Yes            0.2 
+##  7                1 Ice skating   Yes            0.05
+##  8                1 Ice skating   Yes            0.8 
+##  9                1 Ice skating   Yes            0   
+## 10                1 Speed skating Yes            0.75
+## # … with 65 more rows
+```
+
+
+---
+
+
+```r
+summarize(select(filter(class_survey, 
+                        coding_exp_scale &lt; 3,
+                        olympics %in% c("Ice skating", "Speed skating"),
+                        business != "No"), 
+                 coding_exp_scale,
+                 olympics,
+                 business,
+                 covid_fall),
+          covid_avg = mean(covid_fall))
+```
+
+```
+## # A tibble: 1 × 1
+##   covid_avg
+##       &lt;dbl&gt;
+## 1     0.584
+```
+
+
+---
+class: middle
+
+# Building data pipelines
+
+
+---
+
+---
+## Data Pipelines
+--
+
+Most claims about data start with a *raw* data set, undergo many subsetting, aggregating, and cleaning operations, then return a *data product*.
+
+&lt;img src="assets/images/pipeline-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&gt; Let's look at three equivalent ways to build a pipeline
+
+
+---
+## Nesting
+--
+
+
+```r
+summarize(select(filter(class_survey, 
+                        coding_exp_scale &lt; 3,
+                        olympics %in% c("Ice skating", "Speed skating"),
+                        business != "No"), 
+                 coding_exp_scale,
+                 olympics,
+                 business,
+                 covid_fall),
+          covid_avg = mean(covid_fall))
+```
+
+--
+
+.pull-left[
+**Cons**
+- Must be read from inside out 👎 
+- Hard to keep track of arguments 👎 
+]
+
+--
+
+.pull-right[
+**Pros**
+- All in one line of code 👍
+- Only refer to one data frame 👍
+]
+
+---
+## Step-by-step
+--
+
+
+```r
+df1 &lt;- filter(class_survey, 
+              coding_exp_scale &lt; 3,
+              olympics %in% c("Ice skating", "Speed skating"),
+              business != "No")
+df2 &lt;- select(df1, coding_exp_scale,
+              olympics,
+              business,
+              covid_fall)
+summarize(df2,
+          covid_avg = mean(covid_fall))
+```
+
+--
+
+.pull-left[
+**Cons**
+- Have to repeat data frame names 👎 
+- Creates unnecessary objects 👎 
+]
+
+--
+
+.pull-right[
+**Pros**
+- Stores intermediate objects 👍
+- Can be read top to bottom 👍
+]
+
+
+---
+## Using the pipe operator
+
+Inside the tidyverse is the **pipe operator**, `%&gt;%`, which takes the output of the preceding expression and inserts it as the first argument in the subsequent function.
+
+&lt;style type="text/css"&gt;
+.huge .remark-code { /*Change made here*/
+  font-size: 150% !important;
+}
+&lt;/style&gt;
+
+.center[.huge[
+```
+f1(&lt;DF&gt;) %&gt;% f2()
+```
+]]
+
+&gt; Add a line break after the pipe to increase readability.
+
+--
+
+
+```r
+filter(class_survey, coding_exp_scale &lt; 3) %&gt;%
+  summarize(mean(covid_fall))
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(covid_fall)`
+##                &lt;dbl&gt;
+## 1              0.524
+```
+
+
+---
+class: middle, center
+
+demo
+
+
+---
+
+&lt;img src="assets/images/pipeline-2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Using the pipe operator
+--
+
+
+```r
+class_survey %&gt;%
+  filter(coding_exp_scale &lt; 3,
+         olympics %in% c("Ice skating", "Speed skating"),
+         business != "No") %&gt;%
+  select(coding_exp_scale,
+         olympics,
+         business,
+         covid_fall) %&gt;%
+  summarize(covid_avg = mean(covid_fall))
+```
+
+--
+
+.pull-left[
+**Cons**
+- 🤷 
+]
+
+--
+
+.pull-right[
+**Pros**
+- Can be read like an english paragraph 👍
+- Only type the data once 👍
+- No leftovers objects 👍
+]
+
+
+---
+## Understanding your pipeline
+--
+
+It's good practice to understand the output of each line of code by *breaking the pipe*.
+
+--
+
+.pull-left[
+**Example**  
+What's the error here?
+
+
+```r
+class_survey %&gt;%
+  select(covid_fall) %&gt;%
+  filter(time_at_cal == "It's my first year.")
+```
+
+```
+## Error: Problem with `filter()` input `..1`.
+## ℹ Input `..1` is `time_at_cal == "It's my first year."`.
+## x object 'time_at_cal' not found
+```
+]
+
+--
+
+.pull-right[
+Break the pipe after `select()`
+
+
+```r
+class_survey %&gt;%
+  select(covid_fall)
+```
+
+```
+## # A tibble: 552 × 1
+##    covid_fall
+##         &lt;dbl&gt;
+##  1        0.6
+##  2        0.5
+##  3        0.5
+##  4        0.3
+##  5        0.3
+##  6        0.7
+##  7        1  
+##  8        0.3
+##  9        0.8
+## 10        0.6
+## # … with 542 more rows
+```
+]
+
+
+---
+
+
+```r
+*class_survey %&gt;% # A
+  filter(coding_exp_scale &lt; 3,
+         olympics %in% c("Ice skating", 
+                         "Speed skating"),
+*        business != "No") %&gt;% # B
+  select(coding_exp_scale,
+         olympics,
+         business,
+*        covid_fall) %&gt;% # C
+* summarize(covid_avg = mean(covid_fall)) # D
+```
+
+.task[
+What are the dimensions (rows x columns) of the data frames output at each stage of this pipe?
+]
+
+<div class="countdown" id="timer_620443c2" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/Gf9G67sH10mc7BvtSe4ql?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+
+---
+## Aside
+--
+
+.pull-left[
+The `tidyverse` package loads other useful packages.
+
+- `ggplot2` for graphics
+- `dplyr` for subsetting and aggregation
+]
+
+--
+
+.pull-right[
+&lt;img src="assets/images/hexes-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+## Aside
+
+.pull-left[
+The `tidyverse` package loads other useful packages.
+
+- `ggplot2` for graphics
+- `dplyr` for subsetting and aggregation
+- `magrittr` for the pipe operator
+]
+
+.pull-right[
+&lt;img src="assets/images/hexes-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Aside
+
+.pull-left[
+The `tidyverse` package loads other useful packages.
+
+- `ggplot2` for graphics
+- `dplyr` for subsetting and aggregation
+- `magrittr` for the pipe operator
+]
+
+.pull-right[
+&lt;img src="assets/images/hexes-2.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+&lt;img src="assets/images/magritte.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+# Group-wise Aggregation
+
+---
+## Operating on Subgroups
+--
+
+To analyze first-year and non-first-year students separately, we could `filter()` based on a logical vector, then create an analysis pipeline for each one separately.
+
+--
+
+.pull-left[
+
+```r
+first_year_df &lt;- class_survey %&gt;%
+  filter(time_at_cal == "I'm in my first year.")
+first_year_df %&gt;%
+  summarize(mean(coding_exp_scale,
+                 na.rm = T))
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(coding_exp_scale, na.rm = T)`
+##                                 &lt;dbl&gt;
+## 1                                3.21
+```
+]
+
+--
+
+.pull-right[
+
+```r
+non_first_year_df &lt;- class_survey %&gt;%
+  filter(time_at_cal != "I'm in my first year.")
+non_first_year_df %&gt;%
+  summarize(mean(coding_exp_scale,
+                 na.rm = T))
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(coding_exp_scale, na.rm = T)`
+##                                 &lt;dbl&gt;
+## 1                                3.23
+```
+]
+
+--
+
+&gt; Can we combine this into one pipeline?
+
+
+---
+## Grouped operations
+--
+
+You can flag a data frame as containing subsets using `group_by()`.
+
+.center[.huge[
+```
+group_by(&lt;GROUPING_VAR1&gt;)
+```
+]]
+
+--
+
+- Subsequent mutations and summaries will be done on each group separately then recombined.
+- Allows multiple grouping variables 
+
+
+---
+## Groupwise Operations
+--
+
+
+```r
+class_survey %&gt;%
+* group_by(time_at_cal) %&gt;%
+  summarize(avg_coding = mean(coding_exp_scale,
+                              na.rm = T))
+```
+
+--
+
+
+```
+## # A tibble: 6 × 2
+##   time_at_cal                avg_coding
+##   &lt;chr&gt;                           &lt;dbl&gt;
+## 1 I'm in my first year.            3.21
+## 2 I'm in my fourth year.           3.85
+## 3 I'm in my second year.           3.02
+## 4 I'm in my third year.            4.23
+## 5 More than 4 years.               4   
+## 6 This is my first semester!       3.31
+```
+
+--
+
+&gt; `group_by() + summarize()` results in a data frame with one group in every row and one statistic in every column.
+
+
+---
+
+
+```r
+library(palmerpenguins)
+data(penguins)
+penguins %&gt;%
+  group_by(species) %&gt;%
+  drop_na(bill_length_mm) %&gt;%
+  summarize(avg_length = mean(bill_length_mm))
+```
+
+.task[
+What will the dimensions of the resulting data frame be?
+]
+
+---
+class: middle
+
+&lt;center&gt;
+&lt;iframe src="https://embed.polleverywhere.com/multiple_choice_polls/9K93vfYYjTF0NingoINyD?controls=none&amp;short_poll=true" width="800px" height="600px"&gt;&lt;/iframe&gt;
+&lt;/center&gt;
+
+
+---
+
+
+```r
+library(palmerpenguins)
+data(penguins)
+penguins %&gt;%
+  group_by(species) %&gt;%
+  drop_na(bill_length_mm) %&gt;%
+  summarize( avg_length = mean(bill_length_mm))
+```
+
+```
+## # A tibble: 3 × 2
+##   species   avg_length
+##   &lt;fct&gt;          &lt;dbl&gt;
+## 1 Adelie          38.8
+## 2 Chinstrap       48.8
+## 3 Gentoo          47.5
+```
+
+
+---
+## Multiple grouping variables
+--
+
+&gt; What are the dimensions of the resulting data frame?
+
+
+```r
+penguins %&gt;%
+* group_by(species, island) %&gt;%
+  drop_na(bill_length_mm) %&gt;%
+  summarize( avg_length = mean(bill_length_mm))
+```
+
+--
+
+
+```
+## # A tibble: 5 × 3
+## # Groups:   species [3]
+##   species   island    avg_length
+##   &lt;fct&gt;     &lt;fct&gt;          &lt;dbl&gt;
+## 1 Adelie    Biscoe          39.0
+## 2 Adelie    Dream           38.5
+## 3 Adelie    Torgersen       39.0
+## 4 Chinstrap Dream           48.8
+## 5 Gentoo    Biscoe          47.5
+```
+
+
+
+
+---
+## Looking forward
+--
+
+.pull-left[
+- Practice, practice, practice
+
+  - Labs Thurs, next Tues
+  - Evening Study Session Thurs, Mon
+  - Office Hours
+
+- Lab 4 / PS 4 due **Wednesday 10 pm**
+
+]
+
+--
+
+.pull-right[
+&lt;iframe src="https://i.makeagif.com/media/10-06-2016/btmRJ5.gif" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;/center&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
