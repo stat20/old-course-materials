@@ -19,13 +19,17 @@ sched_raw <- read_csv("schedule.csv")
 # Clean the data frame
 sched <- sched_raw %>%
   replace_na(list("Week" = " ")) %>% # Make empty fields empty
-  slice(1:9)
+  slice(1:16)
 
 # Replace some values with html links
 # TODO: automate the stripping of empty links using
 # `Weekly Work` = if_else(grepl("<a href=\"NA", `Weekly Work`))
 sched <- sched %>%
-  mutate(`Reading` = cell_spec(`Reading`,
+  mutate(`Topic` = cell_spec(`Topic`,
+                                   "html",
+                                   link = `Topic Link`,
+                                   new_tab = FALSE),
+         `Reading` = cell_spec(`Reading`,
                            "html",
                            link = `Reading Link`,
                            new_tab = TRUE),
@@ -38,7 +42,7 @@ sched <- sched %>%
 # Create html table
 sched %>%
   kbl(escape = FALSE) %>%
-  kable_styling(bootstrap_options = c("hover"))
+  kable_styling(bootstrap_options = c("hover", "striped"))
 
 
 # sched %>%
