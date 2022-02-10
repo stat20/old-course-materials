@@ -26,6 +26,8 @@ knitr::opts_chunk$set(message = FALSE,
 
 library(tidyverse)
 library(xaringanthemer)
+library(stat20data)
+data(flights)
 source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
 ```
 
@@ -40,14 +42,65 @@ class: center, middle
 
 --
 
-1. Review group_by()  and summarize()
+1. Review data pipelines
 
 --
 
-2. Flights data with ggplot
+2. Review group_by()  and summarize()
+
+--
+
+3. Flights data with ggplot
 
 ---
+class: middle
 
+# Data Pipelines
+
+---
+## The Pipe Operator
+Using the `%>%` from `tidyverse` helps break data frame manipulations into successive steps.
+
+--
+
+Consider counting the total number of flights between the Bay Area and LAX.
+
+--
+
+```{r eval = FALSE, echo = TRUE}
+summarise(filter(flights,dest=="LAX"),count=n())
+```
+
+--
+
+```{r eval = TRUE, echo = TRUE}
+flights %>% 
+  filter(dest=="LAX") %>%
+  summarise(count=n())
+```
+
+---
+## Some Considerations
+Note that we do not have to pass the data frame's name as an argument to functions within a pipe.
+
+--
+
+Using `%>%` makes a copy of the original data frame. You have to save your manipulated data frame to use it again later.
+
+```{r eval = FALSE, echo = TRUE}
+# Not Saved
+flights %>%
+  summarise(count = n())
+
+# Saved
+total_flights <- flights %>%
+  summarise(count = n())
+```
+
+--
+It is often necessary to manipulate your data frame in a specific way to generate the plot you envision. Saving copies prevents confusion and therefore bugs.
+
+---
 
 class: middle
 
@@ -57,13 +110,11 @@ class: middle
 
 ## Flights by month
 
-Describe the steps to create the following summary from the flights data. Specify the functions and variables.
+Combined with the pipeline, `group_by()` and `summarize()` provide a good way for summary statistics.
 
 --
 
-```{r}
-library(stat20data)
-data(flights)
+```{r eval=TRUE,  echo=TRUE}
 flights %>%
   group_by(month) %>%
   summarise('Number of Flights' = n())
@@ -71,14 +122,68 @@ flights %>%
 
 ---
 
-class: middle
+## Comparison Operators
+--
+
+There are many comparisons that can be made for (usually) categorical data (`==`, `!=`, `%in%`) and for numerical data (`<`, `<=`, `>`, `>=`).
+
+```{r echo = FALSE}
+knitr::include_graphics("assets/images/comparison-operators.png")
+```
+
+---
+
+## Logical Vectors
+--
+
+Multiple logical constraints can be placed on your variables in the `filter()` function.
+
+--
+
+Logical statements should be enclosed within parentheses and joined with `&` (AND) or `|` (OR)
+
+--
+
+Selecting flights to Boston:
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter((dest=="BOS"))
+```
+
+--
+
+Selecting flights from SFO to Boston:
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter(((origin=="SFO") & (dest=="BOS")))
+```
+
+---
+## Logical Vectors (continued)
+
+Selecting flights from SFO to Boston or Philadelphia:
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter(((origin=="SFO") & ((dest=="BOS")|(dest=="PHL"))))
+```
+
+--
+
+Alternatively:
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter(((origin=="SFO") & (dest %in% c("BOS","PHL"))))
+```
+
+Which do you prefer?
+---
 
 # Part II: Computing with the Data - continued
 
 ---
 ## Summarize the data
 
-16. Create a data frame that contains the median and interquartile range for departure delays, grouped by carrier. Which carrier has the lowest typical departure delay? Which one has the least variable departure delays?
+14. Create a data frame that contains the median and interquartile range for departure delays, grouped by carrier. Which carrier has the lowest typical departure delay? Which one has the least variable departure delays?
 
 ---
 ## Simple ggplots
