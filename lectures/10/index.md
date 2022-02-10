@@ -3,8 +3,8 @@ title: "Lecture 10: Data Pipelines"
 subtitle: "Creating data products with readable and robust code"
 summary: "Creating data products with readable and robust code."
 layout: single
-publishdate: "2022-01-25" # when the page will be renderable
-date: "2022-01-25"        # when the lecture was given
+publishdate: "2022-02-09" # when the page will be renderable
+date: "2022-02-09"        # when the lecture was given
 show_post_date: false
 featured: true
 links:
