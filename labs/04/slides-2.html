@@ -51,7 +51,7 @@ Consider counting the total number of flights between the Bay Area and LAX.
 
 
 ```r
-summarise(filter(flights,dest=="LAX"),count=n())
+summarise(filter(flights,dest == "LAX"), count = n())
 ```
 
 --
@@ -59,8 +59,8 @@ summarise(filter(flights,dest=="LAX"),count=n())
 
 ```r
 flights %&gt;% 
-  filter(dest=="LAX") %&gt;%
-  summarise(count=n())
+  filter(dest == "LAX") %&gt;%
+  summarise(count = n())
 ```
 
 ```
@@ -70,27 +70,6 @@ flights %&gt;%
 ## 1 11164
 ```
 
----
-## Some Considerations
-Note that we do not have to pass the data frame's name as an argument to functions within a pipe.
-
---
-
-Using `%&gt;%` makes a copy of the original data frame. You have to save your manipulated data frame to use it again later.
-
-
-```r
-# Not Saved
-flights %&gt;%
-  summarise(count = n())
-
-# Saved
-total_flights &lt;- flights %&gt;%
-  summarise(count = n())
-```
-
---
-It is often necessary to manipulate your data frame in a specific way to generate the plot you envision. Saving copies prevents confusion and therefore bugs.
 
 ---
 
@@ -110,25 +89,25 @@ Combined with the pipeline, `group_by()` and `summarize()` provide a good way fo
 ```r
 flights %&gt;%
   group_by(month) %&gt;%
-  summarise('Number of Flights' = n())
+  summarise(n = n())
 ```
 
 ```
 ## # A tibble: 12 × 2
-##    month `Number of Flights`
-##    &lt;dbl&gt;               &lt;int&gt;
-##  1     1               17780
-##  2     2               16748
-##  3     3               18415
-##  4     4                7224
-##  5     5                4399
-##  6     6                5756
-##  7     7                8697
-##  8     8                8815
-##  9     9                7786
-## 10    10                8257
-## 11    11                8296
-## 12    12                8432
+##    month     n
+##    &lt;dbl&gt; &lt;int&gt;
+##  1     1 17780
+##  2     2 16748
+##  3     3 18415
+##  4     4  7224
+##  5     5  4399
+##  6     6  5756
+##  7     7  8697
+##  8     8  8815
+##  9     9  7786
+## 10    10  8257
+## 11    11  8296
+## 12    12  8432
 ```
 
 ---
@@ -138,7 +117,7 @@ flights %&gt;%
 
 There are many comparisons that can be made for (usually) categorical data (`==`, `!=`, `%in%`) and for numerical data (`&lt;`, `&lt;=`, `&gt;`, `&gt;=`).
 
-&lt;img src="assets/images/comparison-operators.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="assets/images/comparison-operators.png" width="696" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -149,24 +128,22 @@ Multiple logical constraints can be placed on your variables in the `filter()` f
 
 --
 
-Logical statements should be enclosed within parentheses and joined with `&amp;` (AND) or `|` (OR)
-
---
-
 Selecting flights to Boston:
 
 ```r
 flights %&gt;%
-  filter((dest=="BOS"))
+  filter(dest == "BOS")
 ```
 
 --
 
 Selecting flights from SFO to Boston:
 
+
 ```r
 flights %&gt;%
-  filter(((origin=="SFO") &amp; (dest=="BOS")))
+  filter(origin == "SFO",
+         dest == "BOS")
 ```
 
 ---
@@ -174,21 +151,14 @@ flights %&gt;%
 
 Selecting flights from SFO to Boston or Philadelphia:
 
-```r
-flights %&gt;%
-  filter(((origin=="SFO") &amp; ((dest=="BOS")|(dest=="PHL"))))
-```
-
---
-
-Alternatively:
 
 ```r
 flights %&gt;%
-  filter(((origin=="SFO") &amp; (dest %in% c("BOS","PHL"))))
+  filter(origin == "SFO",
+         dest %in% c("BOS", "PHL"))
 ```
 
-Which do you prefer?
+
 ---
 
 # Part II: Computing with the Data - continued
@@ -211,7 +181,37 @@ Which do you prefer?
 9. Add a new column to your data frame called before_times that takes values of TRUE and FALSE indicating whether the flight took place up through the end of March or after April 1st, respectively. Remake the histograms above, but now separated into two subplots: one with the departure delays from the before times, the other with the flights from afterwards. Can you visually detect any difference in the distribution of departure delays?
 
 
+---
+class:
 
+# Appendix
+
+---
+## Logical Vectors
+
+
+Logical statements can also be joined together joined with `&amp;` (AND) or `|` (OR).
+
+--
+
+Selecting flights from SFO to Boston or Philadelphia:
+
+
+```r
+flights %&gt;%
+  filter(origin == "SFO",
+         dest %in% c("BOS","PHL"))
+```
+
+--
+
+Alternatively:
+
+
+```r
+flights %&gt;%
+  filter(((origin == "SFO") &amp; ((dest == "BOS") | (dest == "PHL"))))
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -68,37 +68,17 @@ Consider counting the total number of flights between the Bay Area and LAX.
 --
 
 ```{r eval = FALSE, echo = TRUE}
-summarise(filter(flights,dest=="LAX"),count=n())
+summarise(filter(flights,dest == "LAX"), count = n())
 ```
 
 --
 
 ```{r eval = TRUE, echo = TRUE}
 flights %>% 
-  filter(dest=="LAX") %>%
-  summarise(count=n())
-```
-
----
-## Some Considerations
-Note that we do not have to pass the data frame's name as an argument to functions within a pipe.
-
---
-
-Using `%>%` makes a copy of the original data frame. You have to save your manipulated data frame to use it again later.
-
-```{r eval = FALSE, echo = TRUE}
-# Not Saved
-flights %>%
-  summarise(count = n())
-
-# Saved
-total_flights <- flights %>%
+  filter(dest == "LAX") %>%
   summarise(count = n())
 ```
 
---
-It is often necessary to manipulate your data frame in a specific way to generate the plot you envision. Saving copies prevents confusion and therefore bugs.
 
 ---
 
@@ -117,7 +97,7 @@ Combined with the pipeline, `group_by()` and `summarize()` provide a good way fo
 ```{r eval=TRUE,  echo=TRUE}
 flights %>%
   group_by(month) %>%
-  summarise('Number of Flights' = n())
+  summarise(n = n())
 ```
 
 ---
@@ -140,42 +120,34 @@ Multiple logical constraints can be placed on your variables in the `filter()` f
 
 --
 
-Logical statements should be enclosed within parentheses and joined with `&` (AND) or `|` (OR)
-
---
-
 Selecting flights to Boston:
 ```{r eval = FALSE, echo = TRUE}
 flights %>%
-  filter((dest=="BOS"))
+  filter(dest == "BOS")
 ```
 
 --
 
 Selecting flights from SFO to Boston:
+
 ```{r eval = FALSE, echo = TRUE}
 flights %>%
-  filter(((origin=="SFO") & (dest=="BOS")))
+  filter(origin == "SFO",
+         dest == "BOS")
 ```
 
 ---
 ## Logical Vectors (continued)
 
 Selecting flights from SFO to Boston or Philadelphia:
+
 ```{r eval = FALSE, echo = TRUE}
 flights %>%
-  filter(((origin=="SFO") & ((dest=="BOS")|(dest=="PHL"))))
+  filter(origin == "SFO",
+         dest %in% c("BOS", "PHL"))
 ```
 
---
 
-Alternatively:
-```{r eval = FALSE, echo = TRUE}
-flights %>%
-  filter(((origin=="SFO") & (dest %in% c("BOS","PHL"))))
-```
-
-Which do you prefer?
 ---
 
 # Part II: Computing with the Data - continued
@@ -198,4 +170,32 @@ Which do you prefer?
 9. Add a new column to your data frame called before_times that takes values of TRUE and FALSE indicating whether the flight took place up through the end of March or after April 1st, respectively. Remake the histograms above, but now separated into two subplots: one with the departure delays from the before times, the other with the flights from afterwards. Can you visually detect any difference in the distribution of departure delays?
 
 
+---
+class:
 
+# Appendix
+
+---
+## Logical Vectors
+
+
+Logical statements can also be joined together joined with `&` (AND) or `|` (OR).
+
+--
+
+Selecting flights from SFO to Boston or Philadelphia:
+
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter(origin == "SFO",
+         dest %in% c("BOS","PHL"))
+```
+
+--
+
+Alternatively:
+
+```{r eval = FALSE, echo = TRUE}
+flights %>%
+  filter(((origin == "SFO") & ((dest == "BOS") | (dest == "PHL"))))
+```
