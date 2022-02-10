@@ -1,0 +1,21 @@
+---
+title: "PS 4"
+subtitle: "Stat 20 UC Berkeley"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE)
+```
+
+The practice for this week comes in the form of an interactive tutorial:
+
+[**Describing Data with Numerical Summaries and Graphics**](https://openintro.shinyapps.io/ims-02-explore-03/)  
+[https://openintro.shinyapps.io/ims-02-explore-03/](https://openintro.shinyapps.io/ims-02-explore-03/)
+
+There is nothing to submit for this problem set but please attest that you have worked through the tutorial on Gradescope.

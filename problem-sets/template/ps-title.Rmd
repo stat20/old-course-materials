@@ -1,5 +1,6 @@
 ---
 title: "PS X"
+subtitle: "Stat 20 UC Berkeley"
 output:
   pdf_document: default
   html_document:
