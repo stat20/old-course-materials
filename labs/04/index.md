@@ -19,6 +19,10 @@ links:
   icon_pack: fas
   name: Slides I
   url: https://stat20.org/labs/04/slides-1.html
+- icon: images
+  icon_pack: fas
+  name: Slides II
+  url: https://stat20.org/labs/04/slides-2.html
 ---
 
 The `stat20data` package contains a data set called `flights` that contains *all* of the flights that left from San Francisco International Airport and Oakland International Airports between January 1st and December 31st 2020. You will use this rich data set to learn essential skills of data subsetting and aggregation, here using the `dplyr` package in the `tidyverse`.
