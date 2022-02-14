@@ -1,0 +1,208 @@
+---
+title: "Making Generalizations"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: hex-background.png
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1. Lab 4 / PS 4 due Wednesday 10 pm
+
+2. My office hours: 12 - 1 pm today in Evans 415
+
+3. Lost iPad? Go to Stats Dept Office 3rd floor Evans
+
+
+## Agenda
+
+1. Making Generalizations
+
+2. Example 1: Sampling the Class
+
+3. Example 2: Spinning the Globe
+
+
+--- 
+
+## {background-image="/images/student-plot1.png" background-size="contain"}
+
+
+## {background-image="/images/student-plot2.png" background-size="contain"}
+
+
+## {background-image="/images/claims.jpg" background-size="contain"}
+
+
+## {background-image="/images/sheep.gif" background-size="contain"}
+
+
+## {background-image="/images/sports-car.webp" background-size="contain"}
+
+
+---
+
+Example 1
+
+---
+
+
+## How can generalizations be wrong?
+
+They can be based on small samples of data that may not be representative of the more general phenomenon
+
+1. due to chance. This is called **sampling variability**, the variability in the data from one sample to the next.
+
+2. due to a systematic **bias**, wherein *all* samples of data are persistently non-representative.
+
+
+## Terminology around sets
+
+1. **Population**: the full group of observational units upon which you wish to make a claim. Population size: $N$.
+
+2. **Sample**: the set of observational units and accompanying data that you have observed. Sample size: $n$. $(n \le N)$
+
+3. **Census**: a sample of data that encompasses the whole population. $n = N$.
+
+4. **Anecdote**: a sample of size 1. $n = 1$.
+
+---
+
+Example 2
+
+
+---
+
+::: {.poll}
+What proportion of the Earth's surface is covered with water?
+:::
+
+```{r}
+countdown::countdown(0, 20, font_size = "2em")
+```
+
+
+---
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/MLt2wFluiZ6SGE5PAglwq?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+---
+
+---
+
+## Probability distributions
+
+A **probability distribution** of a discrete (random) data generating process encompasses all possible outcomes of a variable along with their respective probabilities.
+
+They can be expressed as tables or bar charts.
+
+**Properties**
+
+1. The outcomes must be disjoint (mutually exclusive).
+2. Each probability must be between 0 and 1.
+3. The probabilities must sum to 1.
+
+
+## Ex. of probability distributions
+
+:::: {.columns}
+::: {.column width="33%"}
+```{r fig.height=12}
+library(tidyverse)
+tibble(surface = c("Land", "Water"),
+       p = c(.29, .71)) %>%
+  ggplot(aes(x = surface,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Surface",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="33%"}
+```{r fig.height=12}
+library(stat20data)
+data(class_survey)
+class_survey %>%
+  mutate(year_at_cal = case_when(
+    time_at_cal %in% c("This is my first semester!", "I'm in my first year.") ~ 1,
+    time_at_cal == "I'm in my second year." ~ 2,
+    time_at_cal == "I'm in my third year." ~ 3,
+    time_at_cal == "I'm in my fourth year." ~ 4,
+    time_at_cal == "More than 4 years." ~ 5
+  )) %>%
+  count(year_at_cal) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = year_at_cal,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Years at Cal",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="33%"}
+```{r fig.height=12}
+class_survey  %>%
+  drop_na(season) %>%
+  count(season) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = season,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Season",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+::::
+
+> Note: These are not distributions of *data*, but descriptions of the process that generates data.
+
+
+---
+
+### Generalization:
+
+A description of the **process that generated** the data.
+
+
+## Questions we seek to answer
+
+1. How can we use a sample of *data* to reason about a particular *data generating process*?
+
+2. How can we account for the uncertainty caused by *sampling variability*?
+
+3. How does uncertainty decrease as we increase *sample size*?
+
+4. How can we identify and deal with *statistical bias*?
+
+
+## Looking Forward
+
+:::: {.columns}
+::: {.column width="50%"}
+- Continue practicing coding with data
+
+- Next week: Probability and Random Variables
+:::
+
+::: {.column width="50%"}
+<iframe src="https://giphy.com/embed/YU7JFa3TcjIM6b1JZo" width="366" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+:::
+::::
