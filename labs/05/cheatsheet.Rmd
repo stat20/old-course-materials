@@ -1,0 +1,26 @@
+---
+title: "Lab 5: Cheatsheet"
+author: "STAT 20 Spring 2022"
+output: pdf_document
+---
+
+One of the best ways to learn a new computational tool is to build your own guide to that tool. Here, we give you the option to create such a reference for the R language.
+
+**The optional assignment**: Create an R reference guide that encompasses the primary functions that we use in this class. That includes:
+
+- Identifying the function
+- Describing in a sentence or two what it does
+- Providing an example of its use
+- Providing a link to documentation on how to use it
+
+To get you started, you can use an R Markdown template called `R Cheatsheet` from the `stat20data` package, which gets you started with examples of the basic R functions that you saw towards the beginning of this semester. To complete this assignment, you will flesh out this template to include all of the major functions that you have used. This optional assignment will be due on the last day of classes.
+
+
+**How this assignment is graded**. This assignment is optional and will be graded credit / no credit. If you choose to submit it, it will factor into your final grade, not your lab grade. Your final grade will be re-apportioned such that the final exam itself accounts for 29% instead of 30% of your final grade; that remaining 1% will be your R Reference Guide.
+
+To get full credit for the assignment, it should, at minimum, provide the 4 properties listed above for the major functions that we cover in this class. Major functions include functions explicitly discussed in lecture and required to complete the labs. It need not include functions like `fct_relevel()` that are discussed tangentially in class or on Ed. The objective of this assignment, however, is just to help you improve your familiarity with R, so please use this as an opportunity to learn about more obscure functions.
+
+As we approach the due date (last day of classes), you're welcome to discuss your R reference guide with your GSI to see if it is of passing quality. We have no desire to penalize students for embarking on this assignment, so if your reference guide is not of passing quality, we will default you back to the original grading scheme with all 30% of your final grade coming from your final exam.
+
+**A note on collaboration**: Some students may find it helpful to work together to build their reference guide. That can be beneficial if done well - you can learn new functions and examples from your peers - but it diminishes the amount you learn if you simply copy in the references that others have written. Keep this in mind when putting yours together and note at the top of the guide the names of any students with whom you have collaborated.
+
