@@ -450,35 +450,81 @@ df %>%
 
 . . .
 
-A random variable $X$ has a discrete uniform distribution if it has only two outcomes, 1 and 0, (known as "success" and "failure", respectively) and a probability of success $p$.
+A random variable $X$ has a discrete uniform distribution on the integers between $a$ and $b$ (inclusive) if each integer in the interval is equally likely.
 
-$$ X \sim \textrm{Unif}(a, b) $$
+$$ X \sim \textrm{Unif}(a, b) \textrm{, with } n = b - a + 1 \textrm{ outcomes }$$
 
 . . .
 
 ::: columns
 ::: {.column width="50%"}
 ```{r}
-df <- tibble(x = c("1", "0"),
-             `P(X = x)` = c("p", "1 - p"))
+df <- tibble(x = c("a", "a + 1", "...", "b - 1", "b"),
+             `P(X = x)` = c("1/n", "1/n", "...", "1/n", "1/n"))
 df %>%
   kbl(align = "c") %>%
   kable_styling()
 ```
+
 :::
 
 ::: {.column width="\"50%"}
 ```{r}
-#| fig.height: 8
-df <- tibble(x = c("1", "0"),
-             Probability = c(.33, .67))
+#| fig.height: 7
+df <- tibble(x = 0:3,
+             Probability = c(.25, .25, .25, .25))
 df %>%
   ggplot(aes(x = x,
              y = Probability,)) +
   geom_col(fill = "#EFBE43", color = "black") +
-  labs(title = "Bern(p = .33)") +
+  labs(title = "Unif(0, 3)") +
   theme_bw(base_size = 40) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 :::
 :::
+
+
+## Die roll as a Uniform
+
+We can model the number of pips appearing on one roll of a fair six-sided die as $X \sim \textrm{Unif}(a = 1, b = 6)$.
+
+. . .
+
+```{r}
+#| fig.height: 5
+#| fig.width: 5
+#| fig.align: center
+df <- tibble(x = factor(1:6),
+             Probability = rep(1/6, 6))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Unif(1, 6)") +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## Fair-coin flip as a Bern
+
+Let an outcome of $H$ be considered a 1 and $T$ considered a 0. Then we can model the outcome of a fair coin flip using $X \sim \textrm{Unif}(a = 0, b = 1)$.
+
+. . .
+
+```{r}
+#| fig.height: 5
+#| fig.width: 5
+#| fig.align: center
+df <- tibble(x = factor(0:1),
+             Probability = c(.5, .5))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Unif(0, 1)") +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+

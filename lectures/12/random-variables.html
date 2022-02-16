@@ -657,13 +657,77 @@
 <img data-src="random-variables_files/figure-revealjs/unnamed-chunk-26-1.png" width="480" class="r-stretch quarto-figure-center"></section>
 <section id="fair-3-sided-coin-as-a-bern" class="slide level2">
 <h2>Fair 3-sided coin as a Bern</h2>
-<p>Let an outcome of <span class="math inline">\(S\)</span> be considered a 1 and <span class="math inline">\(\{H, T\}\)</span> considered a 0. Then we can model the outcome of our 2-sided coin using <span class="math inline">\(X \sim \textrm{Bern}(p = .33)\)</span>.</p>
+<p>Let an outcome of <span class="math inline">\(S\)</span> be considered a 1 and <span class="math inline">\(\{H, T\}\)</span> considered a 0. Then we can model the outcome of our 3-sided coin using <span class="math inline">\(X \sim \textrm{Bern}(p = .33)\)</span>.</p>
+
+<img data-src="random-variables_files/figure-revealjs/unnamed-chunk-28-1.png" width="480" class="r-stretch quarto-figure-center"></section>
+<section id="uniform-distribution" class="slide level2">
+<h2>Uniform Distribution</h2>
+<div class="fragment">
+<p>A random variable <span class="math inline">\(X\)</span> has a discrete uniform distribution on the integers between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> (inclusive) if each integer in the interval is equally likely.</p>
+<p><span class="math display">\[ X \sim \textrm{Unif}(a, b) \textrm{, with } n = b - a + 1 \textrm{ outcomes }\]</span></p>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:center;"> x </th>
+   <th style="text-align:center;"> P(X = x) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> a </td>
+   <td style="text-align:center;"> 1/n </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> a + 1 </td>
+   <td style="text-align:center;"> 1/n </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> ... </td>
+   <td style="text-align:center;"> ... </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> b - 1 </td>
+   <td style="text-align:center;"> 1/n </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> b </td>
+   <td style="text-align:center;"> 1/n </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div><div class="column" style="width:&quot;50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="random-variables_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="die-roll-as-a-uniform" class="slide level2">
+<h2>Die roll as a Uniform</h2>
+<p>We can model the number of pips appearing on one roll of a fair six-sided die as <span class="math inline">\(X \sim \textrm{Unif}(a = 1, b = 6)\)</span>.</p>
+
+<img data-src="random-variables_files/figure-revealjs/unnamed-chunk-34-1.png" width="480" class="r-stretch quarto-figure-center"></section>
+<section id="fair-coin-flip-as-a-bern-1" class="slide level2">
+<h2>Fair-coin flip as a Bern</h2>
+<p>Let an outcome of <span class="math inline">\(H\)</span> be considered a 1 and <span class="math inline">\(T\)</span> considered a 0. Then we can model the outcome of a fair coin flip using <span class="math inline">\(X \sim \textrm{Unif}(a = 0, b = 1)\)</span>.</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="random-variables_files/figure-revealjs/unnamed-chunk-28-1.png" width="480"></p>
+<p><img data-src="random-variables_files/figure-revealjs/unnamed-chunk-36-1.png" width="480"></p>
 </figure>
 </div>
 </div>
