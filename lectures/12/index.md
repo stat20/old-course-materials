@@ -14,8 +14,6 @@ links:
   url: https://stat20.org/lectures/12/random-variables.html
 ---
 
-The kernel of any claim made using data is a data product: a summary statistic, a visualization, or the output of a statistical model. These products are generated from a raw data set using a series of operations. We introduce a readable and robust way to build such data pipelines using the pipe operator. We also introduce a powerful function that can be added to a pipeline to do operations on all subgroups of data at once.
-
 ### Key Questions
 - What distinguishes a probability distribution from a distribution of a data set?
 - What are parameters and how are they related to probability distributions?
