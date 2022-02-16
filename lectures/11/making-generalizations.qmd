@@ -36,19 +36,19 @@ execute:
 
 --- 
 
-## {background-image="/images/student-plot1.png" background-size="contain"}
+## {background-image="images/student-plot1.png" background-size="contain"}
 
 
-## {background-image="/images/student-plot2.png" background-size="contain"}
+## {background-image="images/student-plot2.png" background-size="contain"}
 
 
-## {background-image="/images/claims.jpg" background-size="contain"}
+## {background-image="images/claims.jpg" background-size="contain"}
 
 
-## {background-image="/images/sheep.gif" background-size="contain"}
+## {background-image="images/sheep.gif" background-size="contain"}
 
 
-## {background-image="/images/sports-car.webp" background-size="contain"}
+## {background-image="images/sports-car.webp" background-size="contain"}
 
 
 ---
