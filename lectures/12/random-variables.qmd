@@ -507,7 +507,7 @@ df %>%
 ```
 
 
-## Fair-coin flip as a Bern
+## Fair coin flip as a Bern
 
 Let an outcome of $H$ be considered a 1 and $T$ considered a 0. Then we can model the outcome of a fair coin flip using $X \sim \textrm{Unif}(a = 0, b = 1)$.
 
