@@ -1,0 +1,484 @@
+---
+title: "Random Variables"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: images/hex-background.png
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## While you're waiting...
+
+::: poll
+What would a fair three-sided coin look like?
+
+Discuss with your neighbors.
+:::
+
+## Announcements
+
+1.  Lab 4 / PS 4 due Wednesday 10 pm
+    -   Practice, practice, practice
+    -   Evening Study Session 6:30 - 8:30 3rd floor Evans
+
+## Agenda
+
+1.  Parameters
+2.  Probability Distributions
+3.  Random Variables
+4.  Fundamental Distributions
+    1.  Bernoulli
+
+    2.  Uniform
+
+## Generalization {.middle .center}
+
+. . .
+
+::: smalladage
+A description of the **process that generated** the data.
+:::
+
+## Questions we seek to answer
+
+1.  How can we use a sample of *data* to reason about a particular *data generating process*?
+
+2.  How can we account for the uncertainty caused by *sampling variability*?
+
+3.  How does uncertainty decrease as we increase *sample size*?
+
+4.  How can we identify and deal with *statistical bias*?
+
+## Probability distributions
+
+A **probability distribution** of a discrete (random) data generating process encompasses all possible outcomes of a variable along with their respective probabilities.
+
+They can be expressed as tables or bar charts.
+
+<br>
+
+**Properties**
+
+1.  The outcomes must be disjoint (mutually exclusive).
+2.  Each probability must be between 0 and 1.
+3.  The probabilities must sum to 1.
+
+## Ex. of probability distributions
+
+::: columns
+::: {.column width="33%"}
+```{r fig.height=12}
+library(tidyverse)
+tibble(surface = c("Land", "Water"),
+       p = c(.29, .71)) %>%
+  ggplot(aes(x = surface,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Surface",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="33%"}
+```{r fig.height=12}
+library(stat20data)
+data(class_survey)
+class_survey %>%
+  mutate(year_at_cal = case_when(
+    time_at_cal %in% c("This is my first semester!", "I'm in my first year.") ~ 1,
+    time_at_cal == "I'm in my second year." ~ 2,
+    time_at_cal == "I'm in my third year." ~ 3,
+    time_at_cal == "I'm in my fourth year." ~ 4,
+    time_at_cal == "More than 4 years." ~ 5
+  )) %>%
+  count(year_at_cal) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = year_at_cal,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Years at Cal",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="33%"}
+```{r fig.height=12}
+class_survey  %>%
+  drop_na(season) %>%
+  count(season) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = season,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Season",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+:::
+
+> Note: These are not distributions of *data*, but descriptions of the process that generates data.
+
+## Parameters
+
+**Parameter**: a numerical characteristic of a probability distribution or population. Often unknown but what we seek to estimate using data.
+
+Examples:
+
+-   The average debt of adults in California.
+-   The percentage increase in area burned by wildfire by 2030.
+-   The probability of a magnitude 9 earthquake in the next 50 years.
+
+## Example
+
+::: columns
+::: {.column width="50%"}
+```{r fig.height=12}
+library(tidyverse)
+tibble(surface = c("Land", "Water"),
+       p = c(.29, .71)) %>%
+  ggplot(aes(x = surface,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Surface",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="50%"}
+**Parameters**:
+
+-   The proportion land
+-   The proportion water
+:::
+:::
+
+## Example
+
+::: columns
+::: {.column width="50%"}
+```{r fig.height=12}
+library(stat20data)
+data(class_survey)
+class_survey %>%
+  mutate(year_at_cal = case_when(
+    time_at_cal %in% c("This is my first semester!", "I'm in my first year.") ~ 1,
+    time_at_cal == "I'm in my second year." ~ 2,
+    time_at_cal == "I'm in my third year." ~ 3,
+    time_at_cal == "I'm in my fourth year." ~ 4,
+    time_at_cal == "More than 4 years." ~ 5
+  )) %>%
+  count(year_at_cal) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = year_at_cal,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Years at Cal",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+
+::: {.column width="50%"}
+**Parameters**:
+
+-   The proportion first years
+-   The proportion second years
+-   The proportion third years
+-   The proportion fourth years
+-   The proportion fifth years
+-   The average year
+-   The median year
+:::
+:::
+
+##  {background-image="images/1.png" background-size="contain"}
+
+##  {background-image="images/2.png" background-size="contain"}
+
+## Poll
+
+::: poll
+Consider the random process of rolling a fair 6 sided die. Let W be a roll of 1 or 3 and Z be an outcome of 3 or 5. What is the probability of observing W or Z?
+:::
+
+## Poll Results
+
+<center>
+
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/2Z8evj9eEpeNZKX0R52gk?controls=none&amp;short_poll=true" width="800px" height="600px">
+
+</iframe>
+
+</center>
+
+##  {background-image="images/3.png" background-size="contain"}
+
+##  {background-image="images/4.png" background-size="contain"}
+
+## Another Probability Distribution
+
+**Ex 2**: The outcome of a single flip of a fair coin.
+
+<br>
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+library(kableExtra)
+df <- tibble(Outcome = c("H", "T"),
+             Probability = c(.5, .5))
+df %>%
+  kbl(align = "c") %>%
+  kable_styling()
+```
+:::
+
+::: {.column width="50%"}
+```{r fig.height=10}
+df %>%
+  ggplot(aes(x = Outcome,
+             y = Probability)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  theme_bw(base_size = 40)
+```
+:::
+:::
+
+## While you're waiting...
+
+::: poll
+What would a fair three-sided coin look like?
+
+Discuss with your neighbors.
+:::
+
+##  {background-image="images/3-sided-coins.jpeg" background-size="contain"}
+
+##  {background-image="images/5.png" background-size="contain"}
+
+## Two 3-sided coins
+
+::: columns
+::: {.column width="\"50%"}
+```{r}
+#| fig.height: 10
+df <- tibble(Outcome = c("S", "H", "T"),
+             Probability = c(.2, .4, .4))
+df %>%
+  ggplot(aes(x = Outcome,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Coin A") +
+  ylim(0, .4) +
+  theme_bw(base_size = 40) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+:::
+
+::: {.column width="\"50%"}
+```{r}
+#| fig.height: 10
+df <- tibble(Outcome = c("S", "H", "T"),
+             Probability = c(.33, .33, .33))
+df %>%
+  ggplot(aes(x = Outcome,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Coin B") +
+  ylim(0, .4) +
+  theme_bw(base_size = 40) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+:::
+:::
+
+> The parameters steer the shape of the probability distribution.
+
+# Random Variables
+
+## Random Variable
+
+A **random variable** is...
+
+-   A random process with a numerical outcome
+-   A mapping from the outcome space to the real number line
+
+. . .
+
+It also comes with a helpful and compact notation.
+
+## Random Variable Notation
+
+Random variables are indicated by capital letters near the end of the alphabet.
+
+$$ X, Y, Z, W $$
+
+. . .
+
+The values that a random variable can take are indicated by lowercase equivalents.
+
+$$ x, y, z, w $$
+
+. . .
+
+The following statement reads, "The probability that the random variable $X$ takes the value $x$".
+
+$$ P(X = x) $$
+
+# Fundamental Distributions
+
+## Bernoulli Distribution
+
+. . .
+
+A random variable $X$ has a Bernoulli distribution if it has only two outcomes, 1 and 0, (known as "success" and "failure", respectively) and a probability of success $p$.
+
+$$ X \sim \textrm{Bern}(p) $$
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+```{r}
+df <- tibble(x = c("1", "0"),
+             `P(X = x)` = c("p", "1 - p"))
+df %>%
+  kbl(align = "c") %>%
+  kable_styling()
+```
+:::
+
+::: {.column width="\"50%"}
+```{r}
+#| fig.height: 8
+df <- tibble(x = c("1", "0"),
+             Probability = c(.33, .67))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .33)") +
+  theme_bw(base_size = 40) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+:::
+:::
+
+
+## Fair-coin flip as a Bern
+
+Let an outcome of $H$ be considered a 1 and $T$ considered a 0. Then we can model the outcome of a fair coin flip using $X \sim \textrm{Bern}(p = .5)$.
+
+. . .
+
+```{r}
+#| fig.height: 5
+#| fig.width: 5
+#| fig.align: center
+df <- tibble(x = c("1", "0"),
+             Probability = c(.5, .5))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .5)") +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## Spinning globe as a Bern
+
+Let an outcome of $Water$ be considered a 1 and $Land$ considered a 0. Then we can model the outcome of our spinning globe using $X \sim \textrm{Bern}(p = .71)$.
+
+. . .
+
+```{r}
+#| fig.height: 5
+#| fig.width: 5
+#| fig.align: center
+df <- tibble(x = c("1", "0"),
+             Probability = c(.71, .29))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .71)") +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## Fair 3-sided coin as a Bern
+
+Let an outcome of $S$ be considered a 1 and $\{H, T\}$ considered a 0. Then we can model the outcome of our 3-sided coin using $X \sim \textrm{Bern}(p = .33)$.
+
+. . .
+
+```{r}
+#| fig.height: 5
+#| fig.width: 5
+#| fig.align: center
+df <- tibble(x = c("1", "0"),
+             Probability = c(.33, .67))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .33)") +
+  theme_bw(base_size = 20) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## Uniform Distribution
+
+. . .
+
+A random variable $X$ has a discrete uniform distribution if it has only two outcomes, 1 and 0, (known as "success" and "failure", respectively) and a probability of success $p$.
+
+$$ X \sim \textrm{Unif}(a, b) $$
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+```{r}
+df <- tibble(x = c("1", "0"),
+             `P(X = x)` = c("p", "1 - p"))
+df %>%
+  kbl(align = "c") %>%
+  kable_styling()
+```
+:::
+
+::: {.column width="\"50%"}
+```{r}
+#| fig.height: 8
+df <- tibble(x = c("1", "0"),
+             Probability = c(.33, .67))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .33)") +
+  theme_bw(base_size = 40) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+:::
+:::
