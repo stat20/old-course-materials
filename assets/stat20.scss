@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+
+// fonts
+@import url(https://fonts.googleapis.com/css?family=Cabin:600,600i&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Commissioner&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC:Bold,700&display=swap);
+$font-family-sans-serif: "Commissioner" !default;
+$presentation-font-size-root: 36px;
+
+// colors
+$body-color: #5c5859 !default;
+
+// headings
+$presentation-heading-color: #4466B0 !default;
+$presentation-heading-font: "Cabin", "Commissioner", sans serif !default;
+$presentation-heading-color: #383d3d !default;
+
+
+
+/*-- scss:rules --*/
+
+details>summary {
+  font-size: 0.75em;
+}
+
+.reveal .slide .question {
+  border-left: 3px solid #5B888C;
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  background: #D9E3E4;
+}
+
+.reveal .slide .poll {
+  border-left: 5px solid #F1DE67;
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  background: #F1DE6750;
+}
+
+.reveal .slide .appex {
+  border-left: 3px solid #003559;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  background: #EBF7FF;
+}
+
+.bigadage {
+  font-size: 250%;
+  font-family: Amatic SC;
+}
+
+.smalladage {
+  font-size: 150%;
+  font-family: Amatic SC;
+}
+
+.reveal .slide blockquote {
+  border-left: solid 5px #EFBE4380;
+  padding-left: 1em;
+  font-style: normal;
+  color: $body-color;
+}
