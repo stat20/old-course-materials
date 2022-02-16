@@ -9,7 +9,7 @@ format:
     incremental: true
     menu: false
     title-slide-attributes:
-      data-background-image: images/hex-background.png
+      data-background-image: "images/hex-background.png"
       data-background-size: cover  
     progress: false
 execute:
@@ -37,7 +37,6 @@ Discuss with your neighbors.
 3.  Random Variables
 4.  Fundamental Distributions
     1.  Bernoulli
-
     2.  Uniform
 
 ## Generalization {.middle .center}
@@ -379,7 +378,6 @@ df %>%
 :::
 :::
 
-
 ## Fair-coin flip as a Bern
 
 Let an outcome of $H$ be considered a 1 and $T$ considered a 0. Then we can model the outcome of a fair coin flip using $X \sim \textrm{Bern}(p = .5)$.
@@ -400,7 +398,6 @@ df %>%
   theme_bw(base_size = 20) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
-
 
 ## Spinning globe as a Bern
 
@@ -423,7 +420,6 @@ df %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-
 ## Fair 3-sided coin as a Bern
 
 Let an outcome of $S$ be considered a 1 and $\{H, T\}$ considered a 0. Then we can model the outcome of our 3-sided coin using $X \sim \textrm{Bern}(p = .33)$.
@@ -445,7 +441,6 @@ df %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-
 ## Uniform Distribution
 
 . . .
@@ -465,7 +460,6 @@ df %>%
   kbl(align = "c") %>%
   kable_styling()
 ```
-
 :::
 
 ::: {.column width="\"50%"}
@@ -483,7 +477,6 @@ df %>%
 ```
 :::
 :::
-
 
 ## Die roll as a Uniform
 
@@ -506,8 +499,7 @@ df %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-
-## Fair coin flip as a Bern
+## Fair coin flip as a Uniform
 
 Let an outcome of $H$ be considered a 1 and $T$ considered a 0. Then we can model the outcome of a fair coin flip using $X \sim \textrm{Unif}(a = 0, b = 1)$.
 
@@ -528,3 +520,7 @@ df %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+
+# Takeaway
+
+[While there are many many kinds of probability distributions, the most common forms have been been given standard names and parameterizations.]{.smalladage}
