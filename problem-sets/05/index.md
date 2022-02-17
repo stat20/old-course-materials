@@ -9,7 +9,7 @@ layout: single
 links:
 - icon: file-pdf
   icon_pack: fas
-  name: Lab
+  name: PS
   url: https://stat20.org/problem-sets/05/probability.pdf
 ---
 
