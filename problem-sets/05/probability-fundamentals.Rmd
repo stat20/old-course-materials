@@ -1,0 +1,40 @@
+---
+title: "PS 5: Probability Fundamentals"
+subtitle: "Stat 20 UC Berkeley"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+#| include = FALSE
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE)
+```
+
+1. What characteristics must every distribution must have to be a valid probability distribution?
+
+1. Maria gets a cup of coffee and a muffin every day for breakfast from one of the many coffee shops in her neighborhood. She picks a coffee shop each morning at random and independently of previous days. The average price of a cup of coffee is \$1.40 with a standard deviation of 30 cents (\$0.30), the average price of a muffin is \$2.50 with a standard deviation of 15 cents, and the two prices are independent of each other.
+    a. What is the mean and standard deviation of the amount she spends on 
+breakfast daily?
+    b. What is the mean and standard deviation of the amount she spends on 
+breakfast weekly (every 7 days)?
+
+
+1. An airline charges the following baggage fees: \$25 for the first bag and \$35 for the second. Suppose 54\% of passengers have no checked luggage, 34\% have one piece of checked luggage and 12\% have two pieces. We suppose a negligible portion of people check more than two bags.
+    a. Using a table, define a random variable that describes the baggage fee revenue for a single passenger, with the possible values that it can take along with their probabilities.  The compute the average revenue per passenger, and compute the corresponding standard deviation.
+    c. Draw a bar plot that depicts the distribution of the random variable you described in part a.
+    b. About how much revenue should the airline expect for a flight of 120 passengers? With what standard deviation? Note any assumptions you make and if you think they are justified.
+
+1. Suppose we have independent observations $X_1$ and $X_2$, both from a distribution with expected value $\mu$ and standard deviation $\sigma$. What is the variance of the average of the two values: $\frac{X_1 + X_2}{2}$?
+
+1. What characteristics should a random process have to be well-modeled by the Binomial distribution?
+
+1. Let $Y \sim \textrm{Bern(p = 3)}$. What is $E(Y)$? $Var(Y)$?
+
+1. Let $Z \sim \textrm{Bin(n = 10, p = .9)}$. Find the following properties of $Z$.
+    a. What are the different values that $Z$ can take? 
+    b. $E(Z)$
+    c. $Var(Z)$
+    d. $P(Z = 10)$
