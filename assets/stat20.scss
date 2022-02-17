@@ -13,7 +13,6 @@ $body-color: #5c5859 !default;
 // headings
 $presentation-heading-color: #4466B0 !default;
 $presentation-heading-font: "Cabin", "Commissioner", sans serif !default;
-$presentation-heading-color: #383d3d !default;
 
 
 
@@ -62,4 +61,24 @@ details>summary {
   padding-left: 1em;
   font-style: normal;
   color: $body-color;
+}
+
+.reveal .slide .inversebox {
+  padding-left: .25em;
+  padding-top: .25em;
+  padding-bottom: .25em;
+  padding-right: .25em;
+  color: #FFFFFF;
+  font-weight: bold;
+  background: $presentation-heading-color;
+}
+
+.reveal .slide .inversebox {
+  padding-left: .25em;
+  padding-top: .25em;
+  padding-bottom: .25em;
+  padding-right: .25em;
+  color: #FFFFFF;
+  font-weight: bold;
+  background: $presentation-heading-color;
 }
