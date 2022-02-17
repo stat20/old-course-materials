@@ -1,0 +1,147 @@
+---
+title: "Expectation and Variance"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1.  Office Hours 3-4 pm Evans 415
+2.  PS 5 will be posted this afternoon due Tuesday 10 pm
+3.  No lab session tomorrow (Thursday)
+3.  Quiz 2 Monday 11 am - Tuesday 11 am
+  - Data Wrangling
+  - Probability
+
+
+## Agenda
+
+1.  Expected Value
+2.  Variance
+
+
+# Expected Value
+
+
+## {background-image="images/0.png" background-size="contain"}
+
+
+## {background-image="images/1.png" background-size="contain"}
+
+
+## Expected Value
+
+The **expected value** of a random variable is the value you would expect in the long-run. More precisely: the sum of all possible values weighted by their probabilities.
+
+. . .
+
+$$ E(X) = \sum_{i=1}^k x_i P(X = x_i) $$
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+where:
+
+::: {.nonincremental}
+-   $X$ is any discrete RV
+-   $x_i$ is the $i^{th}$ value
+-   $k$ is the total number of possible values
+:::
+
+:::
+::: {.column width="50%"}
+> The greek letter $\mu$ ("mu") is shorthand for $E(X)$.
+:::
+::::
+
+
+# Variance
+
+
+## {background-image="images/2.png" background-size="contain"}
+
+
+## Variance
+
+The **variance** of a random variable expresses the variability. More precisely: the sum of all possible squared deviations from the expected value weighted by their probabilities.
+
+. . .
+
+$$ Var(X) = \sum_{i=1}^k (x_i - \mu)^2 P\left(X = x_i \right) $$
+
+:::: columns
+::: {.column width="50%"}
+where:
+
+::: {.nonincremental}
+-   $X$ is any discrete RV
+-   $x_i$ is the $i^{th}$ value
+-   $k$ is the total number of possible values
+:::
+
+:::
+::: {.column width="50%"}
+> The greek letter $\sigma^2$ ("sigma squared") is shorthand for $Var(X)$.
+:::
+::::
+
+
+
+## {background-image="images/3.png" background-size="contain"}
+
+
+## {background-image="images/4.png" background-size="contain"}
+
+
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column width="45%"}
+[Q3]{.inversebox}
+  
+What is your expected winnings and their SD if you play 3 times?
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="45%"}
+[Q4]{.inversebox}
+
+What is your expected winnings and their SD if you triple your bet but play only once?
+:::
+:::
+
+<br>
+<br>
+
+::: poll
+Work with your neighbor(s) to come up with your 4 answers. I will ask pairs to share with the class.
+:::
+
+```{r}
+countdown::countdown(4, font_size = "2em")
+```
+
+
+## {background-image="images/5.png" background-size="contain"}
+
+
+## {background-image="images/6.png" background-size="contain"}
+
+
+------------------------------------------------------------------------
