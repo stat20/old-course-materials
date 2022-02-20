@@ -1,0 +1,588 @@
+---
+title: "The Binomial Distribution"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1.  Office Hours 1:-2:30 pm today Evans 415
+2.  PS 5 due Tuesday 10 pm
+3.  Quiz 2 Monday 11 am - Tuesday 11 am
+    1.  Data Wrangling
+    2.  Probability
+
+## Agenda
+
+1.  E and V for Bernoulli RVs
+2.  The Binomial Distribution
+
+# E and V for Bernoulli RVs
+
+## Expected value of the Bernoulli
+
+Let $X \sim \textrm{Bern}(p)$.
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+```{r}
+library(tidyverse)
+library(kableExtra)
+df <- tibble(x = c("1", "0"),
+             `P(X = x)` = c("p", "1 - p"))
+df %>%
+  kbl(align = "c") %>%
+  kable_styling()
+```
+:::
+
+::: {.column width="50%"}
+```{=tex}
+\begin{align}
+E(X) &= \sum_{i=1}^k x_i P(X = x_i) \\
+&= 1 \cdot p + 0 \cdot \left(1 - p\right) \\
+&= p
+\end{align}
+```
+:::
+:::
+
+## Variance of the Bernoulli
+
+Let $X \sim \textrm{Bern}(p)$. $E(X) = p = \mu$.
+
+. . .
+
+```{=tex}
+\begin{align}
+Var(X) &= \sum_{i=1}^k (x_i - \mu)^2 P(X = x_i) \\
+&= (1 - p)^2 \cdot p + (0 - p)^2 \cdot \left(1 - p\right) \\
+&= (1 - 2p + p^2) \cdot p + (p^2) \cdot (1 - p) \\
+&= p - 2p^2 + p^3 + p^2 - p^3 \\
+&= p - p^2 \\
+&= p \left(1-p\right)
+\end{align}
+```
+
+
+## Bernoulli Distribution
+
+. . .
+
+A random variable $X$ has a Bernoulli distribution if it has only two outcomes, 1 and 0, (known as "success" and "failure", respectively) and a probability of success $p$.
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+$$ X \sim \textrm{Bern}(p) $$
+
+```{=tex}
+\begin{align}
+E(X) &= p \\
+Var(X) &= p (1-p) \\
+SD(X) &= \sqrt{p (1-p)}
+\end{align}
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig.height: 8
+df <- tibble(x = c("1", "0"),
+             Probability = c(.33, .67))
+df %>%
+  ggplot(aes(x = x,
+             y = Probability,)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Bern(p = .33)") +
+  theme_bw(base_size = 40) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+:::
+:::
+
+
+## Poll
+
+::: columns
+::: {.column width="50%"}
+<iframe src="https://giphy.com/embed/YU7JFa3TcjIM6b1JZo" width="366" height="480" frameBorder="0" class="giphy-embed" allowFullScreen>
+
+</iframe>
+:::
+
+::: {.column width="50%"}
+::: poll
+What is the variance of the random variable described by our spinning globe example?
+
+Please answer at `pollev.com/stat20`
+:::
+:::
+:::
+
+------------------------------------------------------------------------
+
+<center>
+
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/69W5Hz2bhLYMLEQyHyVob?controls=none&amp;short_poll=true" width="800px" height="600px">
+
+</iframe>
+
+</center>
+
+------------------------------------------------------------------------
+
+::: poll
+What is the variance of the random variable described by our spinning globe example?
+:::
+
+. . .
+
+Let $X$ be an outcome of 1 if "Water" and 0 if "Land.
+
+$$ X \sim \textrm{Bern}(p = .71) $$
+
+. . .
+
+```{=tex}
+\begin{align}
+Var(X) &= p (1 - p) \\
+&= .71 \cdot .29 \\
+&= .2059
+\end{align}
+```
+
+
+# The Binomial Distribution
+
+------------------------------------------------------------------------
+
+[What is the *next* most simple form of randomness that we could express as a random variable?]{.bigadage}
+
+------------------------------------------------------------------------
+
+<center>
+<iframe width="1120" height="730" src="https://www.youtube.com/embed/3m4bxse2JEQ?start=5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</center>
+
+
+## Example: The Quincunx
+
+. . . 
+
+Let $Y$ be the number of times the ball has bounced right after 4 trials.
+
+. . .
+
+<br>
+
+> What is $P(Y = 4)$?
+
+. . .
+
+<br>
+
+It should be the probability that the ball first bounces right, 
+
+::: {.fragment}
+then bounces right, 
+:::
+
+::: {.fragment}
+then bounces right, 
+:::
+
+::: {.fragment}
+then bounces right.
+:::
+
+
+------------------------------------------------------------------------
+
+[The probability that the ball first bounces right]{.fragment .highlight-blue}, then bounces right, then bounces right, then bounces right.
+
+. . .
+
+<br>
+
+Let $X_1$ be a 1 if the ball bounces R on the first bounce.
+
+. . .
+
+$$ X \sim \textrm{Bern}(p) $$
+
+. . .
+
+$$P(X_1 = 1) = p$$
+
+
+------------------------------------------------------------------------
+
+[The probability that the ball first bounces right, then bounces right]{.fragment .highlight-blue}, then bounces right, then bounces right.
+
+. . .
+
+<br>
+
+Let $X_2$ be a 1 if the ball bounces R on the second bounce.
+
+. . .
+
+> How can we express the probability of $X_2$ conditioning on the outcome of $X_1$?
+
+
+------------------------------------------------------------------------
+
+**Conditional Probability**
+
+. . . 
+
+The conditional probability of outcome $A$ given condition $B$ is written
+
+$$P(A | B)$$
+
+where the vertical bar is read as "given" or "conditioning on".
+
+. . .
+
+<br>
+
+**Independence**
+
+. . . 
+
+Two outcomes $A$ and $B$ are independent of one another if conditioning on one does not change the probability of the other.
+
+. . .
+
+$$P(A | B) = P(A)$$
+
+or equivalently:
+
+$$P(B | A) = P(B)$$
+
+
+------------------------------------------------------------------------
+
+[The probability that the ball first bounces right, then bounces right]{.fragment .highlight-blue}, then bounces right, then bounces right.
+
+
+<br>
+
+Let $X_2$ be a 1 if the ball bounces R on the second bounce.
+
+. . .
+
+<br>
+
+If $X_2$ and $X_1$ are independent,
+
+. . .
+
+$$ P(X_2 = 1 | X_1 = 1) = P(X_2 = 1) = p $$
+
+. . .
+
+<br>
+
+> What is the probability that $X_2 = 1$ _and_ $X_1 = 1$?
+
+
+## General Multiplication Rule
+
+. . .
+
+If $A$ and $B$ represent two outcomes, then
+
+$$ P(A \textrm{ and } B) = P(A|B) \times P(B) $$
+
+. . .
+
+<br>
+
+If $A$ and $B$ are independent, 
+
+. . .
+
+$$ P(A \textrm{ and } B) = P(A) \times P(B) $$
+
+
+## Example: The Quincunx
+
+Let $Y$ be the number of times the ball has bounced right after 4 trials.
+
+<br>
+
+> What is $P(Y = 4)$?
+
+. . .
+
+<br>
+
+It should be the probability that the ball first bounces right, then bounces right, then bounces right, then bounces right.
+
+. . .
+
+<br>
+
+\begin{align}
+P(Y = 4) &= P(X_1 = 1 \textrm{ and } X_2 = 1 \textrm{ and } X_3 = 1 \textrm{ and } X_4 = 1) \\
+&= P(X_1 = 1)P(X_2 = 1)P(X_3 = 1)P(X_4 = 1) \\
+&= p^4
+\end{align}
+
+
+## Poll
+
+::: poll
+What is $P(Y = 3)$?
+:::
+
+
+------------------------------------------------------------------------
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/pQylxBkhvfho3rLTW6sGV?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+------------------------------------------------------------------------
+
+::: poll
+What is $P(Y = 3)$?
+:::
+
+. . .
+
+$Y = 3$ can happen in four ways: $RRRL$ or $RRLR$ or $RLRR$ or $LRRR$
+
+. . .
+
+\begin{align}
+P(Y = 3) &= p^3 (1-p) + p^3 (1-p) + p^3 (1-p) + p^3 (1-p) \\
+&= 4 p^3 (1-p)
+\end{align}
+
+
+## The Binomial Coefficient
+
+```{r}
+knitr::include_graphics("images/pascal.png")
+```
+
+. . .
+
+The binomial coefficient, ${n \choose x}$, counts the number of ways a binomial outcome can occur.
+
+. . . 
+
+$$ {n \choose x} = \frac{n!}{x!(n-x)!} $$
+
+. . .
+
+Recall $3! = 3 \cdot 2 \cdot 1$.
+
+. . . 
+
+Example:
+
+$${4 \choose 2} = \frac{4 \cdot 3 \cdot 2 \cdot 1}{2 \cdot 1 (2 \cdot 1)} = \frac{12}{2} = 6$$
+
+
+## The Binomial Distribution
+
+Describes a random variable that is the sum of $n$ independent Bernoulli RVs, each with a success probability $p$.
+
+:::: columns
+::: {.column width="50%"}
+
+$$
+Y \sim \textrm{Binom}(n, p)
+$$
+
+*"Y is distributed as a Binomial r.v. with n trials and probability of success p"*
+
+\begin{align}
+P(Y = y) &= {n \choose y} p^y (1 - p)^{n - y}
+\end{align}
+
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE, fig.height=8}
+y <- c(0, 1, 2, 3, 4)
+py <- dbinom(y, size = 4, prob = .5)
+df <- data.frame(y = factor(y),
+                 py = py)
+names(df) <- c("y", "P(Y = y)")
+df %>%
+  ggplot(aes(x = y, 
+             y = `P(Y = y)`)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Binom(n = 4, p = .5)",
+       x = "Y",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+::::
+
+. . . 
+
+> What is $E(Y)$? What is $SD(Y)$?
+
+
+## E and Var of the Binomial
+
+::: poll
+Let $X \sim \textrm{Bern}(p)$ and $Y = X_1 + X_2 + \ldots + X_n$.
+
+Find $E(Y)$ and $SD(Y)$.
+
+Work with your neighbor(s) and enter your answers at `pollev.com/stat20`.
+:::
+
+```{r echo = FALSE}
+countdown::countdown(minutes = 4, bottom = 0)
+```
+
+
+------------------------------------------------------------------------
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/xQy8IscDXEEQExxpYm2Ri?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+------------------------------------------------------------------------
+
+
+## E and Var of the Binomial
+
+#### Expected Value
+
+```{=tex}
+\begin{align}
+E(Y) &= E(X_1 + X_2 + \ldots + X_n) \\
+&= E(X_1) + E(X_2) + \ldots + E(X_n) \\
+&= nE(X) = np
+\end{align}
+```
+#### Variance
+
+```{=tex}
+\begin{align}
+Var(Y) &= Var(X_1 + X_2 + \ldots + X_n) \\
+&= Var(X_1) + Var(X_2) + \ldots + Var(X_n) \\
+&= nVar(X) = np(1-p); \quad \quad SD(Y) = \sqrt{np(1-p)}
+\end{align}
+```
+# Examples of the Binomial
+
+## The sum of fair coin flips
+
+Let $Y$ be the total number of heads in 4 flips of a fair coin.
+
+
+:::: columns
+::: {.column width="50%"}
+
+$$
+Y \sim \textrm{Binom}(n = 4, p = .5)
+$$
+
+*"Y is distributed as a Binomial r.v. with 4 trials and probability of success .5"*
+
+\begin{align}
+\textrm{E}(Y) &= np = 4\cdot.5 = 2 \\
+\textrm{SD}(Y) &= \sqrt{np(1-p)} \\
+& = \sqrt{4 \cdot.5(1 - .5)} = 1 \\
+\end{align}
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE, fig.height=8}
+y <- c(0, 1, 2, 3, 4)
+py <- dbinom(y, size = 4, prob = .5)
+df <- data.frame(y = factor(y),
+                 py = py)
+names(df) <- c("y", "P(Y = y)")
+df %>%
+  ggplot(aes(x = y, 
+             y = `P(Y = y)`)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Y",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+::::
+
+## The sum of unfair coin flips
+
+Let $Y$ be the total number of heads in 4 flips of a coin that lands heads with probability .33.
+
+:::: columns
+::: {.column width="50%"}
+
+$$
+Y \sim \textrm{Binom}(n = 4, p = .33)
+$$
+
+\begin{align}
+\textrm{E}(Y) &= np = 4\cdot.33 = 1.33 \\
+\textrm{SD}(Y) &= \sqrt{np(1-p)} \\
+& = \sqrt{4 \cdot.33(1 - .33)} = .94 \\
+\end{align}
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE, fig.height=8}
+y <- c(0, 1, 2, 3, 4)
+py <- dbinom(y, size = 4, prob = .33)
+df <- data.frame(y = factor(y),
+                 py = py)
+names(df) <- c("y", "P(Y = y)")
+df %>%
+  ggplot(aes(x = y, 
+             y = `P(Y = y)`)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(x = "Y",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+::::
+
+
+## Are these binomial?
+
+1.  The total number of exams that get jammed in the scanner when we scan them Monday afternoon.
+
+2.  The total number of students that miss the exam due to illness.
+
+3.  The total number of questions you get correct on your midterm.
+
+> In order for a process to be perfectly described by the binomial distribution, the $n$ fixed trials must be independent of one another and each with the same probability of success $p$.
+
+
+<center>
+<iframe width="1120" height="730" src="https://www.youtube.com/embed/3m4bxse2JEQ?start=5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</center>
