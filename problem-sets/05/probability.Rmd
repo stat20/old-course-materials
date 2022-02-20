@@ -31,7 +31,7 @@ breakfast weekly (every 7 days)?
 
 1. What characteristics should a random process have to be well-modeled by the Binomial distribution?
 
-1. Let $Y \sim \textrm{Bern(p = 3)}$. What is $E(Y)$? $Var(Y)$?
+1. Let $Y \sim \textrm{Bern(p = .3)}$. What is $E(Y)$? $Var(Y)$?
 
 1. Let $Z \sim \textrm{Bin(n = 10, p = .9)}$. Find the following properties of $Z$.
     a. What are the different values that $Z$ can take? 
