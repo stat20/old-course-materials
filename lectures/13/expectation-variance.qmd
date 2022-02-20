@@ -145,3 +145,78 @@ countdown::countdown(4, font_size = "2em")
 
 
 ------------------------------------------------------------------------
+
+$${\Large X_1 + X_2 + X_3 \ne 3X}$$
+
+Why is this not true?
+
+. . .
+
+> Left side has three independent pieces of randomness. The right side has only one.
+
+
+## Two Distributions Compared
+
+```{r}
+library(tidyverse)
+library(patchwork)
+df_y <- tibble(y = 0:6,
+               p = c(dbinom(0, 3, prob = 18/38),
+                     0,
+                     dbinom(1, 3, prob = 18/38),
+                     0,
+                     dbinom(2, 3, prob = 18/38),
+                     0,
+                     dbinom(3, 3, prob = 18/38)))
+mu_y <- sum(df_y$y * df_y$p)
+
+py <- df_y %>%
+  ggplot(aes(x = y,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Distribution of Y",
+       x = "Y",
+       y = "P(Y = y)") +
+  scale_x_continuous(breaks = 0:6) +
+  theme_bw(base_size = 30) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+df_z <- tibble(z = 0:6,
+               p = c(20/38, 0, 0, 0, 0, 0, 18/38))
+mu_z <- sum(df_z$z * df_z$p)
+pz <- df_z %>%
+  ggplot(aes(x = z,
+             y = p)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Distribution of Z",
+       x = "Z",
+       y = "P(Z = z)") +
+  scale_x_continuous(breaks = 0:6) +
+  theme_bw(base_size = 30) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+:::: columns
+::: {.column width=50%}
+Let $Y$ be the winnings in 3 independent $1 bets on "red".
+
+$$ Y = X_1 + X_2 + X_3 $$
+
+```{r fig.height=8}
+py
+```
+:::
+
+::: {.column width=50%}
+Let $Z$ be the winnings in 1 $3 bet on "red".
+
+$$ Z = 3X $$
+
+```{r fig.height=8}
+pz
+```
+:::
+::::
+
+
+------------------------------------------------------------------------
