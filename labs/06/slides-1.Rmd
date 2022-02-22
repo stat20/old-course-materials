@@ -80,13 +80,13 @@ class: middle
 
 ---
 
-1. What was the goal(s) of the Chancellor's office in commissioning this survey?
+1) What was the goal(s) of the Chancellor's office in commissioning this survey?
 
-2. To which population does the Chancellor's office wish to generalize their findings?
+2) To which population does the Chancellor's office wish to generalize their findings?
 
-3. Describe two parameters that the Chancellor's office is trying to estimate using the survey data.
+3) Describe two parameters that the Chancellor's office is trying to estimate using the survey data.
 
-5. Describe one scenario wherein this response rate would lead to results that they could not generalize from the sample to the population. Describe a scenario where this same response rate have no effect on their ability to generalize. Be specific.
+5) Describe one scenario wherein this response rate would lead to results that they could not generalize from the sample to the population. Be specific.
 
 ```{r}
 countdown::countdown(5, font_size = "2em")
