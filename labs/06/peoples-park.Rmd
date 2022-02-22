@@ -1,5 +1,5 @@
 ---
-title: "Lab 9: People's Park Survey"
+title: "Lab 6: People's Park Survey"
 output: pdf_document
 ---
 
@@ -43,7 +43,7 @@ Based on your interpretation of these documents, address the following questions
 
 4. What was initial sample size of students selected to take the survey? What was the final sample size that actually did? What was the response rate?
 
-5. Describe one scenario wherein this response rate would lead to results that they could not generalize from the sample to the population. Describe a scenario where this same response rate have no effect on their ability to generalize. Be specific.
+5. Describe one scenario wherein this response rate would lead to results that they could not generalize from the sample to the population. Be specific.
 
 6. Consider the type of data collected in question 8, which is measured using the Likert Scale. Review the Wikipedia article on the Likert Scale (particularly the Scoring and Analysis section) to determine: Where does this type of data fall in the Data Taxonomy? 
 
@@ -57,13 +57,7 @@ Based on your interpretation of these documents, address the following questions
 
 ## Part II: Computing on the Data
 
-The following questions deal with a data set called `ppk` which can be loaded by running:
-
-```{r eval = FALSE, echo = TRUE}
-ppk <- read_csv("https://www.dropbox.com/s/zamyjzlclortmtu/ppk.csv?dl=1")
-```
-
-They represent a subset of questions that were asked in the questionnaire and have had random noise added to them. The results, in aggregate, share similar statistical properties to the raw data, but a given row no longer reflects an individual student's response completely.
+The `ppk` data set represents a subset of questions that were asked in the questionnaire and have had random noise added to them. The results, in aggregate, share similar statistical properties to the raw data, but a given row no longer reflects an individual student's response completely.
 
 9. Print the first few rows with the columns that correspond to the responses to survey questions 1, 7, and 8. Were they as you described them in question 7 here in the lab? If not, describe how they appear.
 
@@ -96,15 +90,12 @@ p2 %>%
 
 For the following confidence intervals, please use bootstrap percentile intervals.
 
-15. In bootstrapping, the bootstrapped sample is usually of the same size of the actual sample collected. However, other sample size can also be used. In this questions, create two bootstrap distributions of the
-median of the rating of the condition, one with 25 reps, the other with 1000. How do they compare? What appears to be the affect of increasing the number of bootstrap samples you use?
+15. Create a 95% confidence interval for the median rating of the condition of People's Park. Interpret the interval in the context of the problem.
 
-16. Generate 9 bootstrap samples of size 1000 for the median rating of the condition of People's Park. Plot those 9 samples using three by three facet plots. Using one of them to construct a 95% confidence interval for the median rating of the condition of People's Park. Interpret the interval in the context of the problem: what does it tell us about the parameter we are trying to estimate?
+<!-- 16. Generate 9 bootstrap samples of size 500 for the rating of the condition of People's Park. Plot those 9 samples using three by three facet plots. Using one of them to construct a 95% confidence interval for the median rating of the condition of People's Park. Interpret the interval in the context of the problem: what does it tell us about the parameter we are trying to estimate? -->
 
-*Hint*: For i from 1 to 1000, sample 1000 responses from the original sample about the rating of the condition of People's Park with replacement and compute the median of the 1000 responses. Now you will have 1000 medians, and they should follow a bell-shaped distribution when plotted on histogram.
+16. Create a 95% confidence interval for the overall proportion of students that support the People's Park Project without having been exposed to the information on page 14. Interpret the interval in the context of the problem.
 
-17. Create a 95% confidence interval for the overall proportion of students that support the People's Park Project without having been exposed to the information on page 14. Interpret the interval in the context of the problem.
-
-18. Create a 95% confidence interval for the overall change in support the Project before and after being exposed to the information on page 14. Does the interval contain 0? What are the implications of that for those working in the Chancellor's Office on the People's Park Project?
+17. Create a 95% confidence interval for the overall change in support the Project before and after being exposed to the information on page 14. Does the interval contain 0? What are the implications of that for those working in the Chancellor's Office on the People's Park Project?
 
 
