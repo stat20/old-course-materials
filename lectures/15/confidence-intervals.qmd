@@ -1,0 +1,655 @@
+---
+title: "Confidence Intervals"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1.  Office Hours 3-4 pm today Evans 422
+2.  Quiz 2 video walkthrough will be posted to bCourses
+3.  Quiz 2 Again Thursday (tomorrow) 11 am - Friday 11 am
+4.  PS 6 released this afternoon
+5.  Regrade requests
+
+## Regrade requests
+
+**Purpose**
+
+1.  To correct our errors
+2.  To clarify our expectations
+
+. . .
+
+**Norms**
+
+1.  Please read the rubric carefully before filing a regrade request
+2.  Take the perspective of seeking to understand, not arguing for points
+3.  Regrade requests can be accepted within a week of publishing grades
+
+## Agenda
+
+1.  Quiz 2
+2.  Review: The Binomial Distribution
+3.  Estimating a Parameter with an Interval
+4.  Confidence Intervals via Probability Theory
+5.  Confidence Intervals via the Bootstrap
+
+
+# Review: The Binomial Distribution
+
+## The Binomial Distribution
+
+Describes a random variable that is the sum of $n$ independent Bernoulli RVs, each with a success probability $p$.
+
+::: columns
+::: {.column width="50%"}
+$$
+Y \sim \textrm{Binom}(n, p)
+$$
+
+*"Y is distributed as a Binomial r.v. with n trials and probability of success p"*
+
+```{=tex}
+\begin{align}
+P(Y = y) &= {n \choose y} p^y (1 - p)^{n - y}
+\end{align}
+```
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE, fig.height=8}
+library(tidyverse)
+library(infer)
+y <- c(0, 1, 2, 3, 4)
+py <- dbinom(y, size = 4, prob = .5)
+df <- data.frame(y = factor(y),
+                 py = py)
+names(df) <- c("y", "P(Y = y)")
+df %>%
+  ggplot(aes(x = y, 
+             y = `P(Y = y)`)) +
+  geom_col(fill = "#EFBE43", color = "black") +
+  labs(title = "Binom(n = 4, p = .5)",
+       x = "Y",
+       y = "Probability") +
+  theme_bw(base_size = 40)
+```
+:::
+:::
+
+## Are these binomial?
+
+1.  The total number of exams that get jammed in the scanner when we scan them after the midterm.
+
+2.  The total number of students that miss the exam due to illness.
+
+3.  The total number of questions students get correct on your midterm.
+
+. . .
+
+> In order for a process to be perfectly described by the binomial distribution, the $n$ fixed trials must be independent of one another and each with the same probability of success $p$. Many real world scenarios are _approximately_ binomial.
+
+------------------------------------------------------------------------
+
+<center>
+
+<iframe width="1120" height="730" src="https://www.youtube.com/embed/3m4bxse2JEQ?start=5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+</iframe>
+
+</center>
+
+# Estimating a Parameter with an Interval
+
+##  {background-image="images/plato-cave.jpg" background-size="contain"}
+
+## Example: Partisan Antipathy
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew1.png")
+```
+
+## Metaphor: Plato's Cave
+
+::: columns
+::: {.column width="47%"}
+[Forms]{.inversebox}\
+The true essence of a thing (the objects by the fire).
+
+<br>
+
+[Representations]{.inversebox}\
+Fragments of the forms that we can observe (the shadows on the wall).
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+[Parameters]{.inversebox}\
+Numerical characteristics of a population / phenomenon.
+
+<br>
+
+[Statistics]{.inversebox}\
+Estimates of parameters calculated from data.
+:::
+:::
+
+. . .
+
+> A statistician seeks to infer the nature on unknown parameters (forms) based on estimates made from data (shadows cast upon the wall).
+
+
+## Example: Partisan Antipathy
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+
+## Identifying the components
+
+```{r out.width=200, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+1.  What is the **population** that they hope to generalize to?
+
+. . .
+
+> All registered Republicans and Democrats.
+
+. . .
+
+2.  What **parameters** are they interested in estimating?
+
+. . .
+
+> E.g. the proportion of Reps in 2019 who see Dems as close-minded.
+
+. . .
+
+3.  What are they using as their **point estimate**?
+
+. . .
+
+> E.g. the sample proportion of Reps in 2019 who see Dems as close-minded.
+
+## Example: Partisan Antipathy
+
+```{r out.width=700, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew3.png")
+```
+
+> What is *sampling error*?
+
+
+##  {background-image="images/sampling-dist.jpg" background-size="contain"}
+
+## Confidence Interval
+
+A **confidence interval** is an interval constructed from a sample of data that contains the true parameter with $1 - \alpha$ confidence.
+
+. . . 
+
+$$ \Large LB, UB $$
+
+. . .
+
+Where:
+
+- $LB$ is the lower bound of the interval
+- $UB$ is the upper bound of the interval
+- $1 - \alpha$ is the confidence level (most common: 95%)
+
+
+# Confidence Intervals via Probability Theory
+
+## Defining Random Variables
+
+Let $X_1$ be the response of the first Republican in the sample to the question "Are Dems close-minded?" where "yes" = 1, "no" = 0. The $p$ be the (unknown) probability of a 1.
+
+. . .
+
+$$ X_1 \sim \textrm{Bern}(p) $$
+
+. . .
+
+Let $X_2$ be the response of the **second** Republican in the sample . . .
+
+. . . 
+
+$$ X_2 \sim \textrm{Bern}(p') $$
+
+. . .
+
+> Is $p' = p$?
+
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+. . . 
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+
+## Poll
+
+Consider a deck of cards with only two cards: a red card and a black card. I will be drawing cards **without replacement**.
+
+::: poll
+1. What is the probability of drawing a red card first?
+
+2. What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+
+```{r}
+countdown::countdown(minutes = 0, seconds = 30, font_size = "2em")
+```
+
+## Results
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/2BXrJep94zKJBn6AMGMvu?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## Poll
+
+Consider a deck of cards with _two hundred cards: 100 red cards and 100 black cards. I will be drawing cards **without replacement**.
+
+::: poll
+1. What is the probability of drawing a red card first?
+
+2. What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+
+```{r}
+countdown::countdown(minutes = 0, seconds = 30, font_size = "2em")
+```
+
+
+## Results
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/v7j52YPPXUIGiz2u9Fw7a?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+. . . 
+
+> Probabilities remain stable when you sample with replacement.
+
+. . .
+
+> As population sizes grow large relative to sample sizes, probabilities remain approximately stable even when sampling without replacement.
+
+
+## Defining Random Variables
+
+Let $Y$ be the total number of "yes" responses in a sample of size $n$.
+
+. . . 
+
+$$ Y = \left(X_1 + X_2 + \ldots + X_n \right) $$
+
+. . . 
+
+If we think of this as the sum of $n$ Bernoulli independent random variables, each with the same probability of success $p$, then.
+
+. . . 
+
+$$ Y \sim \textrm{Binom}(n, p) $$
+
+
+## A CI based on the Binomial {.smaller}
+
+```{r fig.align='center', fig.height=20, fig.width = 40}
+df <- tibble(y = 0:4947,
+             p = dbinom(0:4947, 4947, prob = .64))
+ggplot(df, aes(x = y,
+               y = p)) +
+  geom_col() +
+  xlim(qbinom(.001, size = 4947, prob = .64), 
+       qbinom(.999, size = 4947, prob = .64)) +
+  labs(title = "Y ~ Bern(p = .64)",
+       y = "Probability") +
+  theme_bw(base_size = 80)
+```
+
+. . . 
+
+What values of $Y$ contain the middle 95% of the probability distribution?
+
+- 2.5% quantile: `r qbinom(.025, size = 4947, prob = .64)`
+- 97.5% quantile: `r qbinom(.975, size = 4947, prob = .64)`
+
+. . . 
+
+95% CI for $\hat{p}$: 
+
+$$ (LB, UB) = (3100/4947, 3232/4947) = (.626, .653) $$
+
+
+# Confidence Intervals via the Bootstrap
+
+##  {background-image="images/boot-1.jpg" background-size="contain"}
+
+##  {background-image="images/boot-2.jpg" background-size="contain"}
+
+
+## Pew Data
+
+How much uncertainty do we have in our estimate (64%) of the proportion of Republicans that think Democrats are more close-minded?
+
+. . . 
+
+:::: columns
+::: {.column width="50%"}
+```{r pew1, eval = TRUE, echo = FALSE}
+pew <- tibble(party = "Republican",
+              closed = rep(c("yes", "no"),
+                           c(3166, 1781)))
+```
+
+```{r echo = TRUE}
+pew
+```
+:::
+
+::: {.column width="50%"}
+```{r echo = TRUE}
+pew %>%
+  count(closed)
+```
+:::
+::::
+
+## Visualizing the data
+
+What geometry is appropriate for visualizing a single categorical variable with two levels/values?
+
+. . . 
+
+> Bar chart
+
+
+## Visualizing the data
+
+What geometry is appropriate for visualizing a single categorical variable with two levels/values?
+
+> Bar chart
+
+```{r}
+pew %>%
+  ggplot(aes(x = closed)) +
+  geom_bar() +
+  theme_bw(base_size = 30)
+```
+
+
+## Calculating $\hat{p}$
+
+$\hat{p}$ represents the observed statistic / estimate of the parameter $p$.
+
+:::: columns
+::: {.column width="53%"}
+**with `dplyr`**
+
+```{r echo = TRUE}
+obs_stat <- pew %>%
+  summarize(p_yes = mean(closed == "yes"))
+obs_stat
+```
+:::
+
+::: {.column width="47%"}
+**with `infer`**
+
+```{r echo = TRUE}
+library(infer)
+obs_stat <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  calculate(stat = "prop")
+obs_stat
+```
+:::
+::::
+
+
+## Generating a bootstrap sample
+
+. . .
+
+```{r boot1, eval = FALSE, echo = TRUE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 1, type = "bootstrap")
+```
+
+. . . 
+
+```{r ref.label = "boot1", echo = FALSE}
+```
+
+## Generating more bootstrap samples
+
+. . . 
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = TRUE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 1, type = "bootstrap")
+```
+:::
+
+::: {.column width="50%"}
+```{r echo = TRUE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 1, type = "bootstrap")
+```
+:::
+::::
+
+
+## Generating nine bootstrap samples
+
+. . .
+
+```{r echo = TRUE}
+boot_9 <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 9, type = "bootstrap")
+boot_9
+```
+
+
+## Visualizing nine bootstrap samples
+
+. . .
+
+```{r eval = FALSE, echo = TRUE}
+boot_9 %>%
+  ggplot(aes(x = closed)) +
+  geom_bar() + 
+  facet_wrap(vars(replicate))
+```
+
+
+## Visualizing nine bootstrap samples
+
+```{r boot9, eval = FALSE, echo = TRUE}
+boot_9 %>%
+  ggplot(aes(x = closed)) +
+  geom_bar() + 
+  facet_wrap(vars(replicate))
+```
+
+```{r ref.label = "boot9", echo = FALSE}
+```
+
+
+## Calculating nine bootstrap $\hat{p}$
+
+For each bootstrap sample, compute the proportion of "yes".
+
+. . .
+
+```{r calc9, eval = FALSE, echo = TRUE}
+boot_9 %>%
+  calculate(stat = "prop")
+```
+
+. . .
+
+```{r ref.label = "calc9"}
+```
+
+. . .
+
+> Note the reduction in size of the data frame as we summarize each bootstrap data set with a single statistic.
+
+## Generating 500 $\hat{p}$s
+
+```{r calc500, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, type = "bootstrap") %>%
+  calculate(stat = "prop")
+boot
+```
+
+. . .
+
+```{r ref.label = "calc500"}
+```
+
+
+
+## Visualizing bootstrap dist. of $\hat{p}$ (500 reps)
+
+What geometry is appropriate for visualizing the distribution of a single numerical variable (proportions)?
+
+## Visualizing bootstrap dist. of $\hat{p}$ (500 reps)
+
+What geometry is appropriate for visualizing the distribution of a single numerical variable (proportions)?
+
+> Density plot, histogram, dot plot, box plot.
+
+:::: columns
+::: {.column width="50%"}
+```{r boot, eval = FALSE, echo = TRUE}
+boot %>%
+  ggplot(aes(x = stat)) +
+  geom_histogram()
+```
+:::
+
+::: {.column width="50%"}
+```{r ref.label = "boot", echo = FALSE, fig.height = 4.5, fig.align='center'}
+```
+:::
+::::
+
+
+## Constructing a confidence interval
+
+**Characteristics of CIs**
+
+- A summary of sampling variability in an estimate using an interval
+- Take the form $(LB, UB)$
+- These intervals are built to contain the parameter with probability $1-\alpha$ (the confidence level).
+- A percentile bootstrap interval is the middle $1-\alpha$ of the bootstrap distribution.
+
+```{r ref.label = "bootv0", echo = FALSE, fig.height = 4.5}
+```
+
+## Visualizing the confidence interval
+
+```{r echo = FALSE}
+ci_boot <- boot %>%
+  get_ci(level = .95)
+```
+
+```{r bootv, eval = FALSE}
+boot %>%
+  visualize() +
+  shade_ci(ci_boot)
+```
+
+```{r ref.label = "bootv", echo = FALSE, fig.height = 4.5}
+```
+
+## Compute $1 - \alpha$ confidence interval
+
+`get_ci()` takes the *bootstrap distribution* and a $1 - \alpha$ *confidence level* and returns a *percentile confidence interval*.
+
+### 95% Percentile confidence interval
+
+```{r bootci, eval = FALSE, echo = TRUE}
+ci_boot <- boot %>%
+  get_ci(level = .95)
+ci_boot
+```
+
+```{r ref.label = "bootci", echo = FALSE, fig.height = 4.5}
+```
+
+## Compute $1 - \alpha$ confidence interval
+
+`get_ci()` takes the *bootstrap distribution* and a $1 - \alpha$ *confidence level* and returns a *percentile confidence interval*.
+
+### 95% Percentile confidence interval
+
+```{r bootci2, eval = FALSE, echo = TRUE}
+ci_boot <- boot %>%
+  get_ci(level = .95)
+ci_boot
+```
+
+```{r ref.label = "bootci2", echo = FALSE, fig.height = 4.5}
+```
+
+**Interpretation** We are 95% confident that the true proportion of Republicans that think Democrats are closed minded is between 62.7% and 65.4%.
+
+
+## Example: Partisan Antipathy {.smaller}
+
+```{r out.width=600, out.height = 350, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+- Our estimate for the proportion of Republicans that view Democrats as more close-minded is 64% with a margin of error of 1.3%.
+
+- We're 95% confident that the true proportion of Republicans that view Democrats as more close-minded is between 62.6% and 65.3%.
