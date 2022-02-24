@@ -179,6 +179,7 @@ penguins %>%
 ```{r}
 obs_stat <- penguins %>%
   summarize(p_adelie = mean(is_adelie))
+obs_stat
 ```
 
 ---

@@ -148,6 +148,14 @@ penguins %&gt;%
 ```r
 obs_stat &lt;- penguins %&gt;%
   summarize(p_adelie = mean(is_adelie))
+obs_stat
+```
+
+```
+## # A tibble: 1 × 1
+##   p_adelie
+##      &lt;dbl&gt;
+## 1    0.442
 ```
 
 ---
@@ -174,15 +182,15 @@ penguins %&gt;%
 ##    replicate is_adelie
 ##        &lt;int&gt; &lt;fct&gt;    
 ##  1         1 FALSE    
-##  2         1 FALSE    
+##  2         1 TRUE     
 ##  3         1 FALSE    
-##  4         1 FALSE    
+##  4         1 TRUE     
 ##  5         1 FALSE    
 ##  6         1 TRUE     
 ##  7         1 FALSE    
-##  8         1 FALSE    
-##  9         1 TRUE     
-## 10         1 FALSE    
+##  8         1 TRUE     
+##  9         1 FALSE    
+## 10         1 TRUE     
 ## # … with 334 more rows
 ```
 
@@ -212,9 +220,9 @@ penguins %&gt;%
 ##  4         1 TRUE     
 ##  5         1 FALSE    
 ##  6         1 TRUE     
-##  7         1 TRUE     
-##  8         1 FALSE    
-##  9         1 TRUE     
+##  7         1 FALSE    
+##  8         1 TRUE     
+##  9         1 FALSE    
 ## 10         1 FALSE    
 ## # … with 334 more rows
 ```
@@ -240,14 +248,14 @@ penguins %&gt;%
 ##        &lt;int&gt; &lt;fct&gt;    
 ##  1         1 TRUE     
 ##  2         1 FALSE    
-##  3         1 FALSE    
+##  3         1 TRUE     
 ##  4         1 TRUE     
 ##  5         1 FALSE    
 ##  6         1 TRUE     
 ##  7         1 FALSE    
-##  8         1 FALSE    
-##  9         1 TRUE     
-## 10         1 FALSE    
+##  8         1 TRUE     
+##  9         1 FALSE    
+## 10         1 TRUE     
 ## # … with 334 more rows
 ```
 ]
@@ -299,15 +307,15 @@ penguins %&gt;%
 ## # A tibble: 9 × 2
 ##   replicate  stat
 ##       &lt;int&gt; &lt;dbl&gt;
-## 1         1 0.427
-## 2         2 0.433
-## 3         3 0.422
-## 4         4 0.392
+## 1         1 0.456
+## 2         2 0.465
+## 3         3 0.416
+## 4         4 0.483
 ## 5         5 0.445
-## 6         6 0.451
-## 7         7 0.468
-## 8         8 0.459
-## 9         9 0.462
+## 6         6 0.456
+## 7         7 0.442
+## 8         8 0.419
+## 9         9 0.442
 ```
 
 --
@@ -363,7 +371,7 @@ penguins %&gt;%
 ## # A tibble: 1 × 2
 ##   lower_ci upper_ci
 ##      &lt;dbl&gt;    &lt;dbl&gt;
-## 1    0.387    0.491
+## 1    0.391    0.491
 ```
 
 
