@@ -59,20 +59,9 @@ Based on your interpretation of these documents, address the following questions
 
 The `ppk` data set represents a subset of questions that were asked in the questionnaire and have had random noise added to them. The results, in aggregate, share similar statistical properties to the raw data, but a given row no longer reflects an individual student's response completely.
 
-9. Print the first few rows with the columns that correspond to the responses to survey questions 1, 7, and 8. Were they as you described them in question 7 here in the lab? If not, describe how they appear.
+9. Print the first few rows with the columns that correspond to the responses to survey questions 1, 7, and 8. Note: we have changed the data back from all numerical data, as suggested by lab question 7, to a mix of numerical and categorical data. Please comment on whether your encoding of the data from Q7 on the questionnaire matches the encoding in `ppk`.
 
-```{r}
-p2 <- ppk %>%
-    pivot_longer(starts_with("Q9"), names_to = "Q9_issue", values_to = "Q9_rank")
-
-p2 %>%
-    ggplot(aes(x = Q9_rank)) +
-    geom_bar() +
-    facet_wrap(vars(Q9_issue))
-```
-
-
-10. Return to your sketches from question 8 here in the lab. Create those visualizations (or more appropriate analogues) using the questionnaire data. For each, describe the distribution in words. For question 9 you're welcome select just three of the priorities to visualize.
+10. Return to your sketches from question 8 here in the lab. Create those visualizations (or more appropriate analogues) using the questionnaire data. For each, add a title and axis labels to make it clear what they are showing, and describe the distribution in words. If your visualization is of ordinal data, the bars should be ordered accordingly. For question 9 you're welcome to select just three of the priorities to visualize.
 
     a. Question 9
     b. Question 10
@@ -91,8 +80,6 @@ p2 %>%
 For the following confidence intervals, please use bootstrap percentile intervals.
 
 15. Create a 95% confidence interval for the median rating of the condition of People's Park. Interpret the interval in the context of the problem.
-
-<!-- 16. Generate 9 bootstrap samples of size 500 for the rating of the condition of People's Park. Plot those 9 samples using three by three facet plots. Using one of them to construct a 95% confidence interval for the median rating of the condition of People's Park. Interpret the interval in the context of the problem: what does it tell us about the parameter we are trying to estimate? -->
 
 16. Create a 95% confidence interval for the overall proportion of students that support the People's Park Project without having been exposed to the information on page 14. Interpret the interval in the context of the problem.
 
