@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lab 6: People’s Park</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Lab 6: People's Park
+### Introduction to Probability and Statistics
+
+???
+As students arrive, randomly give ~8 of them an index card.
+
+
+---
+## While you're waiting
+
+If you've been given an index card, please write on it:
+
+1. Your first name
+2. Your year at Cal (1 is first year, 2 is second year, etc)
+3. Whether or not you are interested in majoring in a business- or econ-related field. 1 = yes, 0 = no
+
+---
+## Agenda
+
+--
+
+1. The Bootstrap
+
+2. Bootstrapping with Infer
+
+3. Question 16
+
+---
+class: middle, center
+
+# The Bootstrap
+
+---
+
+&lt;img src="images/sampling-dist.jpg" width="800" style="display: block; margin: auto;" /&gt;
+
+---
+## Parameters and Statistics
+
+**Our Goal**: Assess the sampling error / variability in our estimate of the _median_ year at Cal and the proportion of students in an econ-related field.
+
+--
+
+**Our Tool**: The Bootstrap
+
+
+---
+
+&lt;img src="images/boot-1.jpg" width="800" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Collecting a sample of data
+
+If you've been given an index card, please write on it:
+
+1. Your first name
+2. Your year at Cal (1 is first year, 2 is second year, etc)
+3. Whether or not you are interested in majoring in a business- or econ-related field. 1 = yes, 0 = no
+
+
+---
+class: middle, center
+
+boardwork
+???
+
+Collect index cards from students and record the data into a data frame on the board labelled "Observed sample". Calculate the sample median and sample proportion of econ-related majors.
+
+Ask for a volunteer to generate the first bootstrap sample. Hand them the stack of cards and have them randomly choose a single card and read off the data to you. As they do so, write out the first row of a "Bootstrap Sample 1" data frame on the board. Have them return the card to the deck, shuffle, and randomly choose a card and read off the data. Repeat until you have filled out the same number of rows as in the original data set. Calculate the median and proportion (you're welcome to write dplyr code to do this using `summarize()`).
+
+Ask for a second volunteer to generate the second bootstrap sample. Repeat the procedure as before, drawing a third data frame on the board and computing a second set of statistics (median and proportion).
+
+Collect the bootstrapped medians and proportions and sketch them as the first few points in a broader density plot that we'll be able to see when we take more and more bootstrap samples. Label this as the "bootstrap distribution" and speak of it as an approximation of the true sampling distribution. You can explain the 1 - alpha bootstrap interval as the interval that captures the middle 95% of bootstrapped statistics.
+
+
+---
+class: middle, center
+
+# Bootstrapping with Infer
+
+
+---
+
+&lt;img src="images/infer-plain.jpg" width="800" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+&lt;img src="images/infer-code.jpg" width="800" style="display: block; margin: auto;" /&gt;
+
+---
+## Example: Penguins
+
+What is a point and interval estimate for the proportion of penguins that are Adelie?
+
+--
+
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+```
+
+--
+
+.pull-left[
+
+```r
+penguins &lt;- penguins %&gt;%
+  mutate(is_adelie = species == "Adelie")
+
+penguins %&gt;%
+  ggplot(aes(x = is_adelie)) +
+  geom_bar()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="slides-2_files/figure-html/unnamed-chunk-7-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Point estimate
+
+
+```r
+obs_stat &lt;- penguins %&gt;%
+  summarize(p_adelie = mean(is_adelie))
+```
+
+---
+## Generating one bootstrap sample
+--
+
+
+```r
+library(infer)
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+--
+
+
+```
+## Response: is_adelie (factor)
+## # A tibble: 344 × 2
+## # Groups:   replicate [1]
+##    replicate is_adelie
+##        &lt;int&gt; &lt;fct&gt;    
+##  1         1 FALSE    
+##  2         1 FALSE    
+##  3         1 FALSE    
+##  4         1 TRUE     
+##  5         1 FALSE    
+##  6         1 FALSE    
+##  7         1 TRUE     
+##  8         1 TRUE     
+##  9         1 FALSE    
+## 10         1 TRUE     
+## # … with 334 more rows
+```
+
+---
+## Two more bootstrap samples
+--
+
+.pull-left[
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+```
+## Response: is_adelie (factor)
+## # A tibble: 344 × 2
+## # Groups:   replicate [1]
+##    replicate is_adelie
+##        &lt;int&gt; &lt;fct&gt;    
+##  1         1 FALSE    
+##  2         1 TRUE     
+##  3         1 TRUE     
+##  4         1 TRUE     
+##  5         1 TRUE     
+##  6         1 TRUE     
+##  7         1 TRUE     
+##  8         1 FALSE    
+##  9         1 FALSE    
+## 10         1 FALSE    
+## # … with 334 more rows
+```
+]
+
+--
+
+.pull-right[
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+```
+## Response: is_adelie (factor)
+## # A tibble: 344 × 2
+## # Groups:   replicate [1]
+##    replicate is_adelie
+##        &lt;int&gt; &lt;fct&gt;    
+##  1         1 FALSE    
+##  2         1 TRUE     
+##  3         1 TRUE     
+##  4         1 TRUE     
+##  5         1 TRUE     
+##  6         1 FALSE    
+##  7         1 FALSE    
+##  8         1 FALSE    
+##  9         1 FALSE    
+## 10         1 FALSE    
+## # … with 334 more rows
+```
+]
+
+---
+## Visualizing 9 bs samples
+--
+
+.pull-left[
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 9, 
+           type = "bootstrap") %&gt;%
+  ggplot(aes(x = is_adelie)) +
+  geom_bar() +
+  facet_wrap(vars(replicate),
+             nrow = 3)
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="slides-2_files/figure-html/unnamed-chunk-12-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Calculating 9 `\(\hat{p}\)`
+--
+
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 9, 
+           type = "bootstrap") %&gt;%
+  calculate(stat = "prop")
+```
+
+--
+
+
+```
+## Response: is_adelie (factor)
+## # A tibble: 9 × 2
+##   replicate  stat
+##       &lt;int&gt; &lt;dbl&gt;
+## 1         1 0.468
+## 2         2 0.453
+## 3         3 0.448
+## 4         4 0.448
+## 5         5 0.442
+## 6         6 0.483
+## 7         7 0.453
+## 8         8 0.442
+## 9         9 0.480
+```
+
+--
+
+&gt; Note the change in data frame size.
+
+
+---
+## The bootstrap dist (reps = 500)
+--
+
+.pull-left[
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 500, 
+           type = "bootstrap") %&gt;%
+  calculate(stat = "prop") %&gt;%
+  ggplot(aes(x = stat)) +
+  geom_histogram()
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="slides-2_files/figure-html/unnamed-chunk-14-1.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+---
+## Interval Estimate
+--
+
+We can extract the missing 95% by identifying the .025 quantile and the .975 quantile of the bootstrap distribution with `get_ci()`.
+
+
+```r
+penguins %&gt;%
+  specify(response = is_adelie,
+          success = "TRUE") %&gt;%
+  generate(reps = 500, 
+           type = "bootstrap") %&gt;%
+  calculate(stat = "prop") %&gt;%
+  get_ci(level = .95)
+```
+
+--
+
+
+```
+## # A tibble: 1 × 2
+##   lower_ci upper_ci
+##      &lt;dbl&gt;    &lt;dbl&gt;
+## 1    0.392    0.494
+```
+
+
+---
+
+&lt;img src="images/infer-code.jpg" width="800" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,326 @@
+---
+title: "Lab 6: People's Park"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = TRUE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(stat20data)
+data(class_survey)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+# Lab 6: People's Park
+### Introduction to Probability and Statistics
+
+???
+As students arrive, randomly give ~8 of them an index card.
+
+
+---
+## While you're waiting
+
+If you've been given an index card, please write on it:
+
+1. Your first name
+2. Your year at Cal (1 is first year, 2 is second year, etc)
+3. Whether or not you are interested in majoring in a business- or econ-related field. 1 = yes, 0 = no
+
+---
+## Agenda
+
+--
+
+1. The Bootstrap
+
+2. Bootstrapping with Infer
+
+3. Question 16
+
+---
+class: middle, center
+
+# The Bootstrap
+
+---
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/sampling-dist.jpg")
+```
+
+---
+## Parameters and Statistics
+
+**Our Goal**: Assess the sampling error / variability in our estimate of the _median_ year at Cal and the proportion of students in an econ-related field.
+
+--
+
+**Our Tool**: The Bootstrap
+
+
+---
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/boot-1.jpg")
+```
+
+
+---
+
+## Collecting a sample of data
+
+If you've been given an index card, please write on it:
+
+1. Your first name
+2. Your year at Cal (1 is first year, 2 is second year, etc)
+3. Whether or not you are interested in majoring in a business- or econ-related field. 1 = yes, 0 = no
+
+
+---
+class: middle, center
+
+boardwork
+???
+
+Collect index cards from students and record the data into a data frame on the board labelled "Observed sample". Calculate the sample median and sample proportion of econ-related majors.
+
+Ask for a volunteer to generate the first bootstrap sample. Hand them the stack of cards and have them randomly choose a single card and read off the data to you. As they do so, write out the first row of a "Bootstrap Sample 1" data frame on the board. Have them return the card to the deck, shuffle, and randomly choose a card and read off the data. Repeat until you have filled out the same number of rows as in the original data set. Calculate the median and proportion (you're welcome to write dplyr code to do this using `summarize()`).
+
+Ask for a second volunteer to generate the second bootstrap sample. Repeat the procedure as before, drawing a third data frame on the board and computing a second set of statistics (median and proportion).
+
+Collect the bootstrapped medians and proportions and sketch them as the first few points in a broader density plot that we'll be able to see when we take more and more bootstrap samples. Label this as the "bootstrap distribution" and speak of it as an approximation of the true sampling distribution. You can explain the 1 - alpha bootstrap interval as the interval that captures the middle 95% of bootstrapped statistics.
+
+
+---
+class: middle, center
+
+# Bootstrapping with Infer
+
+
+---
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/infer-plain.jpg")
+```
+
+
+---
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/infer-code.jpg")
+```
+
+---
+## Example: Penguins
+
+What is a point and interval estimate for the proportion of penguins that are Adelie?
+
+--
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+```
+
+--
+
+.pull-left[
+```{r eval = FALSE}
+penguins <- penguins %>%
+  mutate(is_adelie = species == "Adelie")
+
+penguins %>%
+  ggplot(aes(x = is_adelie)) +
+  geom_bar()
+```
+]
+
+--
+
+.pull-right[
+```{r echo = FALSE, fig.height = 4.5}
+penguins <- penguins %>%
+  mutate(is_adelie = species == "Adelie")
+
+penguins %>%
+  ggplot(aes(x = is_adelie)) +
+  geom_bar() +
+  theme_gray(base_size = 20)
+```
+]
+
+---
+## Point estimate
+
+```{r}
+obs_stat <- penguins %>%
+  summarize(p_adelie = mean(is_adelie))
+```
+
+---
+## Generating one bootstrap sample
+--
+
+```{r inf-1, eval = FALSE}
+library(infer)
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+--
+
+```{r ref.label = "inf-1", echo = FALSE}
+```
+
+---
+## Two more bootstrap samples
+--
+
+.pull-left[
+```{r}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+]
+
+--
+
+.pull-right[
+```{r}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+]
+
+---
+## Visualizing 9 bs samples
+--
+
+.pull-left[
+```{r bs9, eval = FALSE}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 9, 
+           type = "bootstrap") %>%
+  ggplot(aes(x = is_adelie)) +
+  geom_bar() +
+  facet_wrap(vars(replicate),
+             nrow = 3)
+```
+]
+
+--
+
+.pull-right[
+```{r ref.label="bs9", echo = FALSE}
+```
+]
+
+---
+## Calculating 9 $\hat{p}$
+--
+
+```{r calc9, eval = FALSE}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 9, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+```
+
+--
+
+```{r ref.label="calc9", echo = FALSE}
+```
+
+--
+
+> Note the change in data frame size.
+
+
+---
+## The bootstrap dist (reps = 500)
+--
+
+.pull-left[
+```{r viz500, eval = FALSE}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  ggplot(aes(x = stat)) +
+  geom_histogram()
+```
+]
+
+--
+
+.pull-right[
+```{r ref.label="viz500", echo = FALSE}
+```
+]
+
+---
+## Interval Estimate
+--
+
+We can extract the missing 95% by identifying the .025 quantile and the .975 quantile of the bootstrap distribution with `get_ci()`.
+
+```{r getci, eval = FALSE}
+penguins %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  get_ci(level = .95)
+```
+
+--
+
+```{r ref.label = "getci", echo = FALSE}
+```
+
+
+---
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/infer-code.jpg")
+```
