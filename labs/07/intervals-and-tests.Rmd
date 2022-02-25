@@ -1,0 +1,151 @@
+---
+title: 'Lab 7: Formal Inference'
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE, 
+                      echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{r}
+# Promote example from slides
+*H_0: Promotion decisions are made independent of sex.*
+*H_A: Promotion decisions are not made independently of sex.*
+  
+(Hypotheses in terms of parameters ok too: p1 - p2 = 0)
+  
+set.seed(504)
+library(infer)
+library(tidyverse)
+data(promote)
+obs_stat <- promote %>%
+  specify(decision ~ sex, success = "promote") %>% 
+  calculate(stat = "diff in props", order = c("male", "female"))
+null <- promote %>%
+  specify(decision ~ sex, success = "promote") %>% 
+  hypothesize(null = "independence") %>%
+  generate(reps = 500, type = "permute") %>%
+  calculate(stat = "diff in props", order = c("male", "female"))
+
+null %>%
+  visualize() +
+  shade_p_value(obs_stat = obs_stat, direction = "both")
+
+null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+## Part I: examples revisited
+
+In lecture we've gone through several examples of hypothesis tests. Now you'll get the chance to get your hands on the data and construct those tests using the computational approach to finding the null distribution. All of the data sets for this lab can be found in the `stats20data` package.
+
+1. Using the `yawn` data set,
+    a. Write the null and alternative hypothesis.
+    b. Compute the observed test statistic.
+    c. Visualize the observed data using an appropriate plot.
+    d. Construct a plot featuring 9 subplots, each one featuring a visualization of a data set generated under the null hypothesis. Does your visualization of the observed data from the previous part look like it be one of these plots?
+    e. Construct and save the null distribution of statistics.
+    f. Visualize the null distribution.
+    g. Compute the p-value.
+    h. Interpret the p-value. What does it say about the consistency between the null hypothesis and the observed data?
+
+```{r}
+*H_0: Yawning occurs independently of being exposed to a yawn.*
+*H_A: Yawning occurs is dependent on being exposed to a yawn.*
+  
+(Hypotheses in terms of parameters ok too: p1 - p2 = 0)
+  
+set.seed(504)
+library(infer)
+library(tidyverse)
+data(yawn)
+obs_stat <- yawn %>%
+  specify(response ~ group, success = "yawn") %>% 
+  calculate(stat = "diff in props", order = c("stimulus", "no stimulus"))
+null <- yawn %>%
+  specify(response ~ group, success = "yawn") %>% 
+  hypothesize(null = "independence") %>%
+  generate(reps = 500, type = "permute") %>%
+  calculate(stat = "diff in props", order = c("stimulus", "no stimulus"))
+
+null %>%
+  visualize() +
+  shade_p_value(obs_stat = obs_stat, direction = "both")
+
+null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+2. Using the `millennials` data set,
+    a. Write the null and alternative hypothesis.
+    b. Compute the observed test statistic.
+    c. Visualize the observed data using an appropriate plot.
+    d. Construct a plot featuring 9 subplots, each one featuring a visualization of a data set generated under the null hypothesis. Does your visualization of the observed data from the previous part look like it be one of these plots?
+    e. Construct and save the null distribution of statistics.
+    f. Visualize the null distribution.
+    g. Compute the p-value.
+    h. Interpret the p-value. What does it say about the consistency between the null hypothesis and the observed data?
+    
+
+```{r}
+*H_0: Millennials favor same sex marriage with a proportion identical to that of Americans at large. p = .5.*
+*H_A: Millennials favor same sex marriage with a proportion different from that of Americans at large. p != .5.*
+  
+data(millenials)
+obs_stat <- millenials %>%
+  specify(response = response, success = "favor") %>% 
+  calculate(stat = "prop")
+null <- millenials %>%
+  specify(response = response, success = "favor") %>%
+  hypothesize(null = "point", p = .5) %>%
+  generate(reps = 500, type = "simulate") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize() +
+  shade_p_value(obs_stat = obs_stat, direction = "both")
+
+null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+    
+3. *In the 2016 NBA season, it was noted that professional basketball player Steph Curry had a remarkable basket-shooting performance beyond 30 feet. The `curry` data frame contains his long range shooting performance across 27 attempts. By comparison, the long range shooting percentage of NBA players that season was 7.5%. Assess whether this data is consistent with the notion that Steph Curry has a long range shooting percentage that is no different from the average NBA player. Said another way, assess just how remarkable this Curry's shooting performance was in 2016.
+    a. Write the null and alternative hypothesis.
+    b. Compute the observed test statistic.
+    c. Visualize the observed data using an appropriate plot.
+    d. Construct a plot featuring 9 subplots, each one featuring a visualization of a data set generated under the null hypothesis. Does your visualization of the observed data from the previous part look like it be one of these plots?
+    e. Construct and save the null distribution of statistics.
+    f. Visualize the null distribution.
+    g. Compute the p-value.
+    h. Interpret the p-value. What does it say about the consistency between the null hypothesis and the observed data?
+  
+```{r}
+*H_0: Millenials favor same sex marriage with a proportion identical to that of Americans at large. p = .5.*
+*H_A: Millenials favor same sex marriage with a proportion different from that of Americans at large. p != .5.*
+
+data(curry)
+obs_stat <- curry %>%
+  specify(response = shot, success = "hit") %>% 
+  calculate(stat = "prop")
+null <- curry %>%
+  specify(response = shot, success = "hit") %>%
+  hypothesize(null = "point", p = .075) %>%
+  generate(reps = 500, type = "simulate") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize() +
+  shade_p_value(obs_stat = obs_stat, direction = "both")
+
+null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+4. *How would you expect one of the plots of a null distribution to change if `reps` were increased to 1000? Give it a try.
+
+```{r}
+*As the `reps` increase, the shape of the null distribution should become smoother. This is confirmed when I try building a distribution with 1000 reps.*
+```

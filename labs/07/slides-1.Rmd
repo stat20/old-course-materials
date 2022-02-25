@@ -1,0 +1,66 @@
+---
+title: "Inference: Intervals and Tests"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = TRUE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(stat20data)
+data(class_survey)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+# Lab 7: Inference: Intervals and Tests
+### Introduction to Probability and Statistics
+
+---
+
+class: middle, center
+
+# Is Yawning Contagious?
+
+---
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"> <iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="https://www.dailymotion.com/embed/video/x6tryad" width="100%" height="100%" allowfullscreen > </iframe> </div>
+
+---
+
+## In pairs/trios
+
+.task[
+Please record answers to the 6 questions on the front of the handout (the side with **Is Yawning Contagious?** on the front).
+]
+
+```{r echo = FALSE}
+countdown::countdown(3)
+```
+
+--
+
+.task[
+Please enter your answers at `pollev.com/andrewpbray088`
+]
+

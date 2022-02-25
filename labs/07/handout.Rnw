@@ -1,0 +1,103 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{fancyhdr,url,hyperref}
+\usepackage{enumerate}
+
+\oddsidemargin 0in  %0.5in
+\topmargin     0in
+\leftmargin    0in
+\rightmargin   0in
+\textheight    9in
+\textwidth     6in %6in
+
+\pagestyle{fancy}
+
+\lhead{\textsc{STAT 20}}
+\chead{\textsc{Lab 7}}
+\lfoot{}
+\cfoot{}
+%\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+\newcommand{\ans}{\vspace{0.5in}}
+\newcommand{\R}{{\sf R}\xspace}
+\newcommand{\cmd}[1]{\texttt{#1}}
+
+\title{STAT 20:\\Intro to Probability and Statistics}
+\date{}
+
+\rhead{\textsc{\today}}
+
+\begin{document}
+
+\textbf{Is Yawning Contagious?} An experiment conducted by MythBusters tested if a person can be subconsciously influenced into yawning if another person near them yawns.
+
+In this study 50 people were randomly assigned to two groups: 34 to a group where a person near them yawned (\texttt{seeded = 1}) and 16 to a control group where there wasn't a yawn seed (\texttt{seeded = 0}). They then recorded the whether each subject yawned (\texttt{yawned = 1}) or not (\texttt{yawned = 0}). The results are as follows:
+
+<<eval=TRUE, message=FALSE, echo = FALSE>>=
+seeded <- c(rep(0, 12), rep(1, 24), rep(0, 4), rep(1, 10))
+yawned <- c(rep(0, 36), rep(1, 14))
+table(seeded, yawned)
+@
+
+
+\begin{enumerate}
+  \item What is the explanatory variable?  Response variable? 
+  \ans
+  \item What was the proportion of yawners in the seeded group?
+  \ans
+  \item What was the proportion of yawners in the unseeded group?
+  \ans
+  \item If there were \emph{no association} between yawning and the proximity of another yawner, what would you expect the difference to be between these two proportions?
+  \ans
+  \item Let $X$ be the number of people in the unseeded group that yawned.  What are the possible values that $X$ can take?
+  \ans
+  \item In terms of $X$, what is an example of a result that would demonstrate a \emph{strong} association between yawning and being exposed to a yawn?  $X = $
+\end{enumerate}
+
+\newpage
+
+\textbf{Simulating Yawners} What kind of data would be observed if there was no association between these variables and if the only variation was caused by the process of randomly assigning subjects to the two conditions? Find out by \emph{simulating} the process.
+\begin{enumerate}
+  \item Create a deck of cards, 36 of which represent subjects who did not yawn, 14 of which represent subjects who yawned.
+  \item Shuffle the deck of cards to simulate the process of randomly assignment to the two conditions: being exposed to a yawn (seeded) and not being exposed (unseeded).
+  \item Deal them into two decks of size 16 and 34, representing the 1/3 of the subjects that were assigned to the seeded group and the 2/3 assigned to the unseeded group.
+  \item Count the number of yawners that happened to end up in the seeded group just by chance and record your count below as $x_1$.
+  \item Repeat process 5 more times.
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+  \hline
+  $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\
+  \hline
+  \hspace{0.75in} & \hspace{0.75in} & \hspace{0.75in} & \hspace{0.75in} & \hspace{0.75in} & \hspace{0.75in} \\[5ex]
+  \hline
+\end{tabular}
+\end{center}
+
+\vspace{2.5in}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline
+  0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
+\end{tabular}
+\end{center}
+
+\vspace{5mm}
+
+\begin{enumerate}
+  \item How many yawners would you expect to find in the seeded group just by chance? (i.e. what is $E(X)$?)
+  \ans
+  \item What value of $X$ did the MythBusters actually observe?
+  \ans
+  \item How would we summarize these results?
+  \ans
+\end{enumerate}
+
+
+\end{document}
