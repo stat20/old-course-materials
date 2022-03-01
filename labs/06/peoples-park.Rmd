@@ -67,7 +67,7 @@ The `ppk` data set represents a subset of questions that were asked in the quest
     b. Question 10
     c. Question 18 and 21 (showing the change from before and after the information)
 
-11. Create a new column called `support_before` that takes the response data from question 18 and returns `TRUE` for answers of "Very strongly support", "Strongly support", and "Somewhat strongly support" and FALSE otherwise. What proportion of the survey participants in each class (freshman, sophomore, etc) supported the People's Park Project before being presented with the information on the bottom of page 14?
+11. Create a new column called `support_before` that takes the response data from question 18 and returns `TRUE` for answers of "Very strongly support", "Strongly support", and "Somewhat support" and FALSE otherwise. What proportion of the survey participants in each class (freshman, sophomore, etc) supported the People's Park Project before being presented with the information on the bottom of page 14?
 
 12. What is the mean and median rating of the condition of People's Park (question 15 on the survey)?
 
