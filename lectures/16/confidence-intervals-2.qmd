@@ -1,0 +1,814 @@
+---
+title: "Confidence Intervals II"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1.  Be sure to attend lab session Tuesday!
+2.  My office hours 12-1 pm today
+
+## Agenda
+
+::: nonincremental
+1.  Confidence Intervals via the Bootstrap
+2.  Interpreting Confidence Intervals
+3.  Confidence Intervals via Probability Theory
+:::
+
+# Confidence Intervals via the Bootstrap
+
+##  {background-image="images/boot-1.jpg" background-size="contain"}
+
+## {.smaller}
+
+::: poll
+Which of these is a valid bootstrap sample?
+
+Answer at `pollev.com/stat20`.
+:::
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+
+set.seed(30)
+a <- penguins %>%
+  sample_n(5) %>%
+  mutate(name = c("Gus", "Luz", "Ida", "Ola", "Abe")) %>%
+  rename(length = bill_length_mm) %>%
+  select(name, species, length)
+```
+
+:::: columns
+::: {.column width="33%"}
+
+<br>
+<br>
+<br>
+
+```{r}
+library(kableExtra)
+kable(a, caption = "Original Sample")
+```
+:::
+
+::: {.column width="33%"}
+```{r}
+a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  kable(caption = "BS A")
+a %>%
+  slice_sample(n = 6, replace = T) %>%
+  kable(caption = "BS C")
+```
+:::
+
+::: {.column width="33%"}
+```{r}
+names_b <- a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  pull(name)
+a %>%
+  mutate(name = names_b) %>%
+  kable(caption = "BS C")
+  
+a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  kable(caption = "BS D")
+```
+:::
+::::
+
+
+##
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/8ivOQbGOSOOQqHIsc3Pon?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe></center>
+
+
+## {.smaller}
+
+::: poll
+Which of these is a valid bootstrap sample?
+
+Answer at `pollev.com/stat20`.
+:::
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+
+set.seed(30)
+a <- penguins %>%
+  sample_n(5) %>%
+  mutate(name = c("Gus", "Luz", "Ida", "Ola", "Abe")) %>%
+  rename(length = bill_length_mm) %>%
+  select(name, species, length)
+```
+
+:::: columns
+::: {.column width="33%"}
+
+<br>
+<br>
+<br>
+
+```{r}
+library(kableExtra)
+kable(a, caption = "Original Sample")
+```
+:::
+
+::: {.column width="33%"}
+```{r}
+a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  kable(caption = "BS A")
+a %>%
+  slice_sample(n = 6, replace = T) %>%
+  kable(caption = "BS C")
+```
+:::
+
+::: {.column width="33%"}
+```{r}
+names_b <- a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  pull(name)
+a %>%
+  mutate(name = names_b) %>%
+  kable(caption = "BS C")
+  
+a %>%
+  slice_sample(prop = 1, replace = T) %>%
+  kable(caption = "BS D")
+```
+:::
+::::
+
+
+## Example: Partisan Antipathy
+
+```{r out.width=700, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+> Can we estimate the proportion of Reps that think Dems are close-minded using an **interval** instead of a **point estimate**?
+
+
+## Confidence Interval {.nonincremental}
+
+A **confidence interval** is an interval constructed from a sample of data that contains the true parameter with $1 - \alpha$ confidence.
+
+$$ \Large LB, UB $$
+
+Where:
+
+::: nonincremental
+-   $LB$ is the lower bound of the interval
+-   $UB$ is the upper bound of the interval
+-   $1 - \alpha$ is the confidence level (most common: 95%)
+:::
+
+
+## Pew Data
+
+How much uncertainty do we have in our estimate (64%) of the proportion of Republicans that think Democrats are more close-minded?
+
+. . .
+
+```{r pew1, eval = TRUE, echo = FALSE}
+pew <- tibble(party = "Republican",
+              closed = rep(c("yes", "no"),
+                           c(3166, 1781)))
+```
+
+```{r echo = TRUE}
+pew
+```
+
+
+## Visualizing the data
+
+What geometry is appropriate for visualizing a single categorical variable with two levels/values?
+
+. . .
+
+> Bar chart
+
+
+## Visualizing the data
+
+What geometry is appropriate for visualizing a single categorical variable with two levels/values?
+
+> Bar chart
+
+```{r fig.align = "center"}
+pew %>%
+  ggplot(aes(x = closed)) +
+  geom_bar() +
+  theme_bw(base_size = 25)
+```
+
+
+## Calculating $\hat{p}$
+
+$\hat{p}$ represents the observed statistic / estimate of the parameter $p$.
+
+::: columns
+::: {.column width="53%"}
+**with `dplyr`**
+
+```{r echo = TRUE}
+obs_stat <- pew %>%
+  summarize(p_yes = mean(closed == "yes"))
+obs_stat
+```
+:::
+
+::: {.column width="47%"}
+**with `infer`**
+
+```{r echo = TRUE}
+library(infer)
+obs_stat <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  calculate(stat = "prop")
+obs_stat
+```
+:::
+:::
+
+# An `infer` Pipeline for Bootstrapping
+
+## {auto-animate=true}
+
+```{r i1, echo = TRUE, eval = FALSE}
+pew
+```
+
+. . .
+
+```{r ref.label="i1"}
+```
+
+
+
+## {auto-animate=true}
+
+```{r i2, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes")
+```
+
+. . .
+
+```{r ref.label="i2"}
+```
+
+
+## {auto-animate=true}
+
+```{r i3, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+. . .
+
+```{r ref.label="i3"}
+```
+
+
+## {auto-animate=true}
+
+```{r echo = TRUE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 1, 
+           type = "bootstrap")
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+
+```{r i4, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 2, 
+           type = "bootstrap")
+```
+
+. . .
+
+```{r ref.label = "i4"}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+```{r i5, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 2, 
+           type = "bootstrap") %>%
+  ggplot(aes(x = closed)) +
+  geom_bar() +
+  facet_wrap(vars(replicate))
+```
+
+. . .
+
+```{r ref.label = "i5", fig.align='center'}
+```
+
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+
+```{r i6, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 2, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+```
+
+. . .
+
+```{r ref.label = "i6", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i7, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+```
+
+. . .
+
+```{r ref.label = "i7", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i8, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  ggplot(aes(x = stat)) +
+  geom_histogram()
+```
+
+. . .
+
+```{r ref.label = "i8", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i9, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  ggplot(aes(x = stat)) +
+  geom_boxplot()
+```
+
+. . .
+
+```{r ref.label = "i9", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i10, echo = TRUE, eval = FALSE}
+pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  ggplot(aes(x = stat)) +
+  geom_density()
+```
+
+. . .
+
+```{r ref.label = "i10", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i11, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+ci
+```
+
+. . .
+
+```{r ref.label = "i11", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+```{r}
+set.seed(31)
+```
+
+```{r i12, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+boot %>%
+  visualize() +
+  shade_ci(ci)
+```
+
+. . .
+
+```{r ref.label = "i12", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+::: poll
+What will happen if I *increase* the number of reps to 5000?
+:::
+
+```{r}
+set.seed(31)
+```
+
+```{r i13, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 5000, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+boot %>%
+  visualize() +
+  shade_ci(ci)
+```
+
+
+##
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/sOJqs8R2Ji6XF3o6Ss6Wb?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## {auto-animate=true}
+
+::: poll
+What will happen if I *increase* the number of reps to 5000?
+:::
+
+```{r}
+set.seed(31)
+```
+
+```{r i13b, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 5000, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+boot %>%
+  visualize() +
+  shade_ci(ci)
+```
+
+. . .
+
+```{r ref.label = "i13b", fig.align='center'}
+```
+
+
+## {auto-animate=true}
+
+::: poll
+What will happen if I *decrease the sample size* to 100?
+:::
+
+```{r}
+set.seed(31)
+```
+
+```{r i14, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  slice_sample(n = 100) %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 500, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+boot %>%
+  visualize() +
+  shade_ci(ci)
+```
+
+
+## 
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/1RkWCtIEVh5gIGX2fCYmr?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## {auto-animate=true}
+
+::: poll
+What will happen if I *decrease the sample size* to 100?
+:::
+
+```{r}
+set.seed(31)
+```
+
+```{r i15, echo = TRUE, eval = FALSE}
+boot <- pew %>%
+  slice_sample(n = 100) %>%
+  specify(response = closed, 
+          success = "yes") %>%
+  generate(reps = 5000, 
+           type = "bootstrap") %>%
+  calculate(stat = "prop")
+ci <- boot %>%
+  get_ci(level = .95)
+boot %>%
+  visualize() +
+  shade_ci(ci)
+```
+
+. . .
+
+```{r ref.label = "i15", fig.align='center'}
+```
+
+# Interpreting a Confidence Interval
+
+## Characteristics of CIs
+
+-   A summary of sampling variability in an estimate using an interval
+-   Take the form $(LB, UB)$
+-   These intervals are built to contain the parameter with probability $1-\alpha$ (the confidence level).
+-   A percentile bootstrap interval is the middle $1-\alpha$ of the bootstrap distribution.
+
+. . .
+
+**Interpretation** We are 95% confident that the true proportion of Republicans that think Democrats are closed minded is between 62.7% and 65.4%.
+
+. . .
+
+> What does this really mean?
+
+
+## Example: Partisan Antipathy
+
+```{r out.width=600, out.height = 350, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+
+-   We're 95% confident that the true proportion of Republicans that view Democrats as more close-minded is between 62.6% and 65.3%.
+
+
+# Confidence Intervals via Probability Theory
+
+## Defining Random Variables
+
+Let $X_1$ be the response of the first Republican in the sample to the question "Are Dems close-minded?" where "yes" = 1, "no" = 0. The $p$ be the (unknown) probability of a 1.
+
+. . .
+
+$$ X_1 \sim \textrm{Bern}(p) $$
+
+. . .
+
+Let $X_2$ be the response of the **second** Republican in the sample . . .
+
+. . .
+
+$$ X_2 \sim \textrm{Bern}(p') $$
+
+. . .
+
+> Is $p' = p$?
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+. . .
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+## 
+
+Consider a deck of cards with only two cards: a red card and a black card. I will be drawing cards **without replacement**.
+
+::: poll
+::: nonincremental
+1.  What is the probability of drawing a red card first?
+
+2.  What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+:::
+
+
+## 
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/2BXrJep94zKJBn6AMGMvu?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</center>
+
+
+## Poll
+
+Consider a deck of cards with \_two hundred cards: 100 red cards and 100 black cards. I will be drawing cards **without replacement**.
+
+::: poll
+1.  What is the probability of drawing a red card first?
+2.  What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+
+## Results
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/v7j52YPPXUIGiz2u9Fw7a?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</center>
+
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+. . .
+
+> Probabilities remain stable when you sample with replacement.
+
+. . .
+
+> As population sizes grow large relative to sample sizes, probabilities remain approximately stable even when sampling without replacement.
+
+
+## Defining Random Variables
+
+Let $Y$ be the total number of "yes" responses in a sample of size $n$.
+
+. . .
+
+$$ Y = \left(X_1 + X_2 + \ldots + X_n \right) $$
+
+. . .
+
+If we think of this as the sum of $n$ Bernoulli independent random variables, each with the same probability of success $p$, then.
+
+. . .
+
+$$ Y \sim \textrm{Binom}(n, p) $$
+
+## A CI based on the Binomial {.smaller}
+
+```{r fig.align='center', fig.height=20, fig.width = 40}
+library(tidyverse)
+df <- tibble(y = 0:4947,
+             p = dbinom(0:4947, 4947, prob = .64))
+ggplot(df, aes(x = y,
+               y = p)) +
+  geom_col() +
+  xlim(qbinom(.001, size = 4947, prob = .64), 
+       qbinom(.999, size = 4947, prob = .64)) +
+  labs(title = "Y ~ Bern(p = .64)",
+       y = "Probability") +
+  theme_bw(base_size = 80)
+```
+
+. . .
+
+What values of $Y$ contain the middle 95% of the probability distribution?
+
+-   2.5% quantile: `r qbinom(.025, size = 4947, prob = .64)`
+-   97.5% quantile: `r qbinom(.975, size = 4947, prob = .64)`
+
+. . .
+
+95% CI for $\hat{p}$:
+
+$$ (LB, UB) = (3100/4947, 3232/4947) = (.626, .653) $$
+
+
+# Parting thoughts
+
+##  {background-image="images/plato-cave.jpg" background-size="contain"}
+
+## 
+
+[Point estimation is like fishing with a spear.]{.bigadage}
+
+. . .
+
+[Interval estimation is like fishing with a net]{.bigadage}

@@ -1,0 +1,515 @@
+---
+title: "Confidence Intervals III"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1.  Be sure to attend lab session Tuesday!
+
+## Agenda
+
+::: nonincremental
+1.  Review
+2.  Confidence Intervals via Probability Theory
+3.  Methods Compared
+4.  Sampling Bias
+:::
+
+# Review
+
+## {background-image="images/ci-interp.png" background-size="contain"}
+
+## {}
+
+Based on our sample size of 4,947, we're 95% confident that the true proportion of Republicans who think Democrats are close-minded is between 62.6% and 65.3%.
+
+::: poll
+**Individual Poll**: If we instead had crafted an 80% confidence interval, would it be...
+
+::: nonincremental
+- shifted to the left
+- shifted to the right
+- narrower
+- wider
+- unchanged
+:::
+:::
+
+```{r}
+countdown::countdown(0, 30, font_size = "2em")
+```
+
+## {}
+
+Based on our sample size of 4,947, we're 95% confident that the true proportion of Republicans who think Democrats are close-minded is between 62.6% and 65.3%.
+
+::: poll
+**Discuss and Re-poll**: If we instead had crafted an 80% confidence interval, would it be...
+
+::: nonincremental
+- shifted to the left
+- shifted to the right
+- narrower
+- wider
+- unchanged
+:::
+:::
+
+```{r}
+countdown::countdown(0, 45, font_size = "2em")
+```
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/VFVTUUpGdpGtmx2qGkbqN?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/8MuFPaoF3UmOniSIrVmpB?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## Confidence levels
+
+- High confidence intervals are so wide as to be useless.
+    - *I am 100% confident the average height of students in Stat 20 is between 3.5 feet and 9 feet.*
+    - *I am 100% confident the proportion of Republicans who think Democrats are close-minded is between 0 and 1.*
+
+- Low confidence intervals, though precise, ... don't inspire much confidence.
+    - *I am 7% confident that the proportion of Republicans who think Democrats are close-minded is between 63.9% and 64.1%.*
+
+
+# Confidence Intervals via Probability Theory
+
+## Example: Partisan Antipathy
+
+```{r out.width=600, out.height = 300, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/pew2.png")
+```
+
+::: nonincremental
+-   We're 95% confident that the true proportion of Republicans that view Democrats as more close-minded is between 62.6% and 65.3%.
+:::
+
+> In addition to the bootstrap, can notions of random variables help us quantify the uncertainty in our estimate?
+
+
+## Defining Random Variables
+
+Let $X_1$ be the response of the first Republican in the sample to the question "Are Dems close-minded?" where "yes" = 1, "no" = 0. The $p$ be the (unknown) probability of a 1.
+
+. . .
+
+$$ X_1 \sim \textrm{Bern}(p) $$
+
+. . .
+
+Let $X_2$ be the response of the **second** Republican in the sample . . .
+
+. . .
+
+$$ X_2 \sim \textrm{Bern}(p') $$
+
+. . .
+
+> Is $p' = p$?
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+. . .
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+## 
+
+Consider a deck of cards with only two cards: a red card and a black card. I will be drawing cards **without replacement**.
+
+::: poll
+::: nonincremental
+1.  What is the probability of drawing a red card first?
+
+2.  What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+:::
+
+
+## 
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/2BXrJep94zKJBn6AMGMvu?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</center>
+
+
+## 
+
+Consider a deck of cards with two hundred cards: 100 red cards and 100 black cards. I will be drawing cards **without replacement**.
+
+::: poll
+::: nonincremental
+1.  What is the probability of drawing a red card first?
+2.  What is the probability of drawing a black card second given that you've drawn a red card first?
+:::
+:::
+
+## 
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/v7j52YPPXUIGiz2u9Fw7a?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</center>
+
+
+## Sampling with and without replacement
+
+If you draw each observation from the population and then replace it, allowing it to be drawn again, you are **sampling with replacement**.
+
+If you draw each observation from the population and do not replace it, you are **sampling without replacement**.
+
+. . .
+
+> Probabilities remain stable when you sample with replacement.
+
+. . .
+
+> As population sizes grow large relative to sample sizes, probabilities remain approximately stable even when sampling without replacement.
+
+
+## Defining Random Variables
+
+Let $Y$ be the total number of "yes" responses in a sample of size $n$.
+
+. . .
+
+$$ Y = \left(X_1 + X_2 + \ldots + X_n \right) $$
+
+. . .
+
+If we think of this as the sum of $n$ Bernoulli independent random variables, each with the same probability of success $p$, then.
+
+. . .
+
+$$ Y \sim \textrm{Binom}(n, p) $$
+
+. . .
+
+$$SD(Y) = \sqrt{np(1-p)}: SE(Y)$$
+
+**Standard error** is the standard deviation of an estimate; a measure of it's uncertainty.
+
+
+## A CI based on the Binomial {.smaller}
+
+```{r fig.align='center', fig.height=12.5, fig.width = 40}
+library(tidyverse)
+df <- tibble(y = 0:4947,
+             p = dbinom(0:4947, 4947, prob = .64))
+ggplot(df, aes(x = y,
+               y = p)) +
+  geom_col() +
+  xlim(qbinom(.001, size = 4947, prob = .64), 
+       qbinom(.999, size = 4947, prob = .64)) +
+  labs(title = "Y ~ Bern(p = .64)",
+       y = "Probability") +
+  theme_bw(base_size = 80)
+```
+
+. . .
+
+What values of $Y$ contain the middle 95% of the probability distribution?
+
+## A CI based on the Binomial {.smaller}
+
+```{r fig.align='center', fig.height=12.5, fig.width = 40}
+df %>%
+  mutate(in_body = y < 3232 & y > 3100) %>%
+  ggplot(aes(x = y,
+             y = p,
+             fill = in_body)) +
+  geom_col() +
+  xlim(qbinom(.001, size = 4947, prob = .64), 
+       qbinom(.999, size = 4947, prob = .64)) +
+  labs(title = "Y ~ Bern(p = .64)",
+       y = "Probability") +
+  theme_bw(base_size = 80) +
+  theme(legend.position = "none")
+```
+
+What values of $Y$ contain the middle 95% of the probability distribution?
+
+-   2.5% quantile: `r qbinom(.025, size = 4947, prob = .64)`
+-   97.5% quantile: `r qbinom(.975, size = 4947, prob = .64)`
+
+. . .
+
+95% CI for $\hat{p}$:
+
+$$ (LB, UB) = (3100/4947, 3232/4947) = (.626, .653) $$
+
+
+# Methods compared
+
+## Binomial interval for a proportion
+
+- Accurate at small $n$
+- Provides intuition for how interval changes with $n$.
+  
+. . .
+
+\begin{align}
+Var(\hat{P}) &= Var(\frac{1}{n}Y) = \frac{1}{n^2}Var(Y)\\
+&= \frac{1}{n^2} np (1-p) \\
+&= \frac{1}{n} p (1-p)
+\end{align}
+
+. . .
+
+> The width of the interval (the $SE$) will decrease with increasing $n$ at a rate of $\frac{1}{\sqrt{n}}$.
+
+
+## Percentile bootstrap intervals
+
+- Requires reasonable sample size
+- Works for *any statistic*, not just proportions
+  
+
+## Flexibility of the bootstrap {auto-animate=true}
+
+```{r echo = FALSE}
+library(tidyverse)
+library(infer)
+library(palmerpenguins)
+data(penguins)
+penguins <- penguins %>%
+  drop_na(species, bill_length_mm)
+```
+
+Bootstrapping a proportion.
+
+```{r echo = TRUE, fig.align = "center"}
+penguins %>%
+  mutate(is_adelie = species == "Adelie") %>%
+  specify(response = is_adelie,
+          success = "TRUE") %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "prop") %>%
+  visualize()
+```
+
+
+## Flexibility of the bootstrap {auto-animate=true}
+
+Bootstrapping a mean.
+
+```{r echo = TRUE, fig.align = "center"}
+penguins %>%
+  specify(response = bill_length_mm) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "mean") %>%
+  visualize()
+```
+
+
+## Flexibility of the bootstrap {auto-animate=true}
+
+Bootstrapping a median
+
+```{r echo = TRUE, fig.align = "center"}
+penguins %>%
+  specify(response = bill_length_mm) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "median") %>%
+  visualize()
+```
+
+
+## Mathematical vs Computational
+
+:::: columns
+::: {.column width="47%"}
+*Mathematical methods*
+
+- Are tailored to particular statistics
+- Don't exist for certain statistics
+- Sometimes make strong assumptions about data generating process
+- A few work for small $n$, many require large $n$.
+:::
+
+::: {.column width="6%"}
+
+:::
+
+::: {.column width="47%"}
+*Bootstrap methods*
+
+- Very general and flexible
+- Still require reasonable amount of data
+:::
+::::
+
+. . .
+
+> In most cases, these methods will yield similar answers.
+
+
+## Parting Thought
+
+. . .
+
+<br>
+<br>
+
+[Point estimation is like fishing with a spear.]{.smalladage}
+
+. . .
+
+<br>
+<br>
+[Interval estimation is like fishing with a net]{.smalladage}
+
+
+# Sampling Bias
+
+
+## {background-image="images/sample-class.png" background-size="contain"}
+
+
+## Questions we seek to answer
+
+1. How can we use a sample of *data* to reason about a particular *data generating process*?
+
+2. How can we account for the uncertainty caused by *sampling variability*?
+
+3. How does uncertainty decrease as we increase *sample size*?
+
+4. How can we identify and deal with *statistical bias*?
+
+
+## Analogy: Sampling as Cooking
+
+. . .
+
+```{r out.width=220, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/soup.png")
+```
+
+- To evaluate if the soup is good, you taste a spoonful - *sample.*
+- If the spoonful is bland, you've made a *descriptive claim*.
+- If you conclude the soup needs salt, you've made an *inference to a population*.
+- For it to be valid, the spoonful must be *representative* of the soup.
+
+
+<!-- image: https://www.cooksillustrated.com/recipes/10242-turkey-barley-soup -->
+
+
+
+## Concepts in Sampling
+
+**Simple Random Sampling (SRS)**: each case in the population has an equal chance of being included and the cases in the sample are not related to each other.
+
+. . .
+
+**Convenience Sampling**: case that are easily accessible are more likely to be included in the sample.
+
+. . .
+
+**Non-response bias**: when sampled cases don't provide data in a manner than is unrepresentative of the population.
+
+
+
+## Sampling considerations
+
+You're a senior Psychology major conducting a study that examines procrastination among Cal students.  How should you select a sample?
+
+. . .
+
+**A.** Post a link to your survey on social media.
+
+. . .
+
+**B.** Get a list of Cal student emails from the Registrar, take a simple random sample (SRS), and email that sample.
+
+. . .
+
+::: poll
+With a neighbor, write one pro and one con to each approach, then vote for your preference.
+:::
+
+
+##
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/axefhZkXRBUwq9Za7cu5d?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+# A Lesson from History
+
+
+## {background-image="images/landon-fdr.png" background-size="contain"}
+
+
+## Landon v. FDR, 1936
+
+Literary Digest polled 10 million Americans, 2.4 million responded.
+
+. . .
+
+N = 128 million, n = 2.4 million
+
+. . .
+
+**Prediction**: 43% for FDR
+
+. . .
+
+**Result**: 62% for FDR
+
+
+## What went wrong?
+
+. . .
+
+Literary Digest surveyed
+
+- magazine subscribers
+- registered car owners
+- registered telephone owners
+
+. . .
+
+These groups have a much higher income on average than the typical
+american. In 1936 the Great Depression is still in full swing, so the 
+typical (poorer) american was more supportive of FDR.
+
+Their sampling method was **biased** (not representative).
+
+
+## {background-image="images/plato-cave.jpg" background-size="contain"}
+
+---
+

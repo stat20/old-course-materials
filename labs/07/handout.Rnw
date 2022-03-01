@@ -64,8 +64,8 @@ table(seeded, yawned)
 \begin{enumerate}
   \item Create a deck of cards, 36 of which represent subjects who did not yawn, 14 of which represent subjects who yawned.
   \item Shuffle the deck of cards to simulate the process of randomly assignment to the two conditions: being exposed to a yawn (seeded) and not being exposed (unseeded).
-  \item Deal them into two decks of size 16 and 34, representing the 1/3 of the subjects that were assigned to the seeded group and the 2/3 assigned to the unseeded group.
-  \item Count the number of yawners that happened to end up in the seeded group just by chance and record your count below as $x_1$.
+  \item Deal them into two decks of size 16 and 34, representing the 1/3 of the subjects that were assigned to the unseeded group and the 2/3 assigned to the seeded group.
+  \item Count the number of yawners that happened to end up in the unseeded group just by chance and record your count below as $x_1$.
   \item Repeat process 5 more times.
 \end{enumerate}
 
@@ -95,7 +95,7 @@ table(seeded, yawned)
   \ans
   \item What value of $X$ did the MythBusters actually observe?
   \ans
-  \item How would we summarize these results?
+  \item Is this data convincing evidence that yawning is contagious? Why or why not?
   \ans
 \end{enumerate}
 
