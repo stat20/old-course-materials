@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  28 FEB 2022 22:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  1 MAR 2022 08:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -398,7 +398,7 @@ Here is how much of TeX's memory you used:
 usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
 /local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
 local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on handout.pdf (2 pages, 86166 bytes).
+Output written on handout.pdf (2 pages, 85632 bytes).
 PDF statistics:
  62 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream
