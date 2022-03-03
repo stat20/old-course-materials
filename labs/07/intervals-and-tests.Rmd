@@ -1,5 +1,5 @@
 ---
-title: 'Lab 7: Hypothesis Testing'
+title: 'Lab 7B: Hypothesis Testing'
 output: pdf_document
 ---
 
@@ -12,7 +12,7 @@ knitr::opts_chunk$set(eval = FALSE,
 
 ## Part I: Permutation Tests
 
-We've gone through several examples of hypothesis tests in lecture and in the lab activity. Now you'll get the chance to get your hands on the data and construct those tests using the computational approach to finding the null distribution. All of the data sets for this lab can be found in the `stats20data` package.
+We've gone through several examples of hypothesis tests in lecture and in the lab activity. Now you'll get the chance to get your hands on the data and construct those tests using the computational approach to finding the null distribution. All of the data sets for this lab can be found in the `stats20data` package. Parts a, d, and h require written English answers; the other parts can be answered just with code, output, and plots.
 
 1. Using the `yawn` data set,
     a. Write the null and alternative hypothesis.
