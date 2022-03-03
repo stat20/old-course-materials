@@ -1,5 +1,5 @@
 ---
-title: "Inference: Intervals and Tests"
+title: "Lab 7B: Hypothesis Testing"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
@@ -33,34 +33,272 @@ source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/
 
 class: center, middle
 
-# Lab 7: Inference: Intervals and Tests
+# Lab 7: Hypothesis Testing
 ### Introduction to Probability and Statistics
 
 ---
+# Agenda
 
+- Framework for a Hypothesis Test
+- Example with `infer`
+
+
+
+---
+background-image: url("assets/figs/pic-5.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-6.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-7.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-8.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-9.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-10.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-11.jpg")
+background-size: contain
+
+---
+background-image: url("assets/figs/pic-12.jpg")
+background-size: contain
+
+
+---
 class: middle, center
 
-# Is Yawning Contagious?
+# Example: Class Survey
 
 ---
 
-<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"> <iframe style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden" frameborder="0" type="text/html" src="https://www.dailymotion.com/embed/video/x6tryad" width="100%" height="100%" allowfullscreen > </iframe> </div>
+> Question: Do beach lovers prefer the warm seasons more than mountain lovers?
 
----
+--
 
-## In pairs/trios
+Load packages and data.
 
-.task[
-Please record answers to the 6 questions on the front of the handout (the side with **Is Yawning Contagious?** on the front).
-]
-
-```{r echo = FALSE}
-countdown::countdown(3)
+```{r}
+library(tidyverse)
+library(stat20data)
+data("class_survey")
 ```
 
 --
 
-.task[
-Please enter your answers at `pollev.com/andrewpbray088`
+Create new column with just two levels and drop NAs.
+
+```{r}
+class_survey <- class_survey %>%
+  mutate(warm_fav = season %in% c("Summer", "Fall")) %>%
+  drop_na(mts_beach, warm_fav)
+```
+
+
+---
+## Visualizing the data
+
+> What sort of visualization can we use to see the association between these two variables?
+
+--
+
+.pull-left[
+```{r}
+class_survey %>%
+  select(mts_beach, warm_fav)
+```
 ]
+
+--
+
+.pull-right[
+```{r, fig.height=4}
+ggplot(class_survey, aes(x = mts_beach,
+                         fill = warm_fav)) +
+  geom_bar(position = "fill")
+```
+]
+
+---
+## Answering with a statistic
+
+> Question: Do beach lovers prefer the warm seasons more than mountain lovers?
+
+--
+
+```{r}
+library(infer)
+obs_stat <- class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  calculate(stat = "diff in props")
+obs_stat
+```
+
+--
+
+Note: the observed statistic could also be computed with `summarize()`.
+
+--
+
+> We see the difference is non-zero, but could that just be a product of this particular small sample of data that we have?
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav, #<<
+          explanatory = mts_beach, #<<
+          success = "TRUE") #<<
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") #<<
+```
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1,
+           type = "permute")
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1,
+           type = "permute") # a second shuffle
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1,
+           type = "permute") # a third shuffle
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500, #<<
+           type = "permute")
+```
+
+---
+## Hypothesis Test Pipeline
+
+```{r}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props") #<<
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r fig.height=4}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props") %>%
+  visualize() #<<
+```
+
+---
+## Hypothesis Test Pipeline
+
+```{r fig.height=4}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props") %>%
+  visualize() +
+  shade_pvalue(obs_stat = obs_stat, #<<
+               direction = "both") #<<
+```
+
+
+---
+## Hypothesis Test Pipeline
+
+```{r echo = FALSE}
+set.seed(30)
+```
+
+
+```{r fig.height=4}
+class_survey %>%
+  specify(response = warm_fav,
+          explanatory = mts_beach,
+          success = "TRUE") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props") %>%
+  get_p_value(obs_stat = obs_stat, #<<
+               direction = "both") #<<
+```
 
