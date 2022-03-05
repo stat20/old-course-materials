@@ -1,0 +1,527 @@
+---
+title: "Permutation and Taking Draws"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1. Midterm
+2. Office Hours today moved to Monday 4-5 pm
+3. Lab 7B
+    1. NB: Two are graded credit / no credit
+4. See Jeremy's Tutorial on R Chunks
+5. PS 7
+
+
+## PS 7
+
+::: poll
+::: nonincremental
+Which would you prefer?
+
+- PS 7 due next Monday 10 PM, Late deadline without penalty: the following Monday.
+- PS 7 due next next Monday 10 PM along with PS 8.
+:::
+:::
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/ZIfbubGTO6e9KM0AbEpNx?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Agenda
+
+1. Hypothesis Testing via Permutation
+2. Hypothesis Tests vs Confidence Intervals
+3. A Different Kind of Null
+
+
+# Hypothesis Testing via Permutation
+
+
+# A Framework for Classical Inference
+
+
+## Finding the Null Distribution: Permutation {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+We can shuffle or **permute** the data in one of the variables to generate the kind of data we would expect under a null hypothesis of _independence_$^1$ between the two variables.
+
+> $^1$A permutation test actually uses a weaker assumption than independence called *exchangability*. Take STAT 134 to learn more.
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE}
+library(tidyverse)
+library(infer)
+library(stat20data)
+data(promote)
+```
+
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1,
+           type = "permute")
+```
+:::
+::::
+
+## Finding the Null Distribution: Permutation {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+We can shuffle or **permute** the data in one of the variables to generate the kind of data we would expect under a null hypothesis of _independence_$^1$ between the two variables.
+
+> $^1$A permutation test actually uses a weaker assumption than independence called *exchangability*. Take STAT 134 to learn more.
+:::
+
+::: {.column width="50%"}
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1,
+           type = "permute")
+```
+:::
+::::
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+. . .
+
+```{r echo = TRUE}
+promote
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote")
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence")
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute")
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r echo = TRUE}
+promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = TRUE, fig.align='center'}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+null %>%
+  visualize()
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+
+```{r}
+obs_stat <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  calculate(stat = "diff in props")
+```
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = TRUE, fig.align='center'}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+null %>%
+  visualize() +
+  shade_pvalue(obs_stat = obs_stat,
+               direction = "both")
+```
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = TRUE}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+null %>%
+  get_p_value(obs_stat = obs_stat,
+              direction = "both")
+```
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = FALSE}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat,
+              direction = "both")
+```
+
+. . .
+
+**Two-sided p-value**: The probability of observing the data or more extreme (in both direction). p-value = `r p_two`.
+
+
+## Pipeline for a Permutation Test {auto-animate=true}
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = TRUE}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+null %>%
+  get_p_value(obs_stat = obs_stat,
+              direction = "left")
+```
+
+```{r}
+set.seed(30)
+```
+
+```{r echo = FALSE}
+null <- promote %>%
+  specify(response = decision,
+          explanatory = gender,
+          success = "promote") %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500,
+           type = "permute") %>%
+  calculate(stat = "diff in props")
+p_one <- null %>%
+  get_p_value(obs_stat = obs_stat,
+              direction = "left")
+```
+
+. . .
+
+
+**One-sided p-value**: The probability of observing the data or more extreme (in one direction). p-value = `r p_one`.
+
+> Be wary of one-sided p-values.
+
+
+# Hypothesis Tests vs Confidence Intervals
+
+
+## {background-image="images/plato-cave.jpg" background-size="contain"}
+
+
+## {}
+
+<center>
+<iframe width="1120" height="730" src="https://www.youtube.com/embed/AGNqI6RYBrQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
+
+
+## Questions we seek to answer
+
+1. How can we use a sample of *data* to reason about a particular *data generating process*?
+
+2. How can we account for the uncertainty caused by *sampling variability*?
+
+3. How does uncertainty decrease as we increase *sample size*?
+
+4. How can we identify and deal with *statistical bias*?
+
+
+# A Different Kind of Null
+
+## Millennials and same-sex marriage
+
+In the national debate on same-sex marriage, it is commonly stated that half of all Americans favor same-sex marriage.  In 2014, Pew research conducted a poll of millennials (Americans born after 1980) and found that 67% answered yes when asked: "Do you favor same-sex marriage?"  The poll was a random sample of 75 millennials.  Does this poll provide convincing evidence that the opinion of millennials is different from those of Americans at large?
+
+::: poll
+What is the parameter value that will form our null hypothesis?
+:::
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/30njpVyKcyN6Bv0WWQz21?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Finding the Null Distribution: Taking Draws
+
+If a null hypothesis concerns a particular value that a proportion should take (a _point_ null), then you can generate data under that null hypothesis by taking **draws** from that distribution.
+
+::: poll
+Explain how you could use cards, a coin, or a die to simulate the process of collecting data from using a survey of 75 people if half of millennials favor same-sex marriage.
+
+Discuss with your neighbors and prepare to be called on.
+:::
+
+```{r}
+countdown::countdown(2, font_size = "2em")
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+. . .
+
+```{r}
+data("millennials")
+```
+
+```{r echo = TRUE}
+millennials
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r echo = TRUE}
+millennials
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r echo = TRUE}
+millennials %>%
+  specify(response = response,
+          success = "favor")
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r echo = TRUE}
+millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5)
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r echo = TRUE}
+millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw")
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r echo = TRUE}
+millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw") %>%
+  calculate(stat = "prop")
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r}
+set.seed(40)
+```
+
+```{r echo = TRUE}
+null <- millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw") %>%
+  calculate(stat = "prop")
+null %>%
+  visualize()
+```
+
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r}
+obs_stat <- millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  calculate(stat = "prop")
+```
+
+```{r}
+set.seed(40)
+```
+
+```{r echo = TRUE}
+null <- millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw") %>%
+  calculate(stat = "prop")
+null %>%
+  visualize() +
+  shade_p_value(obs_stat = obs_stat,
+                direction = "both")
+```
+
+## Pipeline for a Test on One Proption {auto-animate=true}
+
+```{r}
+set.seed(40)
+```
+
+```{r echo = TRUE}
+null <- millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw") %>%
+  calculate(stat = "prop")
+null %>%
+  get_p_value(obs_stat = obs_stat,
+                direction = "both")
+```
+
+```{r}
+set.seed(40)
+```
+
+```{r}
+null <- millennials %>%
+  specify(response = response,
+          success = "favor") %>%
+  hypothesize(null = "point",
+              p = .5) %>%
+  generate(reps = 500,
+           type = "draw") %>%
+  calculate(stat = "prop")
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat,
+                direction = "both")
+```
+
+. . .
+
+**Two-sided p-value**: `r p_two`.
+
+- Our data is inconsistent with the hypothesis that Millennials support same sex marriage at the same rate as Americans in general.
+- We reject the null hypothesis that $p = .5$ at an $\alpha$ level of .05.
+
+
+
+
