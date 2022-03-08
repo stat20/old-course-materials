@@ -1,0 +1,502 @@
+---
+title: "The Central Limit Theorem"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1. Quiz 3 
+2. Midterm Details
+3. PS 7 tutorial released Weds
+4. My OH: today 4-5 pm Evans 415
+
+
+## Agenda
+
+1. Three ways to the Null
+    1. Simulation: Taking Draws
+    2. Exact Method: Binomial
+    3. Approximate Method: Central Limit Theorem
+  
+
+# Simulation: Taking Draws
+
+## Millennials and same-sex marriage
+
+In the national debate on same-sex marriage, it is commonly stated that half of all Americans favor same-sex marriage.  In 2014, Pew research conducted a poll of millennials (Americans born after 1980) and found that 67% answered yes when asked: "Do you favor same-sex marriage?"  The poll was a random sample of 75 millennials.  Does this poll provide convincing evidence that the opinion of millennials is different from those of Americans at large?
+
+. . .
+
+### The Hypotheses
+
+Let $p$ be the true proportion of Americans who favor same-sex marriage.
+
+$$H_0: p = 0.5; \quad H_A: p \ne 0.5$$
+
+
+## Finding the Null Distribution: Taking Draws
+
+If a null hypothesis concerns a particular value that a proportion should take (a _point_ null), then you can generate data under that null hypothesis by taking **draws** from that distribution.
+
+. . .
+
+### Our Simulation
+
+1. Flip 75 fair coins.
+2. Calculate the proportion the 75 that came up heads.
+3. Repeat 1-2 500 times, keeping track of those proportions.
+
+
+## Null Distribution with 100 reps
+
+```{r fig.width = 10, echo = FALSE, fig.height=4, fig.align='center'}
+set.seed(51)
+library(stat20data)
+data(millennials)
+library(infer)
+null <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  hypothesize(null = "point", p = .5) %>%
+  generate(reps = 100, type = "draw") %>%
+  calculate(stat = "prop")
+
+obs_stat <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize() +
+  shade_pvalue(obs_stat = obs_stat,
+               direction = "both")
+```
+
+. . .
+
+```{r echo = FALSE}
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+**p-value**: `r p_two`.
+
+. . .
+
+::: poll
+What will happen if we repeat the simulation and look at the p-value from a _different_ 100 reps?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/qa5jaalnFFmEz9GmfgiIb?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Null Distribution with (a new) 100 reps 
+
+```{r fig.width = 10, echo = FALSE, fig.height=4, fig.align='center'}
+null <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  hypothesize(null = "point", p = .5) %>%
+  generate(reps = 100, type = "draw") %>%
+  calculate(stat = "prop")
+
+obs_stat <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize() +
+  shade_pvalue(obs_stat = obs_stat,
+               direction = "both")
+```
+
+```{r echo = FALSE}
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+**p-value**: `r p_two`.
+
+. . .
+
+::: poll
+What will happen to the p-value if we increase the number of simulations to 5000 reps?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/YxqLzYw0JaJegxilc4S43?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Null Distribution with 5,000 reps 
+
+```{r fig.width = 10, echo = FALSE, fig.height=4, fig.align='center'}
+null <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  hypothesize(null = "point", p = .5) %>%
+  generate(reps = 5000, type = "draw") %>%
+  calculate(stat = "prop")
+
+obs_stat <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize() +
+  shade_pvalue(obs_stat = obs_stat,
+               direction = "both")
+```
+
+```{r echo = FALSE}
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+**p-value**: `r p_two`.
+
+. . .
+
+> Increasing replicates stabilizes the distribution and increases precision of p-value.
+
+
+## {background-image="images/infer.jpg" background-size="contain"}
+
+
+## {background-image="images/infer-w-approx.jpg" background-size="contain"}
+
+
+# Probability Theory: Exact Method
+
+
+## {background-image="images/exact-1.jpg" background-size="contain"}
+
+
+## {background-image="images/exact-2.jpg" background-size="contain"}
+
+
+## {background-image="images/exact-3.jpg" background-size="contain"}
+
+
+## {}
+
+$$
+X \sim \textrm{Bin}(n = 75, p = .5)
+$$
+
+```{r fig.width = 10, fig.height=3.5, fig.align='center'}
+library(tidyverse)
+n <- 75
+p <- .5
+
+data.frame(heads = 0:n, 
+           prob = dbinom(x = 0:n, size = n, prob = p)) %>%
+ggplot(aes(x = factor(heads), y = prob)) +
+  geom_col() +
+  labs(x = "x",
+       y = "P(X = x)")  +
+  scale_x_discrete(breaks = seq(0, 75, 5))
+```
+
+. . .
+
+> Sanity check: What is $P(X > 37)$?
+
+## {}
+
+$$
+X \sim \textrm{Bin}(n = 75, p = .5)
+$$
+
+```{r fig.width = 10, fig.height=3.5, fig.align='center'}
+library(tidyverse)
+
+data.frame(heads = 0:n, 
+           prob = dbinom(x = 0:n, size = n, prob = p)) %>%
+  mutate(ge_38 = heads < 38) %>%
+  ggplot(aes(x = factor(heads), 
+             y = prob,
+             fill = ge_38)) +
+  geom_col() +
+  labs(x = "x",
+       y = "P(X = x)")  +
+  scale_x_discrete(breaks = seq(0, 75, 5)) +
+  scale_fill_discrete() +
+  theme(legend.position = "none")
+```
+
+> Sanity check: What is $P(X > 37)$? $1 - P(X \le 37)$
+
+. . .
+
+```{r bin1, echo = TRUE, eval = FALSE}
+1 - pbinom(37, size = 75, prob = .5)
+```
+
+. . .
+
+```{r ref.label = "bin1", echo = FALSE, eval = TRUE}
+```
+
+## {}
+
+$$
+X \sim \textrm{Bin}(n = 75, p = .5)
+$$
+
+```{r fig.width = 10, fig.height=3.5, fig.align='center'}
+library(tidyverse)
+
+data.frame(heads = 0:n, 
+           prob = dbinom(x = 0:n, size = n, prob = p)) %>%
+  mutate(ge_38 = heads < 50 & heads > 25) %>%
+  ggplot(aes(x = factor(heads), 
+             y = prob,
+             fill = ge_38)) +
+  geom_col() +
+  labs(x = "x",
+       y = "P(X = x)")  +
+  scale_x_discrete(breaks = seq(0, 75, 5)) +
+  scale_fill_discrete() +
+  theme(legend.position = "none")
+```
+
+> What is $P(X \ge 50) + P(X \le 25)$?
+
+. . .
+
+```{r bin2, echo = TRUE, eval = FALSE}
+1 - pbinom(q = 49, size = 75, prob = .5) +
+  pbinom(q = 25, size = 75, prob = .5)
+```
+
+. . .
+
+```{r ref.label = "bin2", eval = TRUE}
+```
+
+
+## Exact Probability vs Simulation
+
+> What was the p-value using simulation?
+
+. . .
+
+```{r fig.width = 10, echo = FALSE, fig.height=4, fig.align='center'}
+null <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  hypothesize(null = "point", p = .5) %>%
+  generate(reps = 50000, type = "draw") %>%
+  calculate(stat = "prop")
+
+obs_stat <- millennials %>%
+  specify(response = response, success = "favor") %>%
+  calculate(stat = "prop")
+
+null %>%
+  visualize(bins = 75) +
+  shade_pvalue(obs_stat = obs_stat,
+               direction = "both")
+```
+
+```{r echo = FALSE}
+p_two <- null %>%
+  get_p_value(obs_stat = obs_stat, direction = "both")
+```
+
+**p-value**: `r p_two`.
+
+
+## Simulation vs Exact Method
+
+- With certain null hypotheses, it's possible to compute the p-value _exactly_.
+- We can get arbitrarily close to this exact probability through _simulation_, which is more general.
+
+. . .
+
+> How were p-values computed before computers?
+
+
+# Probability Theory: Approximation Method
+
+
+## The Normal Distribution
+
+Describes a _continuous_ random variable that is bell-shaped, centered at $\mu$ and with a spread of $\sigma$.
+
+. . .
+
+$$
+X \sim \textrm{N}(\mu, \sigma)
+$$
+
+:::: columns
+::: {.column width="50%"}
+_"X is distributed as a Normal r.v. center at mu with a standard deviation of sigma._
+
+\begin{align}
+f(x) &= \frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma} \right)^2} \\
+E(X) &= \mu \\
+Var(X) &= \sigma^2
+\end{align}
+:::
+
+::: {.column width="50%"}
+```{r fig.height = 8}
+data.frame(heads = -3:3, 
+           prob = rep(0, 7)) %>%
+  ggplot(aes(x = heads, 
+             y = prob)) +
+  geom_blank() +
+  stat_function(fun = dnorm,
+                args = list(mean = 0,
+                            sd = 1),
+                col = "goldenrod",
+                size = 2) +
+  labs(x = "x",
+       y = "f(x)") +
+  scale_x_continuous(breaks = -3:3) +
+  theme_bw(base_size = 25)
+```
+:::
+::::
+
+## The Normal Distribution
+
+Describes a _continuous_ random variable that is bell-shaped, centered at $\mu$ and with a spread of $\sigma$.
+
+$$
+X \sim \textrm{N}(\mu, \sigma)
+$$
+
+:::: columns
+::: {.column width="50%"}
+**The Empirical Rule**
+
+For a *standardized normal* rv,
+
+$$Z \sim N(\mu, \sigma)$$
+
+68% of the distribution is within 1 SD, 95% within 2 SD, 99.7% within 3.
+:::
+
+::: {.column width="50%"}
+```{r fig.height = 8}
+data.frame(heads = -3:3, 
+           prob = rep(0, 7)) %>%
+  ggplot(aes(x = heads, 
+             y = prob)) +
+  geom_blank() +
+  stat_function(fun = dnorm,
+                args = list(mean = 0,
+                            sd = 1),
+                col = "goldenrod",
+                size = 2) +
+  labs(x = "x",
+       y = "f(x)") +
+  scale_x_continuous(breaks = -3:3) +
+  theme_bw(base_size = 25)
+```
+:::
+::::
+
+## {background-image="images/approx-1.jpg" background-size="contain"}
+
+
+## {background-image="images/approx-2.jpg" background-size="contain"}
+
+
+## {}
+
+$$
+X \sim \textrm{N}(\mu = 75 \cdot .5, \sigma = \sqrt(75 \cdot .5 \cdot .5)
+$$
+
+```{r fig.width = 10, fig.height=3.5, fig.align='center'}
+library(tidyverse)
+
+data.frame(heads = 0:n, 
+           prob = dbinom(x = 0:n, size = n, prob = p)) %>%
+  mutate(ge_38 = heads < 50 & heads > 25) %>%
+  ggplot(aes(x = factor(heads), 
+             y = prob,
+             fill = ge_38)) +
+  geom_blank() +
+  stat_function(fun = dnorm,
+                args = list(mean = n*p,
+                            sd = sqrt(n*p*(1-p))),
+                col = "goldenrod",
+                size = 2) +
+  labs(x = "x",
+       y = "f(x)")  +
+  scale_x_discrete(breaks = seq(0, 75, 5)) +
+  scale_fill_discrete() +
+  theme(legend.position = "none") +
+  theme_bw(base_size = 25)
+```
+
+. . .
+
+> What is $P(X \ge 50) + P(X \le 25)$?
+
+. . .
+
+```{r norm1, echo = TRUE, eval = FALSE}
+1 - pnorm(q = 49, mean = 75 *.5, sd = sqrt(75*.5*.5)) +
+  pnorm(q = 25, mean = 75 *.5, sd = sqrt(75*.5*.5))
+```
+
+. . .
+
+```{r ref.label = "norm1", eval = TRUE}
+```
+
+
+## Three methods compared
+
+:::: columns
+::: {.column width="33%"}
+[Simulation]{.inversebox}
+
+- Taking $n$ draws with success $p$
+- Converges to exact as `reps` grows large
+- Can get computationally expensive
+:::
+
+::: {.column width="33%"}
+[Exact]{.inversebox}
+
+- Exact p-value using Binomial
+- Can get computationally expensive
+:::
+
+::: {.column width="33%"}
+[Approximate]{.inversebox}
+
+- Converges to exact p-value as $n$ grows large
+- Computationally cheap
+:::
+::::
+
+
+## {background-image="images/infer-w-approx.jpg" background-size="contain"}
+
+---------------------------------
