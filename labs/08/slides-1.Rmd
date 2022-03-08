@@ -78,17 +78,38 @@ Write out Benford's Law in a similar way to the other named distributions and de
 1. Benford's Law
 2. 2009 Iran Election
 3. Exploring election data
-5. Benford's Law in Iran
-
+4. Benford's Law in Iran
 
 ---
-class: middle, center, inverse
+class: middle, center
+
+# Benford's Law
+
+---
 
 ## Benford's Law
 
 Observation: many naturally occurring numerical variables have a recurring pattern in the distribution of the first digit.
 
-Benford's law observes that in many naturally-occuring phenomena with a quantitative measurement, some patterns can be observed in the digits of that measurement. Specifically, the law states that the first digit of such observations, rather than being distributed uniformly between the numbers 1-9, takes a decreasing log distribution. The code and plotted distribution for this are below. Investments with interest, populations of cities, and election results have all been observed by different groups to follow Benford's law.
+--
+
+Benford's law states that
+
+--
+
+- The first digit of the measurement of a naturally occurring phenomenon takes a **decreasing** log distribution.
+
+--
+
+- Thus the numbers 1-9 are not distributed uniformly. Instead, 1 has the highest proportion and 9 has the lowest proportion. 
+
+--
+
+- For example, investments with interest, populations of cities, and election results are observed to follow the Benford's Law.
+
+---
+## Benford's Law
+The code and plotted distribution for this are below.
 
 ```{r benford_code, echo = TRUE, eval = TRUE}
 benfords_p <- data.frame(first_digit = 1:9, 
@@ -96,6 +117,8 @@ benfords_p <- data.frame(first_digit = 1:9,
 ```
 
 ```{r benford_plot, eval = TRUE}
+#| fig.width = 5.5,
+#| fig.height = 3.3
 library(tidyverse)
 colnames(benfords_p) <- c("digit", "prop")
 ggplot(benfords_p, aes(x = digit, y = prop)) +
@@ -103,36 +126,150 @@ ggplot(benfords_p, aes(x = digit, y = prop)) +
   scale_x_discrete(limits = 1:9)
 ```
 
+
 ---
-class: middle, center, inverse
+class: middle, center
 
 # 2009 Iran Election
 
 ---
-class: middle, center, inverse
+
+## 2009 Iran Election
+
+--
+
+Background
+
+--
+
+- Ongoing public sentiment that the previous election was fraudulent
+- The highest voter turnout in Iran's history
+
+--
+
+Leading candidates
+
+--
+
+- Mahmoud Ahmadinejad: Leader of the conservatives and incumbent president. 
+- Mir-Hossein Mousavi: Reformist and former prime minister. Seeking rapid political evolution.
+
+--
+
+Outcome
+
+--
+
+Ahmadinejad won the election with 62.6% of the votes cast, while Mousavi received 33.75% of the votes cast.
+
+---
+
+## Post-election controversies and unrest
+
+- Allegations of fraud
+- Public protests and unrests
+- The green wave movement, led by Mousavi, against the allegedly fraudulent election and Ahmadinejad's regime
+
+```{r eval = TRUE, echo = FALSE, out.width="40%", out.height="20%",fig.cap=" ",fig.show='hold',fig.align='center'}
+knitr::include_graphics(c("slides-1_files/figure-html/iran_green3.jpg","slides-1_files/figure-html/iran_green2.jpg"))
+```
+
+---
+class: middle, center
+Was the election fraudulent?
+
+---
+class: middle, center
 
 # Exploring election data
 
 ---
 ## Exploring election data
 
-```{r}
-countdown::countdown(15)
+Let's take a look at the dataset
+
+1. What is the unit of observation in the Iran data frame? What are the dimensions?
+
+2. Which cities had the highest proportion of total votes cast for Ahmadinejad? Please return the top several city names along with the province name and the proportions.
+
+3. Which cities had the highest proportion of total votes cast for Mousavi? Please return the top several city names along with the province name and the proportions.
+
+```{r, echo = FALSE}
+countdown::countdown(4, font_size = "2em")
 ```
 
 ---
-class: middle, center, inverse
+Explore the election results 
+
+4.How many cities did Mousavi win?
+
+5.How does the proportion of total votes that were voided compare between cities won by Mousavi and cities won by Ahmadinejad? This can be answered either with a plot or with summary statistics. Describe in words how they compare.
+
+6.What proportion of the total votes cast were won by Ahmadinejad and Mousavi, respectively?
+
+
+
+```{r, echo = FALSE}
+countdown::countdown(5, font_size = "2em")
+```
+
+---
+class: middle, center
 
 # Benford's Law in Iran
 
 ---
-## First Digits
+## Fraud detection using Benford's Law
 
-```{r hint, echo = TRUE, eval = FALSE}
+--
+
+- Find the distribution of the first digit of vote counts.
+
+--
+
+- Compare this distribution with Benford's law.
+
+--
+
+- A significant deviation from Benford's law may indicate a potentially fraudeulent election.
+
+
+---
+## Finding First Digits
+
+```{r, echo = TRUE}
 substr("A long time ago, in a galaxy far far away...", 21, 28)
+```
+
+--
+
+```{r, echo = TRUE}
 substr(387, 1, 2)
+```
+
+--
+
+```{r, echo = TRUE}
 as.numeric(substr(387, 1, 2))
+```
+
+--
+
+```{r, echo = TRUE}
 get_first(387)
+```
+
+---
+Using Benford's law
+
+7.What proportion of vote counts for Ahmadinejad have “1” as a first digit?
+
+8.Create a plot showing the distribution of first digits in the Ahmadinejad’s vote counts. Does this plot appear to match the ideal Benford’s distribution? Where does it deviate?
+
+9.Would you consider this meaningless, weak, moderate, or strong evidence of election fraud? Why or why not?
+
+```{r, echo = FALSE}
+countdown::countdown(5, font_size = "2em")
 ```
 
 ---
@@ -158,5 +295,3 @@ p2 <- ggplot(benfords_p, aes(x = digit, y = prop)) +
   labs(title = "Benford's Law")
 p1 + p2
 ```
-
-
