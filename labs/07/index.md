@@ -15,6 +15,10 @@ links:
   icon_pack: fas
   name: Lab 7B
   url: https://stat20.org/labs/07/intervals-and-tests.pdf
+- icon: images
+  icon_pack: fas
+  name: Slides
+  url: https://stat20.org/labs/07/slides-1.html
 ---
 
 There are two components of this Lab:
