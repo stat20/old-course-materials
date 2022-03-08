@@ -48,9 +48,9 @@ class: center, middle
 [remaining] Students continue working on remaining problems
 
 This first component can be done either during Berkeley time or at the start of class along with students. It depends on how long you expect the rest of the lesson to take and what you'd like to emphasize:
-[Write on the board the two "fundamental" distributions that we've covered so far: the Binomial and the Bernoulli. Slides 30 and 55 of fundamental_distributions.html will give you a sense of the notation and layout that's used. Best to replicate each element of these slides, including the plots.] 
+[Write on the board the two "fundamental" distributions that we've covered so far: the Binomial and the Bernoulli. https://www.stat20.org/lectures/14/binomial.html#/bernoulli-distributionl will give you a sense of the notation and layout that's used. Best to replicate each element of these slides, including the plots.] 
 
-It's perfectly reasonable to ask students to close their laptops for the first part of class.
+It's reasonable to ask students to close their laptops for the first part of class.
 
 Ask students for a guess or two at the population of Berkeley.  Write on board then go to Wikipedia and get the true answer and correct the one(s) on the board. From there, follows links through Wikipedia to other towns and cities in California, building up a list of 10 city names and their populations (randomly picking a few of these links is a good method: https://en.wikipedia.org/wiki/Category:Incorporated_cities_and_towns_in_California). Structure this on the board as a data frame with two columns: city and population, and 10 rows.
 

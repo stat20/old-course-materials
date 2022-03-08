@@ -32,7 +32,7 @@ class: center, middle
 [remaining] Students continue working on remaining problems
 
 This first component can be done either during Berkeley time or at the start of class along with students. It depends on how long you expect the rest of the lesson to take and what you'd like to emphasize:
-[Write on the board the two "fundamental" distributions that we've covered so far: the Binomial and the Bernoulli. Slides 30 and 55 of fundamental_distributions.html will give you a sense of the notation and layout that's used. Best to replicate each element of these slides, including the plots.] 
+[Write on the board the two "fundamental" distributions that we've covered so far: the Binomial and the Bernoulli. https://www.stat20.org/lectures/14/binomial.html#/bernoulli-distributionl will give you a sense of the notation and layout that's used. Best to replicate each element of these slides, including the plots.] 
 
 It's perfectly reasonable to ask students to close their laptops for the first part of class.
 
@@ -89,11 +89,10 @@ Benford's law states that
 
 --
 
-- For example, investments with interest, populations of cities, and election results are observed to follow the Benford's Law.
+- For example, first digits of stock prices, populations of cities, and election results are observed to follow the Benford's Law.
 
 ---
 ## Benford's Law
-The code and plotted distribution for this are below.
 
 
 ```r
@@ -124,32 +123,29 @@ class: middle, center
 
 --
 
-Background
+.pull-left[
+**Background**
 
---
-
-- Ongoing public sentiment that the previous election was fraudulent
+- Ongoing public sentiment that previous election was fraudulent
 - The highest voter turnout in Iran's history
 
---
+**Leading candidates**
 
-Leading candidates
-
---
-
-- Mahmoud Ahmadinejad: Leader of the conservatives and incumbent president. 
+- Mahmoud Ahmadinejad: Leader of conservatives and incumbent president. 
 - Mir-Hossein Mousavi: Reformist and former prime minister. Seeking rapid political evolution.
+]
 
 --
 
-Outcome
+.pull-right[
+&lt;img src="assets/images/iran-pols.png" width="70%" style="display: block; margin: auto;" /&gt;
 
---
+**Outcome**
 
 Ahmadinejad won the election with 62.6% of the votes cast, while Mousavi received 33.75% of the votes cast.
+]
 
 ---
-
 ## Post-election controversies and unrest
 
 - Allegations of fraud
@@ -163,7 +159,8 @@ Ahmadinejad won the election with 62.6% of the votes cast, while Mousavi receive
 
 ---
 class: middle, center
-Was the election fraudulent?
+
+.adage[Was the election fraudulent?]
 
 ---
 class: middle, center
@@ -181,7 +178,7 @@ Let's take a look at the dataset
 
 3. Which cities had the highest proportion of total votes cast for Mousavi? Please return the top several city names along with the province name and the proportions.
 
-<div class="countdown" id="timer_6226b5a3" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<div class="countdown" id="timer_6226e0f0" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">04</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -196,7 +193,7 @@ Explore the election results
 
 
 
-<div class="countdown" id="timer_6226b6ae" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<div class="countdown" id="timer_6226dfe5" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -275,14 +272,14 @@ Using Benford's law
 
 9.Would you consider this meaningless, weak, moderate, or strong evidence of election fraud? Why or why not?
 
-<div class="countdown" id="timer_6226b5a0" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
+<div class="countdown" id="timer_6226e1cd" style="right:0;bottom:0;font-size:2em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
 ## Distribution of first digits in Iran
 
-&lt;img src="slides-1_files/figure-html/unnamed-chunk-9-1.png" width="864" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides-1_files/figure-html/unnamed-chunk-10-1.png" width="864" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
