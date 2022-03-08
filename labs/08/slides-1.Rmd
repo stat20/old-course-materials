@@ -105,11 +105,10 @@ Benford's law states that
 
 --
 
-- For example, investments with interest, populations of cities, and election results are observed to follow the Benford's Law.
+- For example, first digits of stock prices, populations of cities, and election results are observed to follow the Benford's Law.
 
 ---
 ## Benford's Law
-The code and plotted distribution for this are below.
 
 ```{r benford_code, echo = TRUE, eval = TRUE}
 benfords_p <- data.frame(first_digit = 1:9, 
@@ -138,32 +137,31 @@ class: middle, center
 
 --
 
-Background
+.pull-left[
+**Background**
 
---
-
-- Ongoing public sentiment that the previous election was fraudulent
+- Ongoing public sentiment that previous election was fraudulent
 - The highest voter turnout in Iran's history
 
---
+**Leading candidates**
 
-Leading candidates
-
---
-
-- Mahmoud Ahmadinejad: Leader of the conservatives and incumbent president. 
+- Mahmoud Ahmadinejad: Leader of conservatives and incumbent president. 
 - Mir-Hossein Mousavi: Reformist and former prime minister. Seeking rapid political evolution.
+]
 
 --
 
-Outcome
+.pull-right[
+```{r echo = FALSE, out.width = "70%"}
+knitr::include_graphics("assets/images/iran-pols.png")
+```
 
---
+**Outcome**
 
 Ahmadinejad won the election with 62.6% of the votes cast, while Mousavi received 33.75% of the votes cast.
+]
 
 ---
-
 ## Post-election controversies and unrest
 
 - Allegations of fraud
@@ -176,7 +174,8 @@ knitr::include_graphics(c("slides-1_files/figure-html/iran_green3.jpg","slides-1
 
 ---
 class: middle, center
-Was the election fraudulent?
+
+.adage[Was the election fraudulent?]
 
 ---
 class: middle, center
