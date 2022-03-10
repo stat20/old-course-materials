@@ -19,7 +19,7 @@ sched_raw <- read_csv("schedule.csv")
 # Clean the data frame
 sched <- sched_raw %>%
   replace_na(list("Week" = " ")) %>% # Make empty fields empty
-  slice(1:16)
+  slice(1:30)
 
 # Replace some values with html links
 # TODO: automate the stripping of empty links using

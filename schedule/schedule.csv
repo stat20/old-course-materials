@@ -9,26 +9,26 @@ Week,Day,Date,Topic,Topic Link,Reading,Reading Link,Weekly Work,Weekly Work Link
 ,Wednesday,2/2,Reproducibility,https://www.stat20.org/lectures/07/,R4DS 27,https://r4ds.had.co.nz/r-markdown.html,PS 3,https://www.stat20.org/ps/03/
 ,Friday,2/4,Effective Data Visualization,https://www.stat20.org/lectures/08/,DV 3,https://socviz.co/makeplot.html,Quiz 1,https://www.gradescope.com/courses/356299
 4,Monday,2/7,Working with Subsets,https://www.stat20.org/lectures/09/,none,,Lab 4,https://www.stat20.org/lab/04/
-,Wednesday,2/9,Data Pipelines and Groupwise Aggregation,https://www.stat20.org/lectures/10/,none,,PS 4,https://www.stat20.org/ps/02/
+,Wednesday,2/9,Data Pipelines and Groupwise Aggregation,https://www.stat20.org/lectures/10/,none,,PS 4,https://www.stat20.org/ps/04/
 ,Friday,2/11,Data Generating Machines,https://www.stat20.org/lectures/11/,none,,Quiz: none,
 5,Monday,2/14,Random Variables,https://www.stat20.org/lectures/12/,OI Probability Ch.3,https://www.stat20.org/readings/openintro-statistics-ch3-4.pdf,Lab 5,https://www.stat20.org/lab/05/
-,Wednesday,2/16,Expected Value and Variance,https://www.stat20.org/lectures/13/,OI Probability Ch.3,https://www.stat20.org/readings/openintro-statistics-ch3-4.pdf,PS 5,https://www.stat20.org/ps/02/
+,Wednesday,2/16,Expected Value and Variance,https://www.stat20.org/lectures/13/,OI Probability Ch.3,https://www.stat20.org/readings/openintro-statistics-ch3-4.pdf,PS 5,https://www.stat20.org/ps/05/
 ,Friday,2/18,Fundamental Distributions,https://www.stat20.org/lectures/14/,OI Probability Ch.3,https://www.stat20.org/readings/openintro-statistics-ch3-4.pdf,Quiz: 2,
-6,Monday,2/21,No Class: Holiday,https://www.stat20.org/lectures/15/,none,,Lab 6,https://www.stat20.org/lab/06/
-,Wednesday,2/23,,https://www.stat20.org/lectures/16/,,,PS 6,
-,Friday,2/25,,https://www.stat20.org/lectures/17/,,,Quiz: none,
-7,Monday,2/28,,https://www.stat20.org/lectures/18/,,,Lab 7,
-,Wednesday,3/2,,https://www.stat20.org/lectures/19/,,,PS 7,
-,Friday,3/4,,https://www.stat20.org/lectures/20/,,,Quiz: 3,
-8,Monday,3/7,,,,,Lab 8,
-,Wednesday,3/9,,,,,PS 8,
-,Friday,3/11,,,,,Quiz: none,
-9,Monday,3/14,,,,,Lab 9,
-,Wednesday,3/16,,,,,PS 9,
-,Friday,3/18,Midterm,,,,,
-10,Monday,3/21,No Class: Spring Break,,,,,
-,Wednesday,3/23,No Class: Spring Break,,,,,
-,Friday,3/25,No Class: Spring Break,,,,,
+6,Monday,2/21,No Class: Holiday,,none,,Lab 6,https://www.stat20.org/lab/06/
+,Wednesday,2/23,Confidence Intervals,https://www.stat20.org/lectures/15/,OpenIntro 12,https://openintro-ims.netlify.app/foundations-bootstrapping.html,PS 6,https://www.stat20.org/ps/06/
+,Friday,2/25,Using the Bootstrap,https://www.stat20.org/lectures/16/,infer docs,https://infer.netlify.app/articles/observed_stat_examples.html#one-categorical-one-proportion-1,Quiz: none,
+7,Monday,2/28,Computational vs Mathematical Intervals,https://www.stat20.org/lectures/17/,OpenIntro 2.1,https://openintro-ims.netlify.app/data-design.html#sampling-principles-strategies,Lab 7,https://www.stat20.org/lab/07/
+,Wednesday,3/2,Hypothesis Testing Framework,https://www.stat20.org/lectures/18/,OpenIntro 11,https://openintro-ims.netlify.app/foundations-randomization.html,PS 7,https://www.stat20.org/ps/07/
+,Friday,3/4,Permutation vs Taking Draws,https://www.stat20.org/lectures/19/,OpenIntro 17,https://openintro-ims.netlify.app/inference-two-props.html,Quiz: 3,
+8,Monday,3/7,The Central Limit Theorem,https://www.stat20.org/lectures/20/,OpenIntro 13,https://openintro-ims.netlify.app/foundations-mathematical.html,Lab 8,https://www.stat20.org/lab/08/
+,Wednesday,3/9,Statistical Errors,https://www.stat20.org/lectures/21/,OpenIntro 14,https://openintro-ims.netlify.app/decerr.html,PS 8,https://www.stat20.org/ps/08/
+,Friday,3/11,Inference for Means I,https://www.stat20.org/lectures/22/,OpenIntro 19,https://openintro-ims.netlify.app/inference-one-mean.html,Quiz: none,
+9,Monday,3/14,Inference for Means II,https://www.stat20.org/lectures/23/,OpenIntro 20,https://openintro-ims.netlify.app/inference-two-means.html,Lab: none,
+,Wednesday,3/16,Midterm Review,https://www.stat20.org/lectures/24/,none,,PS: none,
+,Friday,3/18,Midterm,https://www.stat20.org/lectures/25/,none,,none,
+10,Monday,3/21,No Class: Spring Break,,none,,none,
+,Wednesday,3/23,No Class: Spring Break,,none,,none,
+,Friday,3/25,No Class: Spring Break,,none,,none,
 11,Monday,3/28,,,,,,
 ,Wednesday,3/30,,,,,,
 ,Friday,4/1,,,,,,

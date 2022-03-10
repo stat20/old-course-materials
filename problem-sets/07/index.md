@@ -2,7 +2,7 @@
 title: "Problem Set 7"
 summary: "Foundations of Hypothesis Testing."
 subtitle: "Foundations of Hypothesis Testing"
-publishdate: "2022-02-06"
+publishdate: "2022-03-06"
 show_post_date: false
 featured: true
 layout: single
