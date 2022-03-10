@@ -1,0 +1,264 @@
+---
+title: "Statistical Errors"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+1. Midterm
+    1. All lectures available on bCourses
+    2. Past midterms posed to Midterm Information on Ed
+    3. Read the Midterm Info
+
+
+## Agenda
+
+1. Hypothesis Testing Review
+2. Statistical Errors
+    1. Type I
+    2. Type II
+3. Error Rates and Statistical Power
+
+
+# Hypothesis Testing Review
+
+
+# One goal for today
+
+[Learn why we don't accept the null hypothesis.]{.bigadage}
+
+
+## What is it good for?
+
+Hypothesis tests have been shown to be valuable contributors to science ([p < .05]{.fragment .highlight-green})
+but are sometimes abused ([p < .05]{.fragment .highlight-green}).
+
+- Used to assess the degree to which data is consistent with a particular model.
+- The most widely used tool in statistical inference.
+
+
+## Step 1
+
+. . .
+
+Lay out your model(s).
+
+$H_0$: null model, business as usual  
+$H_A$: alternative model, business not as usual
+
+- Hypotheses are statments about the TRUE STATE of the world and should involve
+*parameters*, not *statistics*.
+- Hypotheses should suggest a *test statistic* that has some bearing on the claim.
+- The nature of $H_A$ determines one- or two-sided tests; default to two.
+
+
+## Step 2
+
+Construct the appropriate null distribution.
+
+```{r, echo=FALSE, eval=TRUE, fig.height = 3.5, fig.width = 10, fig.align='center'}
+x1  <- 0:75
+df <- data.frame(x = x1, y = dbinom(x1, 75, 0.5))
+library(tidyverse)
+ggplot(df, aes(x = x, y = y)) +
+  geom_bar(stat = "identity", col = "darkgreen", fill = "white") +
+  stat_function(fun = dnorm, args = list(mean = 75/2, sd = sqrt(74/4)), 
+                col = "goldenrod", lwd = 1.2)
+```
+
+1. Permutation (when `null = "independence"`)
+2. Simulation (when `null = "point"`)
+3. Exact Probability Theory (when you're lucky)
+4. Normal Approximation (when the CLT applies)
+
+
+## Step 3
+
+. . .
+
+Calculate a measure of consistency between the observed test statistic (the data) and the null distribution (i.e., a p-value).
+
+- If your observed test stat is in the tails > low p-val > data is inconsistent
+with null hypothesis > "reject null hypothesis".
+- If your observed test stat is in the body > high p-val > data is consistent with the null hypothesis > "fail to reject the null hypothesis".
+
+. . .
+
+> What can go wrong?
+
+
+# Decision Errors
+
+
+##  {background-image="images/covid-dashboard.png" background-size="contain"}
+
+
+## Grammar of Graphics review
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+```{r, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/covid-barchart.png")
+```
+:::
+
+::: {.column width="50%"}
+::: poll
+What geometries are in use in this graphic?
+
+Please respond at `pollev.com/stat20`.
+:::
+:::
+::::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/d3GznBIrX5VfNHGJYoxmb?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {.smaller}
+
+```{r, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/covid-positivity.png")
+```
+
+**A simplified model**
+
+[UHS tests a sample of the Cal community every week and monitors the positivity rate (proportion of tests that are positive).]{.fragment} [Assume this is a random sample of constant size and that the test is perfectly accurate.]{.fragment} [Let $p$ be the positivity rate.]{.fragment}
+
+. . .
+
+:::: columns
+::: {.column width="45%"}
+[$H_0$]{.inversebox} $\quad p = 5%$ 
+
+The incidence of COVID at Cal is at a manageable level.
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="45%"}
+::: {.fragment}
+[$H_A$]{.inversebox}  $\quad p > 5%$ 
+
+The incidence of COVID at Cal is at an elevated level.
+:::
+:::
+::::
+
+. . .
+
+> **Decision protocol**: if there is a big enough spike in a given week, shift classes to remote.
+
+
+## Decision Errors
+
+```{r, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/decision-errors-table.jpg")
+```
+
+
+
+## {}
+
+survey
+
+
+# Error Rates and Statistical Power
+
+
+## Decision Errors Rates
+
+```{r, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/decision-error-rates.jpg")
+```
+
+
+## What affects the error rates?
+
+- **Sample size, $n$**: with increasing $n$, the variability of the null distribution will decrease.
+
+- **Changing $\alpha$**: decreasing $\alpha$ will decrease type I error but increase type II error.
+
+- **Increasing _effect size_**: change data collection process to separate the distribution under $H_A$ and decrease type II error.
+    - Ex: If you're testing whether a pain medicine provides pain relief, only conduct the test if using a medicine that you expect to have cause a dramatic decrease in pain.
+
+
+## {}
+
+::: poll
+Consider a setting where the Cal UHS testing system observes a positivity rate of 5.5% in a one week interval, double the previous week.  Administration needs to decide whether or not to move  to remote learning. Which error would be worse?
+
+A. Moving to remote instruction when in fact the true number of cases on campus is still low.
+
+B. Failing to move to remote instruction when in fact the true number of cases on campus is elevated.
+
+Discuss with a partner then enter your answer at `pollev.com/stat20`.
+:::
+
+```{r}
+countdown::countdown(1, font_size = "2em")
+```
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/bExXaFBFKA3a2JuNTcdX5?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Statistical Power
+
+**Power** is the probability that you will reject the null hypothesis if it is in fact false.
+
+$$ P(\textrm{reject } H_0 | H_0 \textrm{ is false}) $$
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+> The more power, the higher the probability of finding an effect.
+:::
+
+::: {.column width="50%"}
+```{r, out.width="70%"}
+knitr::include_graphics("images/PeopleBirding.jpeg")
+```
+:::
+::::
+
+
+::: footer
+https://upload.wikimedia.org/wikipedia/commons/6/66/PeopleBirding.JPG
+:::
+
+## {background-image="images/unmasking-the-mask.png" background-size="contain"}
+
+
+## {background-image="images/power-masks.png" background-size="contain"}
+
+
+# One goal for today
+
+[Learn why we don't accept the null hypothesis.]{.bigadage}
