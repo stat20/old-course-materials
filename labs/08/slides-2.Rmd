@@ -143,3 +143,6 @@ p2 <- ggplot(benfords_p, aes(x = digit, y = prop)) +
 p1 + p2
 ```
 
+???
+Use part III questions to steer students towards goodness of fit.
+
