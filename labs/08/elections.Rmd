@@ -35,8 +35,6 @@ library(stat20data)
 data(iran)
 ```
 
-## Part I: Iran Election
-
 1. What is the unit of observation in the `iran` data frame? What are the dimensions?
 
 2. Which cities had the highest proportion of total votes cast for Ahmadinejad? Please return the top several city names along with the province name and the proportions. 
@@ -75,6 +73,11 @@ The [OpenElections](http://www.openelections.net) project obtains and standardiz
 
 15. Does the election you chose appear to fit Benford's distribution better or worse than the Iran election?
 
-## Part III: Coming soon...
 
+## Part III: A Goodness of Fit Test
 
+16. Using the code available in the slides from Friday's lecture, conduct a chi-squared goodness of fit test to determine whether or not the first digit counts from your state could have been drawn according to Benford's Law. 
+    - State the null and alternative hypotheses. 
+    - Plot the null distribution and shade the p-value according to your observed statistic.
+    - At an alpha level of .05, state your decision regarding the null hypothesis.
+    - Comment on whether or not you take this to be strong evidence of election fraud.
