@@ -143,26 +143,3 @@ p2 <- ggplot(benfords_p, aes(x = digit, y = prop)) +
 p1 + p2
 ```
 
-
----
-## Goodness of fit
-
-Let's start with an example:
-
-The expected distribution of the number of pets people have is this.
-```{r eval = TRUE, echo = FALSE,fig.cap=" ",fig.show='hold',fig.align='center'}
-knitr::include_graphics("slides-2_files/pets.png")
-```
-
-???
-Let's do an activity where we record the number of pets each student has and write the percentages on the board. Then demonstrate calculating the chi-square statistic using the formula. For now think of the Chi-square test as a distance metric from the observed data to the expected data. The goal is to steer students towards the Chi-square test which will be covered mroe in depth in lecture.
-
----
-
-##Chi-square test
-
-One way to measures how closely the observed data follow our expectation.
-
-$(Actual value – Expected value)^2/Expected value$
-
-
