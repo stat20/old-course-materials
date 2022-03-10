@@ -1,5 +1,5 @@
 ---
-title: "Lab 7B: Hypothesis Testing"
+title: "Lab 8: Elections"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
@@ -49,17 +49,21 @@ class: middle, center
 
 # GitHub
 
+```{r echo = FALSE}
+fontawesome::fa(name = "github", height="2em")
+```
+
+
 ---
 
 ## GitHub
 
-Statisticians, scientists, and engineers work on projects that include code, data, figures, and texts. For large-scale or long-run projects, we need a system to track everything.
+Statisticians, scientists, and engineers work on projects that include code, data, figures, and texts. For large-scale or long-run projects, we need a system to track and share everything.
 
 --
 
 **What is GitHub?**
-- A platform that allows teamwork and progress-tracking on various projects.
-- A repository is like an online folder containing project information. It consists of code, data, figures, presentations, papers, etc.
+- A repository is like an online folder containing code, data, figures, presentations, papers, etc.
 - A public repository allow everyone to access and download its content.
 
 --
@@ -74,14 +78,17 @@ class: middle, center
 
 ---
 
-## The OpenElections Project
-- Tracks official election results in every state of the US.
-- Shares the data with the public via GitHub.
-- Allows everyone to download them as CSV files.
-
-```{r eval = TRUE, echo = FALSE, out.width="40%", out.height="20%",fig.cap=" ",fig.show='hold',fig.align='center'}
+.pull-left[
+```{r eval = TRUE, echo = FALSE, out.width="100%", fig.cap=" ",fig.show='hold',fig.align='center'}
 knitr::include_graphics("slides-2_files/OpenElections.png")
 ```
+]
+
+.pull-right[
+- Tracks official election results in every state of the US.
+- Shares the data via GitHub.
+- Can download data as CSV files.
+]
 
 ---
 
