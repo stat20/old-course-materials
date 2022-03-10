@@ -1,0 +1,148 @@
+---
+title: "Lab 7B: Hypothesis Testing"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    seal: false
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = TRUE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(stat20data)
+data(class_survey)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+class: center, middle
+
+# Lab 8: Elections II
+### Introduction to Probability and Statistics
+
+---
+
+# Agenda
+
+1. GitHub
+2. The OpenElections Project
+3. Goodness-of-fit
+
+---
+class: middle, center
+
+# GitHub
+
+---
+
+## GitHub
+
+Statisticians, scientists, and engineers work on projects that include code, data, figures, and texts. For large-scale or long-run projects, we need a system to track everything.
+
+--
+
+**What is GitHub?**
+- A platform that allows teamwork and progress-tracking on various projects.
+- A repository is like an online folder containing project information. It consists of code, data, figures, presentations, papers, etc.
+- A public repository allow everyone to access and download its content.
+
+--
+
+**Examples**
+- The textbook *Introduction to Modern Statistics* has its code and data stored on GitHub [here](https://github.com/openintrostat/ims)
+- The OpenElections project
+
+---
+class: middle, center
+# The OpenElections Project
+
+---
+
+## The OpenElections Project
+- Tracks official election results in every state of the US.
+- Shares the data with the public via GitHub.
+- Allows everyone to download them as CSV files.
+
+```{r eval = TRUE, echo = FALSE, out.width="40%", out.height="20%",fig.cap=" ",fig.show='hold',fig.align='center'}
+knitr::include_graphics("slides-2_files/OpenElections.png")
+```
+
+---
+
+## Access OpenElections data
+
+Data from GitHub or other websites can be loaded into R like this:
+
+```{css, echo = FALSE}
+.huge .remark-code { /*Change made here*/
+  font-size: 120% !important;
+}
+```
+
+.huge[
+````markdown
+`r ''````{r echo = FALSE}
+object <- read_csv("web link to raw data")
+```
+````
+]
+
+So where to find the link to the raw data? 
+
+
+???
+### Loading data from OpenElections
+- Open the OpenElections GitHub
+- Repositories on the first page could be overwhelming for first-time git users. You may point out they are not different from folders in our laptops but allow people to make updates remotely.
+- Under the Repositories session, open one of the folders named openelections-data-state.
+- Go to the 2020 folder. Some states may include several election results (Texas includes both general and primary elections). Find and open a csv file with "general_precinct". Click the button that says “Raw” at the top right of the data frame on GitHub or click the link that says “View Raw Data”.
+- This may be the first time for some students to see a raw csv file. You may point out that each pair of commas creates a cell, and each header corresponds to one comma-separated field although they might not appear aligned on the raw data.
+- Copy the url of the raw data page. In RStudio, demonstrate using read_csv() to load the data frame and save it to an object. 
+- Visually inspect the data frame and go over the data taxonomy (unit of observation, dimension, type of variable, etc.). It may be worth showing data from two different states, which might use different fields and formats. For instance, North Carolina includes the names of both the candidate and the running mate under the candidate field. Student will adjust their code based on each state's data set.
+
+---
+## Goodness of fit
+
+Back to Benford's law and the Iran election
+- Are the differences between the two distributions strong enough to call the election a fraud?
+
+```{r eval = TRUE, echo = FALSE, fig.width=12, fig.height=6, fig.align='center'}
+library(stat20data)
+library(patchwork)
+data(iran)
+p1 <- iran %>%
+  mutate(first_digit = get_first(ahmadinejad)) %>%
+  ggplot(aes(x = first_digit)) +
+  geom_bar() +
+  labs(x = "first digit",
+       title = "Ahmadinejad Vote Data")
+
+benfords_p <- data.frame(first_digit = 1:9, 
+                         ben_prop = log10(1 + 1/1:9))
+colnames(benfords_p) <- c("digit", "prop")
+p2 <- ggplot(benfords_p, aes(x = digit, y = prop)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete(limits = 1:9) +
+  labs(title = "Benford's Law")
+p1 + p2
+```
+
+???
+Use part III questions to steer students towards goodness of fit.
+
