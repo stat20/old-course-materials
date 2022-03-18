@@ -1,0 +1,52 @@
+---
+title: "Stat 20 Midterm"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: false
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Welcome to the STAT 20 Midterm {.smaller}
+
+:::: columns
+::: {.column width="47%"}
+**Before the exam begins**
+
+- Be sure you are not seated directly next to another student (leave an open seat).
+- Remove any ball caps / hoods.
+- Power-off and stow all materials and devices (phones, calculators, tablets, etc) in your backpack/bag under your seat.
+- Take out a pencil/pen and your two pages of notes (the cheat sheets, optional).
+- Write your name and Berkeley ID# on the front of the exam.
+- Do not open the exam until told to begin.
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+**During the exam**
+
+- If you need to use the bathroom, bring your exam and phone to a proctor at the front.
+- If you have a question, please raise your hand and we will come by.
+- When you are done, bring up your exam with your photo ID.
+- Please do not get up and leave if there are fewer than 5 minutes left.
+:::
+::::
+
+[Good luck! `r emo::ji("clover")`]{.footer}
+
+
+
+
+

@@ -1,0 +1,559 @@
+---
+title: "Inference for Numerical Data"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+## Agenda
+
+1. The distribution of a sample mean
+    1. Large samples
+    2. Small samples
+2. The link between confidence intervals and hypothesis tests
+
+
+## Lab 6: People's Park {auto-animate=true}
+
+. . .
+
+```{r}
+knitr::include_graphics("images/ppk-median.png")
+```
+
+. . .
+
+```{r echo = FALSE}
+library(tidyverse)
+library(infer)
+library(stat20data)
+data("ppk")
+set.seed(40)
+```
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = TRUE, eval = FALSE}
+boot <- ppk %>%
+  specify(response = Q15_1) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "median")
+boot %>%
+  visualize()
+```
+:::
+
+::: {.column width="50%" .fragment .fade-in}
+```{r echo = FALSE, eval = TRUE}
+boot <- ppk %>%
+  specify(response = Q15_1) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "median")
+boot %>%
+  visualize() +
+  theme_gray(base_size = 18)
+```
+:::
+::::
+
+
+## Lab 6: People's Park {auto-animate=true}
+
+```{r}
+knitr::include_graphics("images/ppk-median.png")
+```
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = TRUE, eval = FALSE}
+ppk %>%
+  ggplot(aes(x = Q15_1)) +
+  geom_histogram()
+ppk %>%
+  summarize(xbar = mean(Q15_1, 
+                        na.rm = TRUE))
+```
+:::
+
+::: {.column width="50%" .fragment .fade-in}
+```{r echo = FALSE, eval = TRUE}
+ppk %>%
+  ggplot(aes(x = Q15_1)) +
+  geom_histogram() +
+  theme_gray(base_size = 18)
+ppk %>%
+  summarize(xbar = mean(Q15_1, na.rm = TRUE))
+```
+:::
+::::
+
+## {}
+
+::: poll
+Which distribution could represent the population from which this sample was drawn?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/zJwkPUVclBnQmdFPgQVjN?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## {}
+
+::: poll
+Which distribution could represent a hypothetical second sample drawn from the sample population?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/c4ayubpkc69899wQl3G0N?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+::: poll
+Which distribution could represent the sampling distribution for the sample mean?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/x9y55XowMv1fS2dyrxG4f?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Lab 6: People's Park {auto-animate=true}
+
+```{r}
+knitr::include_graphics("images/ppk-median.png")
+```
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = TRUE, eval = FALSE}
+boot <- ppk %>%
+  specify(response = Q15_1) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "mean")
+boot %>%
+  visualize()
+```
+:::
+
+::: {.column width="50%" .fragment .fade-in}
+```{r echo = FALSE, eval = TRUE}
+boot <- ppk %>%
+  specify(response = Q15_1) %>%
+  generate(reps = 500,
+           type = "bootstrap") %>%
+  calculate(stat = "mean")
+boot %>%
+  visualize() +
+  theme_gray(base_size = 18)
+```
+:::
+::::
+
+
+## The Distribution of the sample mean
+
+```{r fig.height=5, fig.align='center'}
+boot %>%
+  visualize() +
+  theme_gray(base_size = 18)
+```
+
+. . .
+
+```{r echo = TRUE}
+ppk %>%
+  drop_na(Q15_1) %>%
+  summarize(s = sd(Q15_1),
+            n = n())
+```
+
+. . .
+
+```{r echo = TRUE}
+SE <- 2.24 / sqrt(952)
+SE
+```
+
+
+## The Distribution of the sample mean
+
+```{r fig.height=5, fig.align='center'}
+boot %>%
+  visualize() +
+  theme_gray(base_size = 18)
+```
+
+. . .
+
+```{r echo = TRUE}
+3.05 - 2 * SE
+3.05 + 2 * SE
+```
+
+. . .
+
+```{r echo = TRUE}
+boot %>%
+  get_ci(level = .95)
+```
+
+
+## Small Sample Inference
+
+> What if we only had a sample of size $n = 4$?
+
+```{r eval = TRUE}
+ppk_small <- ppk %>%
+  drop_na(Q15_1) %>%
+  sample_n(size = 4)
+```
+
+. . .
+
+```{r}
+ppk_small %>%
+  ggplot(aes(x = Q15_1)) +
+  geom_histogram() +
+  theme_gray(base_size = 18)
+```
+
+## {}
+
+::: poll
+Which distribution could represent the sampling distribution for the sample mean at n = 4?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/EXSdJZ3CaQdxxKeDzf0af?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Distribution of Sample Mean at $n = 4$
+
+```{r}
+sim15 <- ppk %>%
+  drop_na(Q15_1) %>%
+  select(Q15_1) %>%
+  rep_sample_n(4, reps = 500)
+simstat <- sim15 %>%
+  group_by(replicate) %>%
+  summarize(stat = mean(Q15_1))
+simstat %>%
+  ggplot(aes(x = stat)) +
+  geom_histogram() +
+  theme_gray(base_size = 18)
+```
+
+. . .
+
+> We can't bootstrap. We can't use the CLT. What do we do?
+
+
+
+# Small Sample Inference on a Mean
+
+
+## {background-image="images/guinness.jpg" background-size="contain"}
+
+
+## {}
+
+:::: columns
+::: {.column width="50%"}
+```{r out.width=350, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/gosset.jpg")
+```
+
+Meet William Sealy Gosset.
+:::
+
+::: {.column width="50%"}
+**Problem**: A batch of beer should have a fixed [chemical level related to barley]
+in order to be of good quality. Can you test a small number of barrels and infer
+if the entire batch is of good enough quality?
+:::
+::::
+
+
+## {background-image="images/student-t.png" background-size="contain"}
+
+
+## {background-image="images/gosset-plaque.jpg" background-size="contain"}
+
+<!--
+ One version of the origin of the pseudonym is that Gosset’s employer preferred staff to use pen names when publishing scientific papers instead of their real name, so he used the name “Student” to hide his identity. Another version is that Guinness did not want their competitors to know that they were using the t-test to determine the quality of raw material.
+-->
+
+
+## Gosset's insight
+
+[If you have a small number of observations (random variables)]{.fragment}  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[that are drawn from a nearly normal population,]{.fragment}  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[and if those observations are independent,]{.fragment}  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[and if you calculate the sample mean, $\bar{x} = 1/n \sum_{i = 1}^n x_i$,]{.fragment}  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[and the sample standard deviation $s = \sqrt{\frac{1}{n - 1}\sum_{i = 1}^n (x_i - \bar{x})^2}$,]{.fragment}  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[then]{.fragment}
+
+. . .
+
+$$
+t = \frac{\bar{x} - \mu}{s/\sqrt(n)}
+$$
+
+. . .
+
+will follow a t distribution with $n - 1$ degrees of freedom, or
+
+$$
+t \sim \textrm{t}(df = n - 1)
+$$
+
+
+## $t$ versus standard normal
+
+```{r tdist, echo = FALSE, eval = TRUE, fig.height=5.5, fig.align="center", warning = FALSE}
+ggplot(NULL, aes(x=x, colour = distribution)) +
+  stat_function(data = data.frame(x = -4:4, distribution= factor(1)), 
+                fun = dt, args = c(df = 1)) +
+  stat_function(data = data.frame(x = -4:4, distribution = factor(2)), 
+                fun = dt, args = c(df = 2)) +
+  stat_function(data = data.frame(x = -4:4, distribution = factor(3)), 
+                fun = dt, args = c(df = 5)) +
+  stat_function(data = data.frame(x = -4:4, distribution = factor(4)), 
+                fun = dt, args = c(df = 30)) +
+  stat_function(data = data.frame(x = -4:4, distribution = factor(5)), 
+                fun = dnorm) +
+  scale_colour_manual(values = c("orangered4", "orangered3", 
+                                 "orangered2", "orangered", "goldenrod"),
+                      labels = c("df = 1", "df = 2", "df = 5", "df = 30", "normal")) +
+  theme_bw(base_size = 18)
+```
+
+> The $t$ has heavier tails than the normal distribution.
+
+
+## Degrees of Freedom
+
+. . .
+
+*The number of parameters that are free to vary, without violating any constraint imposed on it*.
+
+. . .
+
+Since $\bar{x} = \frac{1}{n}\sum_{i = 1}^n x_i$, one of our *observations* is constrained, leaving $n-1$ that are free to vary.
+
+$$ df = n - 1$$
+
+
+## Confidence interval for $\mu$
+
+. . .
+
+point estimate $\pm$ margin of error
+
+$$ \bar{x} \pm (t^*_{df} \times SE) $$
+
+- $\bar{x}$: point estimate of $\mu$.
+- $t^*_{df}$: critical value that leaves $\alpha$ in the tails of a $t$ with 
+$df = n - 1$.
+- $SE$: standard error of $\bar{x}$, $s/\sqrt{n}$.
+
+
+## Finding $t^*_{df}$
+
+. . .
+
+`q_()`: family of quantile functions that take the probability in the left tail that you're interested in, and the parameters of the distribution, and returns the cutoff value.
+
+. . .
+
+**Ex: quantile function for the standard normal**
+
+```{r n1, eval = FALSE, echo = TRUE}
+qnorm(.025, mean = 0, sd = 1)
+```
+
+. . .
+
+```{r ref.label = "n1", echo = FALSE}
+```
+
+. . .
+
+```{r n2, eval = FALSE, echo = TRUE}
+qnorm(.16, mean = 0, sd = 1)
+```
+
+. . .
+
+```{r ref.label = "n2", echo = FALSE}
+```
+
+
+## Finding $t^*_{df}$, cont.
+
+`q_()`: family of quantile functions that take the probability in the left tail that you're interested in, and the parameters of the distribution, and returns the cutoff value.
+
+. . .
+
+```{r qt1, eval = FALSE, echo = TRUE}
+qt(.025, df = 5)
+```
+
+. . .
+
+```{r ref.label = "qt1", echo = FALSE}
+```
+
+. . .
+
+```{r qt2, eval = FALSE, echo = TRUE}
+qt(.025, df = 30)
+```
+
+. . .
+
+```{r ref.label = "qt2", echo = FALSE}
+```
+
+
+## Hypothesis testing
+
+1. State hypotheses: e.g. $H_0: \mu = \mu_0$ versus $H_A: \mu \ne \mu_0$
+2. Consider conditions
+    - Independent observations
+    - Nearly normal population
+3. Compute observed $t$-statistic $$ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} $$
+4. Draw picture to assess where $t_{obs}$ falls in $t_{df = n - 1}$
+5. Compute a (two-tailed) $p$-value
+6. State conclusion
+
+
+
+## Example: The Kilogram
+
+. . .
+
+How do we know how much a kilogram weighs?
+
+
+## Example: The Kilogram, cont.
+
+Meet the IPK: International Prototype Kilogram, Paris, France.
+
+```{r out.width=400, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/kilo.jpeg")
+```
+
+
+## Example: The Kilogram
+
+
+**Question**
+
+The US has two copies of the IPK. Say they make a third copy for Cal. We take 6 measures of our new CPK and get the following:
+
+. . .
+
+```{r echo = FALSE}
+x <- c(0.997, 0.976, 1.032, 1.101, 1.004)
+x
+```
+
+. . .
+
+Is it a safe assumption that the CPK weighs the same as the IPK?
+
+## A hypothesis test for $\mu$
+
+
+## A CI for $\mu$
+
+$$ \bar{x} \pm (t^*_{df} \times SE) $$
+
+. . .
+
+```{r echo = TRUE}
+x_bar <- mean(x)
+x_bar
+```
+
+. . .
+
+```{r echo = TRUE}
+t_stat <- qt(.025, df = 4)
+t_stat
+```
+
+. . .
+
+```{r echo = TRUE}
+SE <- sd(x)/sqrt(length(n))
+SE
+```
+
+. . .
+
+```{r echo = TRUE}
+c(x_bar - t_stat * SE, x_bar + t_stat * SE)
+```
+
+
+## Using the $t$-distribution
+
+#### Recall
+The Central Limit Theorem says that sums of independent **random variables** become normally distribution as **n grows large**.
+
+. . .
+
+If you have a **small number** of observations (random variables) that are drawn from a **nearly normal population**, and if those observations are **independent**, and if you calculate the sample mean, $\bar{x} = 1/n \sum_{i = 1}^n x_i$, and the sample standard deviation $s = \sqrt{\frac{1}{n - 1}\sum_{i = 1}^n (x_i - \bar{x})^2}$,
+
+then...
+
+. . .
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use the $t$-distribution.
+
+
+## {}
+
+```{r out.width=400, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/rip-ipk.png")
+```
+
+. . .
+
+```{r out.width=400, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/rip-ipk2.png")
+```
