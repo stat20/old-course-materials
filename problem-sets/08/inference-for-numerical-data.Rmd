@@ -1,5 +1,5 @@
 ---
-title: 'Problem Set 9'
+title: 'Problem Set 8/9'
 subtitle: 'Inference for Numerical Data'
 output:
   pdf_document: default

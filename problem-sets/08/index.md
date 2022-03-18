@@ -1,8 +1,8 @@
 ---
-title: "Problem Set 6"
-summary: "Confidence Intervals with the Bootstrap."
-subtitle: "Confidence Intervals with the Bootstrap"
-publishdate: "2022-02-24"
+title: "Problem Set 8/9"
+summary: "Inference for Numerical Data."
+subtitle: "Inference for Numerical Data"
+publishdate: "2022-03-15"
 show_post_date: false
 featured: true
 layout: single
@@ -10,9 +10,7 @@ links:
 - icon: file-pdf
   icon_pack: fas
   name: PS
-  url: https://stat20.org/problem-sets/06/bootstrap.pdf
+  url: https://stat20.org/problem-sets/08/inference-for-numerical-data.pdf
 ---
 
-You are welcome to write your problem set either by hand, using Word / Google Doc, or putting your answers in an .Rmd file in RStudio. The important thing is that they be uploaded to Gradescope as a PDF file. If you are writing your answers by hand, please use a phone cam scanner app instead of simply taking photos.
-
-Problem sets are meant to be additional practice and they are graded credit / no credit. Credit is given for assignments that demonstrate earnest engagement on the majority of the problems.
+This problem set, right before the midterm, will not be collected but is meant to provide additional practice problems with the material seen in lecture. A tutorial working through these problems will be posted to bCourses on Wednesday evening.
