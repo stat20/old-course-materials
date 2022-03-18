@@ -14,6 +14,9 @@ $body-color: #5c5859 !default;
 $presentation-heading-color: #4466B0 !default;
 $presentation-heading-font: "Cabin", "Commissioner", sans serif !default;
 
+// code
+$code-block-bg: lighten($body-color, 60%) !default;
+$code-block-border-color: $body-color !default;
 
 
 /*-- scss:rules --*/
