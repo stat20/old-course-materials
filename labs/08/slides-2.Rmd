@@ -127,9 +127,10 @@ So where to find the link to the raw data?
 ## Goodness of fit
 
 Back to Benford's law and the Iran election
-- Are the differences between the two distributions strong enough to call the election a fraud?
 
-```{r eval = TRUE, echo = FALSE, fig.width=12, fig.height=6, fig.align='center'}
+> Are the differences between the two distributions strong enough to call the election a fraud?
+
+```{r eval = TRUE, echo = FALSE, fig.width=12, fig.height=5.5, fig.align='center'}
 library(stat20data)
 library(patchwork)
 data(iran)
@@ -147,7 +148,7 @@ p2 <- ggplot(benfords_p, aes(x = digit, y = prop)) +
   geom_bar(stat = "identity") +
   scale_x_discrete(limits = 1:9) +
   labs(title = "Benford's Law")
-p1 + p2
+p2 + p1
 ```
 
 ???
