@@ -27,6 +27,7 @@ execute:
 - Remove any ball caps / hoods.
 - Power-off and stow all materials and devices (phones, calculators, tablets, etc) in your backpack/bag under your seat.
 - Take out a pencil/pen and your two pages of notes (the cheat sheets, optional).
+- Check that exam has 4 sheets of paper.
 - Write your name and Berkeley ID# on the front of the exam.
 - Do not open the exam until told to begin.
 :::
@@ -39,7 +40,7 @@ execute:
 
 - If you need to use the bathroom, bring your exam and phone to a proctor at the front.
 - If you have a question, please raise your hand and we will come by.
-- When you are done, bring up your exam with your photo ID.
+- During the exam, a proctor will come by to check your photo ID.
 - Please do not get up and leave if there are fewer than 5 minutes left.
 :::
 ::::
