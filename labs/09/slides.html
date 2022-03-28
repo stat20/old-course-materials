@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lab 9: A Matter of Taste</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Lab 9: A Matter of Taste
+### Introduction to Probability and Statistics
+
+---
+
+# Agenda
+
+1. Collecting data: a matter of taste
+
+???
+
+# Suggested timeline
+- [10 min] Slides and making teams
+- [40 min] Working on the protocol
+
+# General Advice
+- The students have seen *nothing* about experimental design yet in class. The idea is to have them use their own mental models to solve this problem, then later review and revise them. That's to say: coach them only to be precise in their protocol, not to be using best practices in experimental design. Errors made here are great learning opportunities later.
+- The first phase of the lab can all be done with paper and pencil, so you can ask that students stow their laptops.
+- This can be a bit of a jolt for students: from working with ggplot2 code to suddenly thinking about experiments without having seen them in class.
+
+
+---
+class: middle, center
+
+## Constructing Claims from Data
+
+---
+
+- **John Arbuthnot's Question**: What proportion of total births are of girls?
+
+--
+
+- **The Data**: Christening records from London churches.
+
+--
+
+- **The Analysis**: In all years studied, the proportion of girls was less than 50%.
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-1-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+- **Potential Claim**: At birth, humans are more likely to be genetically male than genetically female.
+
+???
+First layout the arc of the Arbuthnot lab from the beginning of the semester. The general theme is: how can we construct claims and answer questions using data?
+
+This week students will work backwards: start with a claim that they think may be true, then decide how to collect data in a manner that will be most effective at determining whether or not the claim is true.
+
+---
+class: middle, center
+
+# But first
+
+Please get into groups of 3 (4 is ok too). Take turns introducing yourselves.
+
+---
+## A Matter of Taste
+
+**Your challenge**: Determine whether or not one of your group members can distinguish between two different types of bubble water.
+
+--
+
+### Each team will have
+
+- 50 minutes (lab Thursday)
+- 2 cans of soda water, each one from a different flavor
+- small cups
+- straws
+- saltine crackers
+
+
+---
+## Group Members
+
+&lt;img src="assets/images/members.png" width="784" style="display: block; margin: auto;" /&gt;
+
+???
+The main reason for the roles here is to dedicate just one person to handling the materials for covid safety. There will also be sanitizer.
+
+
+---
+## Claim and Hypotheses
+
+&lt;img src="assets/images/claim.png" width="1099" style="display: block; margin: auto;" /&gt;
+
+???
+Prompt them to think carefully about their wording here in the claim. How ambitious and general do they want to be?
+
+---
+## Protocol
+
+&lt;img src="assets/images/protocol.png" width="788" style="display: block; margin: auto;" /&gt;
+
+???
+Here they must be very precise. We're spoken about reproducible science in class, so use that language to encourage careful work. They must be able to pass this protocol off to another group, and they should be able to carry out the intended experiment with no ambiguity.
+
+
+---
+## Data
+
+&lt;img src="assets/images/data.png" width="781" style="display: block; margin: auto;" /&gt;
+
+???
+This is intended to be a blank table with n columns and at least 1 row. They may plan to record either variables or not enough to draw the conclusions they intend. As before, don't correct them. They may discover mid-experiment that they did this part wrong, and that's great.
+
+---
+## Graphics
+
+&lt;img src="assets/images/eda.png" width="795" style="display: block; margin: auto;" /&gt;
+
+---
+## Things to remember
+
+- Be precise in your protocol.
+- For Thursday's lab, meet outside Evans.
+- Before leaving today, scan both sides of the handout with your phone.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
