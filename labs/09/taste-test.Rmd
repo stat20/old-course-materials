@@ -1,0 +1,25 @@
+---
+title: 'Lab 9B: A Matter of Taste'
+subtitle: "Data Analysis"
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE, 
+                      echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+1. List any changes that you made to your experimental protocol.
+
+2. Create a data frame based on the data you collected and print it out into your pdf. You can print all rows your data frame using `print(my_tibble, n = nrow(my_tibble))`.
+
+3. Create a visualization of the data you collected (not the null distribution) similar to the one you sketched in the handout. Does it look clearly in support of your claim or contrary to your claim or somewhere in between?
+
+4. Conduct a hypothesis test to determine whether your data is consistent with the null hypothesis. Be sure to provide.
+
+    a. The null and alternative hypotheses.
+    b. The value of the observed test statistic.
+    c. A visualization of the null distribution and observed test statistic with the p-value shaded in.
+    d. The p-value and your conclusion (use $\alpha = .05$) regarding null hypothesis and original claim.
