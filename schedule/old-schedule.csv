@@ -29,22 +29,22 @@ Week,Day,Date,Topic,Topic Link,Reading,Reading Link,Weekly Work,Weekly Work Link
 10,Monday,3/21,No Class: Spring Break,,none,,none,
 ,Wednesday,3/23,No Class: Spring Break,,none,,none,
 ,Friday,3/25,No Class: Spring Break,,none,,none,
-11,Monday,3/28,Bayesian Estimation,https://www.stat20.org/lectures/26/,See lecture page,,Lab 9,https://www.stat20.org/lab/09/
-,Wednesday,3/30,Causality,https://www.stat20.org/lectures/27/,See lecture page,,PS: none,
-,Friday,4/1,Experimental Design,https://www.stat20.org/lectures/28/,OpenIntro 2,https://openintro-ims.netlify.app/data-design.html#experiments,Quiz: none,
-12,Monday,4/4,Experimental Design II,https://www.stat20.org/lectures/29/,OpenIntro 2,https://openintro-ims.netlify.app/data-design.html#experiments,Lab 10,https://www.stat20.org/lab/10/
-,Wednesday,4/6,Correlation,https://www.stat20.org/lectures/30/,OpenIntro 7.1,https://openintro-ims.netlify.app/model-slr.html#fit-line-res-cor,PS 10,https://www.stat20.org/problem-sets/10/
-,Friday,4/8,Line of Best Fit,https://www.stat20.org/lectures/31/,OpenIntro 7.2,https://openintro-ims.netlify.app/model-slr.html#least-squares-regression,Quiz 4,
-13,Monday,4/11,No Class,,,,Lab 11,https://www.stat20.org/lab/11/
-,Wednesday,4/13,"Predictions, Interpretations, Outliers",https://www.stat20.org/lectures/32/,OpenIntro 7.3,https://openintro-ims.netlify.app/model-slr.html#outliers-in-regression,PS 11,https://www.stat20.org/problem-sets/11/
-,Friday,4/15,Inference for Regression,https://www.stat20.org/lectures/33/,OpenIntro 24,https://openintro-ims.netlify.app/inf-model-slr.html,Quiz: none,
-14,Monday,4/18,Geometry of Multiple Regression,https://www.stat20.org/lectures/34/,OpenIntro 8,https://openintro-ims.netlify.app/model-mlr.html,Lab 12,https://www.stat20.org/lab/12/
-,Wednesday,4/20,Adding Complexity,https://www.stat20.org/lectures/35/,OpenIntro 25,https://openintro-ims.netlify.app/inf-model-mlr.html,PS 12,https://www.stat20.org/problem-sets/12/
-,Friday,4/22,Concepts in Model Building,https://www.stat20.org/lectures/36/,OpenIntro 25,https://openintro-ims.netlify.app/inf-model-mlr.html,Quiz 5,
-15,Monday,4/25,Challenges in Model Interpretation,https://www.stat20.org/lectures/37/,OpenIntro 25,https://openintro-ims.netlify.app/inf-model-mlr.html,Lab 13,https://www.stat20.org/lab/13/
-,Wednesday,4/27,From Linear to Logistic,https://www.stat20.org/lectures/38/,OpenIntro 9,https://openintro-ims.netlify.app/model-logistic.html,PS 13,https://www.stat20.org/problem-sets/13/
-,Friday,4/29,Last Lecture,https://www.stat20.org/lectures/39/,,,Quiz: none,
+11,Monday,3/28,,,,,,
+,Wednesday,3/30,,,,,,
+,Friday,4/1,,,,,,
+12,Monday,4/4,,,,,,
+,Wednesday,4/6,,,,,,
+,Friday,4/8,,,,,,
+13,Monday,4/11,,,,,,
+,Wednesday,4/13,,,,,,
+,Friday,4/15,,,,,,
+14,Monday,4/18,,,,,,
+,Wednesday,4/20,,,,,,
+,Friday,4/22,,,,,,
+15,Monday,4/25,,,,,,
+,Wednesday,4/27,,,,,,
+,Friday,4/29,Last Lecture,,,,,
 16,Monday,5/2,RRR,,,,,
 ,Wednesday,5/4,RRR,,,,,
 ,Friday,5/6,RRR,,,,,
-17,Finals Week,,See campus exam schedule,,,,,
+17,Tuesday,5/10,Final Exam 7-10 pm,,,,,
