@@ -14,3 +14,6 @@ links:
   url: https://stat20.org/lectures/26/bayesian-estimation.html
 ---
 
+## Additional Readings
+
+- _The Theory That Would Not Die: How Bayes' Rule Cracked the Enigma Code, Hunted Down Russian Submarines, and Emerged Triumphant from Two Centuries of Controversy_, Sharon Bertsch McGrayne
