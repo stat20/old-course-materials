@@ -1,0 +1,86 @@
+---
+title: 'Problem Set 10'
+subtitle: 'Causality and Experimental Design'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      fig.width = 3,
+                      fig.height = 2.5)
+```
+
+
+1. For each of the following events described using casual language, identify the corresponding counterfactual event that, if we could observe it, would verify that indeed there was a causal effect.
+
+    a. The team lost the basketball game because they had an injured player.
+    
+    b. The company did well in the third quarter due to their heavy investments in research and development.
+    
+    c. The customer continued their subscription to Netflix because of the availability of the show Squid Game.
+    
+
+2.  The following scatterplot was created as part of a study evaluating the relationship between estimated life expectancy at birth (as of 2014) and percentage of internet users (as of 2009) in 208 countries for which such data were available.^[The [`cia_factbook`](http://openintrostat.github.io/openintro/reference/cia_factbook.html) data used in this exercise can be found in the [**openintro**](http://openintrostat.github.io/openintro) R package.]
+    
+    ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 5, fig.align='center'}
+    library(openintro)
+    library(tidyverse)
+    library(scales)
+    
+    ggplot(data = cia_factbook,
+           aes(y = life_exp_at_birth,
+              x = internet_users/population)) +
+     geom_point(alpha = 0.8) +
+     scale_x_continuous(
+        labels = label_percent(scale = 100),
+        limits = c(0, 1)) +
+     labs(
+       x = "Percent internet users",
+       y = "Life expectancy",
+        title = "Life expectancy vs. percent internet users", 
+        subtitle = "Data from 2014 from the CIA Factbook"
+     )
+    ```
+
+    a.  Describe the relationship between life expectancy and percentage of internet users.
+
+    b.  What type of study is this?
+
+    c.  State a possible confounding variable that might explain this relationship and describe its potential effect.
+    
+3. A study that surveyed a random sample of otherwise healthy high school students found that they are more likely to get muscle cramps when they are stressed. The study also noted that students drink more coffee and sleep less when they are stressed.
+
+    a. What type of study is this?
+
+    b. Can this study be used to conclude a causal relationship between increased stress and muscle cramps?
+
+    c. State possible confounding variables that might explain the observed relationship between increased stress and muscle cramps.
+
+
+4. To assess the effectiveness of taking large doses of vitamin C in reducing the duration of the common cold, researchers recruited 400 healthy volunteers from staff and students at a university. 
+A quarter of the patients were assigned a placebo, and the rest were evenly divided between 1g Vitamin C, 3g Vitamin C, or 3g Vitamin C plus additives to be taken at onset of a cold for the following two days. 
+All tablets had identical appearance and packaging. 
+The nurses who handed the prescribed pills to the patients knew which patient received which treatment, but the researchers assessing the patients when they were sick did not. 
+No significant differences were observed in any measure of cold duration or severity between the four groups, and the placebo group had the shortest duration of symptoms.
+
+    a.  Was this an experiment or an observational study? Why?
+
+    b.  What are the explanatory and response variables in this study?
+
+    c.  Were the patients blinded to their treatment?
+
+    d.  Was this study double-blind?
+
+    e.  Participants are ultimately able to choose whether or not to use the pills prescribed to them. We might expect that not all of them will adhere and take their pills. Does this introduce a confounding variable to the study? Explain your reasoning.
+    
+5. In a study of the relationship between socio-economic class and unethical behavior, 129 University of California undergraduates at Berkeley were asked to identify themselves as having low or high social-class by comparing themselves to others with the most (least) money, most (least) education, and most (least) respected jobs. 
+They were also presented with a jar of individually wrapped candies and informed that the candies were for children in a nearby laboratory, but that they could take some if they wanted. 
+After completing some unrelated tasks, participants reported the number of candies they had taken. 
+It was found that those who were identified as upper-class took more candy than others. (Piff, 2012)
+
+    a.  Identify the population of interest and the sample in this study.
+
+    b.  Comment on whether or not the results of the study can be generalized to the population, and if the findings of the study can be used to establish causal relationships.
