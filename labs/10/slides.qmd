@@ -1,0 +1,220 @@
+---
+title: "Time Spent Outside and Inside the Classroom"
+subtitle: "STAT 375 UC Berkeley"
+logo: "../assets/images/stat-375-hex.png"
+format: 
+  revealjs:
+    theme: "../assets/css/stat20.scss"
+    multiplex: true
+    transition: fade
+    slide-number: true
+    incremental: true 
+editor: visual
+execute:
+  freeze: auto
+---
+
+## Agenda
+
+1.  Time outside of the classroom
+    1.  Discussion: the class forum
+2.  Time in the classroom: Think before you compute
+    1.  The curse of small curiosities
+    2.  Lesson plan case study: student evals
+    3.  Debrief
+
+# Time Outside of the classroom
+
+## The Power of Patience
+
+### Teaching students the value of deceleration and immersive attention
+
+```{r}
+knitr::include_graphics("images/boy-with-squirrel.jpeg")
+```
+
+> Changing the pace of the exchange would have changed the form and content of the exchange. This particular painting simply would not exist. This painting is formed out of delay, not in spite of it.
+
+## Discussion Question
+
+::: poll
+What would your class look like without Piazza / Ed / bCourses / email? Would would students gain? What would they lose?
+:::
+
+```{r}
+countdown::countdown(minutes = 5, font_size = "2em")
+```
+
+# Time Inside the Classroom
+
+# **Consider the lab...**
+
+## What should students be doing?
+
+```{r}
+knitr::include_graphics("images/ComputerLab2020.jpeg")
+```
+
+::: footer
+source: https://www.uakron.edu/cba/student-resources/cba-computer-labs/
+:::
+
+## Should they be:
+
+-   working solo, in groups?
+-   reading / learning?
+-   answering questions?
+    -   questions about tools? context? concepts?
+
+## Think before you compute
+
+**Premise:** when put in a computing environment with data, certain processes falter:
+
+-   If they have an uncertain background, students flail
+-   "hacking" mentality can take over
+-   Tunnel vision
+
+## Think before you compute
+
+::: columns
+::: {.column width="40%"}
+**Part I**
+
+-   No computers
+-   Think-pair-share
+-   Understand questions and data collection
+-   Prepare expectations around data structure
+:::
+
+::: {.column width="60%"}
+**Part II**
+
+-   Computers + Data
+-   Verify data structure
+    -   Make plots
+    -   Conduct analysis
+-   Some think-pair-share
+-   Tie back to part I
+:::
+:::
+
+# Part I
+
+Please put all laptops away. You won't need them today.
+
+## Getting Started
+
+-   Please form pairs or trios
+-   Move around seats as needed
+-   Introduce yourself to anyone you don't know
+
+## Work flow for today
+
+We'll work through a scientific article page by page. For each few pages, I'll post a few questions here and you will...
+
+1.  work silently by yourself on the questions, writing notes on the article,
+2.  discuss your answers as a group,
+3.  share your answers if I call on you after most groups are done.
+
+Then we'll repeat this cycle to work through all/most of the questions for the first half of the lab.
+
+## Abstract
+
+1.  Which finding strikes you as most important? Why?
+2.  Based on the results summarized here, what do you believe was the overarching research question that the scientists were wondering about when they devised this study?
+
+```{r}
+countdown::countdown(minutes = 3, bottom = 0, font_size = "2em")
+```
+
+## Background
+
+3.  Why is a student's answer to "How effective was the instructor?" not always helpful in understanding how effective the instructor was?
+4.  What is the general statement of the null hypothesis that is applied to every analysis in this paper?
+5.  What do the results of this study indicate about the relative impact of the teaching effectiveness and perceived gender on SET?
+
+```{r}
+countdown::countdown(minutes = 3, bottom = 0, font_size = "2em")
+```
+
+## Data
+
+6.  Based on the description in the paper, sketch/speculate what the US experimental data frame might look like. Be sure to note the unit of observation, the number of rows and columns, that names of the variables, their data type, and the values they can take.
+
+```{r}
+countdown::countdown(minutes = 6, bottom = 0, font_size = "2em")
+```
+
+## Methods
+
+7.  Sketch/speculate what a plot could look like of the relationship between the Prompt SET scores and reported instructor gender. This should be a plot of the full data set and should be consistent with the statistics should in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender.
+
+```{r}
+countdown::countdown(minutes = 5, bottom = 0, font_size = "2em")
+```
+
+# Part II
+
+Today you will use a computer.
+
+## Getting Started
+
+-   Please remain in the pairs/trios from Part I.
+-   Have the person with the *least* experience computing with data open their laptop; the others should keep their laptops closed.
+
+## 
+
+The authors of this manuscript ensured that their analysis is fully reproducible by marking their manuscript, data, and code easily available at *https://github.com/kellieotto/SET-and-Gender-Bias.* You can load the data from the US experiment with: *https://bit.ly/3vPsnFL*
+
+```{r}
+library(tidyverse)
+set <- read_csv("https://bit.ly/3vPsnFL")
+```
+
+8.  What is the unit of observation in the data frame? What are the dimensions of the data frame? How many students from each section filled out evaluations (at least partially)?
+
+```{r}
+countdown::countdown(minutes = 6, bottom = 0, font_size = "2em")
+```
+
+## 
+
+9.  Use the plots that you drew in question 7 as inspiration for constructing two plots of the actual data: the relationship between Prompt SET and reported TA gender, and the relationship between Responsive SET and reported TA gender. Describe each pair of plots: how does the rating for each differ based on the reported instructor gender?
+
+```{r}
+countdown::countdown(minutes = 5, bottom = 0, font_size = "2em")
+```
+
+## 
+
+15. **Conclusion:** Do you find that the arguments in this section of the manuscript are consistent with the results of their data analysis? Do you find that they're consistent with your own experience with evaluating instructors?
+
+```{r}
+countdown::countdown(minutes = 3, bottom = 0, font_size = "2em")
+```
+
+## Debrief
+
+What worked? What didn't?
+
+::: columns
+::: {.column width="40%"}
+**Part I**
+
+-   No computers
+-   Think-pair-share
+-   Understand questions and data collection
+-   Prepare expectations around data structure
+:::
+
+::: {.column width="60%"}
+**Part II**
+
+-   Computers + Data
+-   Verify data structure
+    -   Make plots
+    -   Conduct analysis
+-   Some think-pair-share
+-   Tie back to part I
+:::
+:::
