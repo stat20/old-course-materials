@@ -1,0 +1,225 @@
+---
+title: "Experimental Design"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(80)
+```
+
+## Announcements
+
+1. PS set released this weekend, due next Fri
+2. Quiz 4 next Sunday-Monday
+
+
+## Agenda
+
+1. Study Design and Experiments
+
+2. A Manner of Taste: 4 principles of experimental design.
+
+3. Correlation and Causation
+
+
+# Study Design and Experiments
+
+## Where did the data come from?
+
+- Draw a *sample* from a *population*.
+- Either conduct an *observational study* or an *experiment*.
+
+. . .
+
+**Observational Study**: researchers collect data from sample in a way that does not interfere with how they arise. Why do an observational study?
+
+- easier/cheaper
+- study historical data
+- ethical
+
+**Experiment**: Researchers assign subjects to treatments, then collect the resulting data. Why do an experiment?
+
+- establish causation. But why?
+
+
+## Causation in terms of counterfactual
+
+. . .
+
+**Counterfactual**: relating to or expressing what has not happened or is not the case.
+
+. . .
+
+<br>
+
+> We say "A causes B" if, in the world where A didn't happen, B no longer happens.
+
+## {background-image="images/frost.png" background-size="contain"}
+
+## A Causal Claim
+
+[I got a good grade in the course because I went to office hours.]{.smalladage}
+
+. . .
+
+> **Counterfactual**:  
+> [_If I hadn't gone to office hours, I would have gotten a worse grade._]{.smalladage}
+
+. . .
+
+<br>
+
+```{r echo = FALSE}
+library(tidyverse)
+df <- tibble(`Unit ID` = c("me", "me"),
+             Treatment = c("office hours",
+                           "no office hours"),
+             Outcome   = c("A",
+                           "B"),
+             Observed  = c("yes",
+                           "no"))
+df %>%
+  knitr::kable()
+```
+
+
+# A Matter of Taste
+
+## {background-image="images/taste-test-birdseye.png" background-size="contain"}
+
+## The Essential Question of Our Time
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/la-croix.png")
+```
+
+::: poll
+Which is the best flavor?
+
+Please answer at `pollev.com`.
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/fHXmpUBIYsHcIeSXM8WLR?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/la-croix.png")
+```
+
+::: poll
+Could your taster differentiate between flavors?
+
+- Yes
+- No
+- We tested a different claim
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/1knzwgOLmB3EGblRwMwM0?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {background-image="images/student-example-front.png" background-size="contain"}
+
+
+## {background-image="images/student-example-back.png" background-size="contain"}
+
+
+## Principles of Experimental Design
+
+**Replication**: Within a study, replicate by collecting a sufficiently large sample. Or replicate the entire study.
+
+**Control**: Compare treatment of interest to a control group that isolates the effect of interest.
+
+**Blinding**: When experimental units do not know whether they are in the control or treatment group
+
+**Random Assignment**: Randomly assign subjects to treatments.
+
+
+## Other key ideas
+
+**Double-Blinding**: When neither the experimental units nor the researchers know the assignment of treatments.
+
+**Placebo**: fake treatment, often used as the control group for medical studies.
+
+**Placebo effect**: experimental units showing improvement simply because they believe they are receiving a special treatment.
+
+
+## Example: Acupuncture and pain
+
+:::: columns
+::: {.column width="50%"}
+```{r out.width=500, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/acupuncture.png")
+```
+
+**Claim**: Traditional acupuncture (needles inserted at specific points on the body) causes a reduction in lower back pain.
+:::
+
+::: {.column width="50%"}
+::: poll
+With a neighbor, discuss how you would test this:
+
+- What is the treatment?
+- What is the control?
+- How is blinding used?
+- How is random assignment used?
+:::
+
+```{r echo = FALSE}
+countdown::countdown(5, font_size = "1.5em")
+```
+
+:::
+::::
+
+
+# Correlation and Causation
+
+
+## {background-image="images/corrs1.png" background-size="contain"}
+
+## {background-image="images/corrs2.png" background-size="contain"}
+
+## If you learn one thing in this class...
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/xkcd-correlation.png")
+```
+
+
+## {}
+
+```{r echo = FALSE, fig.align='center', out.width="55%"}
+knitr::include_graphics("images/cat-causation.png")
+```
+
+Correlation $\ne$ Causation.
+

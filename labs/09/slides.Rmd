@@ -99,10 +99,15 @@ Please get into groups of 3 (4 is ok too). Take turns introducing yourselves.
 ---
 ## A Matter of Taste
 
-**Your challenge**: Determine whether or not one of your group members can distinguish between two different types of bubble water.
+**Your challenge**: Determine whether or not one of your group members can distinguish between two different types of bubble water (or a similar claim of your choosing).
 
---
+.pull-left[
+```{r echo= FALSE}
+knitr::include_graphics("assets/images/la-croix.png")
+```
+]
 
+.pull-right[
 ### Each team will have
 
 - 50 minutes (lab Thursday)
@@ -110,6 +115,9 @@ Please get into groups of 3 (4 is ok too). Take turns introducing yourselves.
 - small cups
 - straws
 - saltine crackers
+]
+
+
 
 
 ---

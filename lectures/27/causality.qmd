@@ -1,0 +1,273 @@
+---
+title: "Causality"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(80)
+```
+
+# As you come in, please sit in chatting proximity to another student - there will be a discussion today.
+
+## Announcements
+
+1. Lab 9A due tonight 10 PM
+    - Submit as group
+    - Submit solo if you weren't there on Tuesday the join group Thursday.
+2. Lab 9B released tomorrow morning, due normal time, submitted solo
+
+
+## Agenda
+
+1. Defining Causality
+2. Estimating Causal Effects
+
+
+## {background-image="images/claims.jpg" background-size="contain"}
+
+
+## {}
+
+```{r fig.align='center', echo = FALSE, out.width = "30%"}
+knitr::include_graphics("images/generalization.png")
+```
+
+1. How can we use a sample of *data* to reason about a particular *data generating process*?
+
+2. How can we account for the uncertainty caused by *sampling variability*?
+
+3. How does uncertainty decrease as we increase *sample size*?
+
+4. How can we identify and deal with *statistical bias*?
+
+
+## {}
+
+```{r fig.align='center', echo = FALSE, out.height = "20%"}
+knitr::include_graphics("images/causal.png")
+```
+
+. . .
+
+> What does it mean to say that "A causes B"?
+
+
+# Defining Causation
+
+## 
+
+. . .
+
+> [I took an aspirin and my headache got better.]{.smalladage}
+
+. . .
+
+<br>
+<br>
+
+> [She was able to find a good job because she graduated from Berkeley.]{.smalladage}
+
+
+## The Fate of the Prisoner
+
+Suppose that a prisoner is about to be executed by a firing squad. A certain chain of events must occur for this to happen. First, the court orders the execution. The order goes to a captain, who signals the two soldiers of the firing squad (soldier 1 and soldier 2) to fire. They are obedient and expert marksmen, so they only fire on command, and if either one of them shoots, the prisoner dies.
+
+::: poll
+Who caused the death of the prisoner?
+:::
+
+Discuss with a neighbor and enter your answers on the poll and write a one sentence definition of what it means for A to cause B.
+
+```{r echo = FALSE}
+countdown::countdown(minutes = 5, font_size = "1.5em")
+```
+
+[From "The Book of Why", Pearl and Mackenzie 2018]{.footer}
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/uGVe2zgQI1HYApGtLKajF?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/free_text_polls/XYzKrVRUfV9Ols2GSBeMj?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Thucydides definition
+
+::: {.fragment .fade-in-then-semi-out}
+About the same time that these earthquakes were so common, the sea at Orobiae, in Euboea, retiring from the then line of coast, returned in a huge wave and invaded part of the town, and retreated leaving some of it still under water; so that what was once land is now sea...
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+The cause, in my opinion, of this phenomenon must be sought in the earthquake. At the point where its shock has been the most violent the sea is driven back, and suddenly recoiling with redoubled force, causes the inundation.
+:::
+
+::: {.fragment}
+Without the earthquake, I do not see how such an accident could happen.
+:::
+
+. . .
+
+> _If the first object had not been, the second never had existed._ -David Hume, 1748
+
+
+## Causation in terms of counterfactual
+
+. . .
+
+**Counterfactual**: relating to or expressing what has not happened or is not the case.
+
+. . .
+
+<br>
+
+> We say "A causes B" if, in the world where A didn't happen, B no longer happens.
+
+
+## {}
+
+:::: columns
+::: {.column width="47%"}
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/frost.png")
+```
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="47%" .fragment}
+::: {.nonincremental}
+**Potential Outcomes**: The outcomes that could be realized for a unit upon each possible level of the treatment.
+
+- The outcome of taking the left path.
+- The outcome of taking the right path.
+
+> Only one of these are observed.
+
+:::
+:::
+::::
+
+[Drawing: Maayan Harel]{.footer}
+
+
+## {background-image="images/the-route-not-taken.png" background-size="contain"}
+
+
+## {}
+
+[I took an aspirin and my headache got better.]{.smalladage}
+
+> What would we need to know to determine if the aspiring caused the headache to improve?
+
+. . .
+
+<br>
+
+_If I hadn't taken an aspirin and my headache didn't get better._
+
+
+## {}
+
+[She was able to find a good job because she graduated from Berkeley.]{.smalladage}
+
+> What would we need to know to determine if graduating from Berkeley caused her to find a good job?
+
+. . .
+
+<br>
+
+_If she hadn't graduated from Berkeley and was not able to find a good job._
+
+
+## The Fate of the Prisoner
+
+Suppose that a prisoner is about to be executed by a firing squad. A certain chain of events must occur for this to happen. First, the court orders the execution. The order goes to a captain, who signals the two soldiers of the firing squad (soldier 1 and soldier 2) to fire. They are obedient and expert marksmen, so they only fire on command, and if either one of them shoots, the prisoner dies.
+
+::: poll
+Who caused the death of the prisoner, using the counterfactual definition of causation?
+:::
+
+Discuss with a neighbor and enter your answers on the poll.
+
+```{r echo = FALSE}
+countdown::countdown(minutes = 4, font_size = "1.5em")
+```
+
+[From "The Book of Why", Pearl and Mackenzie 2018]{.footer}
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/n1xKHa1Qcex8TOZzQjXt0?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+# Estimating Causal Effects
+
+## The Challenge of Causation
+
+. . .
+
+<br>
+<br>
+
+> [Counterfactuals have a particularly problematic relationship with data because data are, by definition, facts.]{.smalladage}  -Judea Pearl
+
+
+## Strategy I: Look across time
+
+Can we compare two states of the same unit (person) at different times?
+
+- A time I took and did not take aspirin?
+- When the woman graduated and did not graduate from Cal?
+
+
+## Strategy II: Look across units
+
+Can we compare two units (people) at the same time?
+
+- When you took aspirin and I did not?
+- When the woman graduated front Cal and her friend did not?
+
+
+## Looking forward
+
+*Experiments* are one approach to the challenge of estimating causal effects.
+
+:::: columns
+::: {.column width="50%"}
+- Your experiment will be assessed based on its clarity, reproducibility, and internal consistency, not on its correctness.
+- You're welcome to revise your protocol before tomorrow and include the revisions in 9B.
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE}
+knitr::include_graphics("images/la-croix.png")
+```
+:::
+::::
