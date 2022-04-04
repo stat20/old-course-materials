@@ -1,0 +1,229 @@
+---
+title: "Experimental Design II"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(80)
+```
+
+## Announcements
+
+1. Lab 9
+    - due tonight 10 pm
+2. PS 10 available 
+    - due next Monday 10 pm
+    - tutorial videos released Friday
+
+
+## Agenda
+
+1. Review
+
+2. Case Study I: Acupuncture
+
+3. Case Study II: Smoking and Cancer
+
+
+# Review
+
+## Where did the data come from?
+
+- Draw a *sample* from a *population*.
+- Either conduct an *observational study* or an *experiment*.
+
+. . .
+
+**Observational Study**: researchers collect data from sample in a way that does not interfere with how they arise.
+
+- easier/cheaper
+- study historical data
+- ethical
+
+**Experiment**: Researchers assign subjects to treatments, then collect the resulting data.
+
+- establish causation. But why?
+
+
+## {}
+
+::: poll
+Why does the principle of random assignment allow us to draw causal inferences?
+
+A. It ensures our sample is representative of our population
+
+B. It removes the effect of the subject knowing the treatment group to which they were assigned
+
+C. It increases the sample size
+
+D. It ensures that, on average, every possible confounding variable should be balanced between the treatment and control groups
+:::
+
+```{r echo = FALSE}
+countdown::countdown(minutes = 1, font_size = "2em")
+```
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/Dh4lJ1YwTHekmTLw8CwZD?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## A Causal Claim
+
+[I got a good grade in the course because I went to office hours.]{.smalladage}
+
+. . .
+
+> **Counterfactual**:  
+> [_If I hadn't gone to office hours, I would have gotten a worse grade._]{.smalladage}
+
+. . .
+
+<br>
+
+```{r echo = FALSE}
+library(tidyverse)
+df <- tibble(`Unit ID` = c("me", "me"),
+             Treatment = c("office hours",
+                           "no office hours"),
+             Outcome   = c("A",
+                           "B"),
+             Observed  = c("yes",
+                           "no"))
+df %>%
+  knitr::kable()
+```
+
+
+# Case Study 1: Acupuncture and Pain
+
+
+## Principles of Experimental Design
+
+**Replication**: Within a study, replicate by collecting a sufficiently large sample. Or replicate the entire study.
+
+**Control**: Compare treatment of interest to a control group that isolates the effect of interest.
+
+**Blinding**: When experimental units do not know whether they are in the control or treatment group
+
+**Random Assignment**: Randomly assign subjects to treatments.
+
+
+## Example: Acupuncture and pain
+
+:::: columns
+::: {.column width="50%"}
+```{r out.width=500, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/acupuncture.png")
+```
+
+**Claim**: Traditional acupuncture (needles inserted at specific points on the body) causes a reduction in lower back pain.
+:::
+
+::: {.column width="50%"}
+::: poll
+With a neighbor, discuss how you would test this:
+
+- What is the treatment?
+- What is the control?
+- How is blinding used?
+- How is random assignment used?
+:::
+
+```{r echo = FALSE}
+countdown::countdown(5, font_size = "1.5em")
+```
+
+:::
+::::
+
+
+# Case Study 2: Smoking and Cancer
+
+## {background-image="images/more-doctors-smoke-camels.jpeg" background-size="contain"}
+
+## Possible confounder: drinking
+
+## Possible confounder: genetics
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/fisher-1.png")
+```
+:::
+
+::: {.column width="50%"}
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/fisher-2.png")
+```
+
+R.A. Fisher
+_Nature_, 1958
+:::
+::::
+
+---
+## The mounting evidence
+
+- Randomized trials with mice and tobacco tar
+
+- Regression models to "control for" possible confounders
+
+- Identification of physical mechanism
+
+- Twins studies
+
+## {}
+
+["Cigarette smoking is causally related to lung cancer in men."]{.bigadage} - U.S. Surgeon General's Report, 1964
+
+
+## Alternate paths from association to causation
+
+```{r out.width=1050, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/alternate-paths.png")
+```
+
+
+# Association and Causation
+
+
+## {background-image="images/corrs1.png" background-size="contain"}
+
+## {background-image="images/corrs2.png" background-size="contain"}
+
+## If you learn one thing in this class...
+
+```{r out.width=800, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/xkcd-correlation.png")
+```
+
+
+## {}
+
+```{r echo = FALSE, fig.align='center', out.width="55%"}
+knitr::include_graphics("images/cat-causation.png")
+```
+
+Correlation $\ne$ Causation.
+
