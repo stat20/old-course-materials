@@ -1,0 +1,101 @@
+---
+title: "Lab 10: Teaching Evals"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(stat20data)
+data(arbuthnot)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+# Part I
+
+.adage[Please put all laptops away.
+
+You won't need them today.]
+
+---
+## Getting Started
+
+- Please form pairs or trios
+
+- Move around seats as needed
+
+- Introduce yourself to anyone you don't know
+
+
+---
+## Work flow for today
+
+We'll work through a scientific article page by page. For each few pages, I'll pose a few questions here and you will...
+
+1. work silently by yourself on the questions, writing notes on the article, 
+
+1. discuss your answers as a group and write your answer to any questions in italics on the board near you, 
+
+1. share your answers if I call on you after most groups are done.
+
+Then we'll repeat this cycle to work through all/most of the questions for the first half of the lab.
+
+---
+
+1. _**General**: As you read through the article, note here any words or acronyms that you were not familiar with before and provide their definition._
+
+---
+
+1. _**Abstract**: Which finding strikes you as the most important? Why?_
+
+1. **Abstract**: Based on the results summarized here, what do you believe was the overarching research question that the scientists were wondering about when they devised this study?
+
+1. _**Background**: Why is a student's answer to "How effective was the instructor?" not always helpful in understanding how effective the instructor was?_
+
+1. **Background**: What is the general statement of the null hypothesis that is applied to every analysis in this paper?
+
+1. **Background**: What do the results of this study indicate about the relative impact of the teaching effectiveness and perceived gender on SET?
+
+```{r echo = FALSE}
+countdown::countdown(5, font_size = "2em")
+```
+
+
+---
+
+1. _**Data**: Based on the description in the paper, sketch/speculate what the US experimental data frame might look like. Be sure to note the unit of observation, the number of rows and columns, that names of the variables, their data type, and the values they can take._
+
+```{r echo = FALSE}
+countdown::countdown(7, font_size = "2em")
+```
+
+---
+
+1. _**Methods**: The previous analysis of the US data (MacNell et al.) addresses the same questions that this analysis does. What differs in the two studies?_
+
+1. **Methods**: What is the test statistic that is used throughout the analysis?
+
+1. **Methods**: _Sketch/speculate what a plot could look like of the relationship between the Prompt SET scores and reported instructor gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender._
+
+```{r echo = FALSE}
+countdown::countdown(7, font_size = "2em")
+```

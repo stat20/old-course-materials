@@ -1,0 +1,214 @@
+---
+title: "Lab 10: Student Evaluations of Teaching"
+output: pdf_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE, 
+                      echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{r echo = FALSE, eval = FALSE}
+# Learning Objectives
+```
+
+These questions reference a paper published by researchers, some of whom were here in the Statistics Department at Cal. Anne Boring, Kellie Ottoboni and Philip B. Stark. _Student evaluations of teaching (mostly) do not measure teaching effectiveness_. Science Open Research. Vol. 0(0):1-11. DOI: 10.14293/S2199-1006.1.SOR-EDU.AETBZC.v1
+
+1. **General**: As you read through the article, note here any words or acronyms that you were not familiar with before and provide their definition.
+
+2. **Abstract**: Which finding strikes you as the most important? Why?
+
+3. ***Abstract**: Based on the results summarized here, what do you believe was the overarching research question that the scientists were wondering about when they devised this study?
+
+<!-- The scientists were wondering: what impact, if any, does the (perceived) gender of the instructor have on the SET scores they receive from their students? -->
+
+4. **Background**: Why is a student's answer to "How effective was the instructor?" not always helpful in understanding how effective the instructor was?
+
+5. ***Background**: What is the general statement of the null hypothesis that is applied to every analysis in this paper?
+
+<!-- As stated in the background section, the null hypothesis is that the gender of the instructor is an arbitrary label and might as well have been assigned at random. Stated another way, SET scores should be similar from students who are evaluating the male and female personae of the same instructor. -->
+
+6. **Background**: What do the results of this study indicate about the relative impact of the teaching effectiveness and perceived instructor gender on SET?
+
+7. **Data**: Why did the researchers in the US experiment have the TAs swap identities for one of the sections that each of them taught?
+
+8. ***Data**: Based on the description in the paper, sketch/speculate what the US experimental data frame might look like. Be sure to note the unit of observation, the number of rows and columns, the names of the variables, their data type, and the values they can take.
+
+<!-- Submissions should include an image of a sketched data frame as well as an articulation of the following: -->
+<!-- - The unit of observation: a single student -->
+<!-- - Number of rows: either 47 or 43 rows, depending on if the students who did not submit SETs were included.  -->
+<!-- - Number of columns: -->
+<!-- - Variable information (no need to name all individual SET items) -->
+<!--     - TA perceived gender (categorical), taking values male female -->
+<!--     - section number (discreet numeric), say 1 - 4 -->
+<!--     - perhaps a TA identifier (numeric or categorical) could be name or number -->
+<!--     - 14 SET scores, each one corresponding to a separate question. The values could be either categorical ordinal (agree-disagree) or numerical on some scale (1-5, 1-10, 1-100, etc.). -->
+
+9. **Methods**: The previous analysis of the US data (MacNell et al.) addresses the same questions that this analysis does. What differs in the two studies?
+
+10. **Methods**: What is the test statistic that is used throughout the analysis?
+
+11. **Methods**: Sketch/speculate what a plot could look like of the relationship between the Prompt SET scores and reported TA gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender.
+
+* * *
+
+The authors of this manuscript ensured that their analysis is fully reproducible by making their manuscript, data, and code easily available at `https://github.com/kellieotto/SET-and-Gender-Bias`. You can load the data from the US experiment with:
+
+```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
+set <- read_csv("https://www.dropbox.com/s/jog3lnqjinabe9s/set.csv?dl=1")
+```
+
+```{r echo = FALSE, eval = FALSE}
+library(tidyverse)
+library(infer)
+
+# load data
+set <- read.csv("Macnell-RatingsData.csv", header = TRUE) %>%
+    tibble() %>%
+    mutate(ta_gender = case_when(tagender == 1 ~ "male", 
+                                 tagender == 0 ~ "female"),
+           ta_gender_id = case_when(taidgender == 1 ~ "male", 
+                                 taidgender == 0 ~ "female"),
+           section = factor(group)) %>%
+    rename(student_gender = gender,
+           student_age = age) %>%
+    select(-c(group, tagender, taidgender)) %>%
+    relocate(section, ta_gender_id, ta_gender)
+write_csv(set, "set.csv")
+set <- read_csv("set.csv")
+```
+
+12. What is the unit of observation in the data frame? What are the dimensions of the data frame? How many students from each section filled out evaluations (at least partially)?
+
+```{r}
+dim(set)
+set %>%
+    count(section)
+```
+
+13. Calculate the difference in mean Prompt SET rating for between the two reported TA gender identities. Repeat this exercise for the difference in mean Responsive SET rating. This code should replicate two rows of the difference in means column of table 8.
+
+```{r}
+# using dplyr
+set %>%
+    drop_na(student_age) %>%
+    group_by(ta_gender_id) %>%
+    summarize(avg = mean(prompt)) %>%
+    summarize(diff_in_means = diff(avg))
+
+# using infer
+set %>%
+    specify(prompt ~ ta_gender_id) %>%
+    calculate(stat = "diff in means",
+              order = c("male", "female"))
+
+# using dplyr
+set %>%
+    drop_na(student_age) %>%
+    group_by(ta_gender_id) %>%
+    summarize(avg = mean(responsive)) %>%
+    summarize(diff_in_means = diff(avg))
+
+# using infer
+set %>%
+    specify(responsive ~ ta_gender_id) %>%
+    calculate(stat = "diff in means",
+              order = c("male", "female"))
+
+# all of them using pivot
+set %>%
+    drop_na(student_age) %>%
+    pivot_longer(professional:overall,
+                 names_to = "category",
+                 values_to = "rating") %>%
+    group_by(category, ta_gender_id) %>%
+    summarize(avg = mean(rating)) %>%
+    summarize(diff_in_means = diff(avg))
+```
+
+14. *Use the plots that you drew in question 11 as inspiration for constructing two plots of the actual data: the relationship between Prompt SET and reported TA gender, and the relationship between Responsive SET and reported TA gender. Describe each pair of plots: how does the rating for each differ based on the reported instructor gender?
+
+```{r}
+set %>%
+    ggplot(aes(x = prompt)) +
+    geom_bar() +
+    facet_wrap(vars(ta_gender_id))
+
+set %>%
+    ggplot(aes(x = responsive)) +
+    geom_bar() +
+    facet_wrap(vars(ta_gender_id))
+```
+
+15. Perform a test of the hypothesis that Prompt rating is independent of the reported TA gender id. Include in your analysis:
+    a. A statement of the null and alternative hypothesis.
+    b. The value of the observed test statistic.
+    c. A plot of the distribution of the test statistic under the null hypothesis with your observed test statistic included as a vertical line.
+    d. A calculation of the two-sided p-value.
+    e. A conclusion regarding the null hypothesis using $\alpha = .05$.
+    
+```{r}
+# calculate the observed statistic
+obs_stat <- set %>%
+    specify(prompt ~ ta_gender_id) %>%
+    calculate(stat = "diff in means", 
+              order = c("male", "female"))
+obs_stat
+
+# compute an estimate of the null distribution
+null <- set %>%
+    specify(prompt ~ ta_gender_id) %>%
+    hypothesize(null = "independence") %>%
+    generate(reps = 100000, type = "permute") %>%
+    calculate(stat = "diff in means",
+              order = c("male", "female"))
+
+# visualize the null distribution
+null %>%
+    visualize() +
+    shade_p_value(obs_stat, direction = "both")
+
+# calculate p-value
+null %>% 
+    get_p_value(obs_stat, direction = "both")
+```
+
+16. *Perform a test of the hypothesis that Responsive rating is independent of the reported TA gender id. Include in your analysis:
+    a. A statement of the null and alternative hypothesis.
+    b. The value of the observed test statistic.
+    c. A plot of the distribution of the test statistic under the null hypothesis with your observed test statistic included as a vertical line.
+    d. A calculation of the two-sided p-value.
+    e. A conclusion regarding the null hypothesis using $\alpha = .05$.
+    
+```{r}
+# calculate the observed statistic
+obs_stat <- set %>%
+    specify(responsive ~ ta_gender_id) %>%
+    calculate(stat = "diff in means", 
+              order = c("male", "female"))
+obs_stat
+
+# compute an estimate of the null distribution
+null <- set %>%
+    specify(responsive ~ ta_gender_id) %>%
+    hypothesize(null = "independence") %>%
+    generate(reps = 100000, type = "permute") %>%
+    calculate(stat = "diff in means",
+              order = c("male", "female"))
+
+# visualize the null distribution
+null %>%
+    visualize() +
+    shade_p_value(obs_stat, direction = "both")
+
+# calculate p-value
+null %>% 
+    get_p_value(obs_stat, direction = "both")
+```
+
+17. ***Conclusion**: Do you find that the arguments in this section of the manuscript are consistent with the results of their data analysis? Do you find that they're consistent with your own experience will evaluating instructors?
+
+<!-- Answers may vary, but both questions should be addressed. -->
