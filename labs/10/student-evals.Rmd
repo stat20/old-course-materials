@@ -16,6 +16,8 @@ knitr::opts_chunk$set(eval = FALSE,
 
 These questions reference a paper published by researchers, some of whom were here in the Statistics Department at Cal. Anne Boring, Kellie Ottoboni and Philip B. Stark. _Student evaluations of teaching (mostly) do not measure teaching effectiveness_. Science Open Research. Vol. 0(0):1-11. DOI: 10.14293/S2199-1006.1.SOR-EDU.AETBZC.v1
 
+## Part I
+
 1. **General**: As you read through the article, note here any words or acronyms that you were not familiar with before and provide their definition.
 
 2. **Abstract**: Which finding strikes you as the most important? Why?
@@ -50,9 +52,9 @@ These questions reference a paper published by researchers, some of whom were he
 
 10. **Methods**: What is the test statistic that is used throughout the analysis?
 
-11. **Methods**: Sketch/speculate what a plot could look like of the relationship between the Prompt SET scores and reported TA gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender.
+11. **Methods**: Sketch/speculate what a plot could look like of the distribution of Prompt SET scores for each reported instructor gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender.
 
-* * *
+## Part II
 
 The authors of this manuscript ensured that their analysis is fully reproducible by making their manuscript, data, and code easily available at `https://github.com/kellieotto/SET-and-Gender-Bias`. You can load the data from the US experiment with:
 

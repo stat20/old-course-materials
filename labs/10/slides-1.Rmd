@@ -94,7 +94,7 @@ countdown::countdown(7, font_size = "2em")
 
 1. **Methods**: What is the test statistic that is used throughout the analysis?
 
-1. **Methods**: _Sketch/speculate what a plot could look like of the relationship between the Prompt SET scores and reported instructor gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender._
+1. **Methods**: _Sketch/speculate what a plot could look like of the distribution of Prompt SET scores for each reported instructor gender. This should be a plot of the full data set and should be consistent with the statistics shown in table 8. Repeat the exercise for the Responsive SET scores and reported instructor gender._
 
 ```{r echo = FALSE}
 countdown::countdown(7, font_size = "2em")
