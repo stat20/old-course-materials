@@ -1,0 +1,466 @@
+---
+title: "Correlation"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align = "center")
+set.seed(80)
+```
+
+## Announcements
+
+1. Midterm grades published Friday
+
+
+## Agenda
+
+1. Association and Causation
+
+2. The Correlation Coefficient
+
+3. Questions of Scatterplots
+
+
+# Association and Causation
+
+## Alternate paths from association to causation
+
+```{r out.width=1050, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/alternate-paths.png")
+```
+
+## {background-image="images/corrs1.png" background-size="contain"}
+
+## {background-image="images/corrs2.png" background-size="contain"}
+
+## If you learn one thing in this class...
+
+```{r out.width=600, echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/xkcd-correlation.png")
+```
+
+
+## [Correlation $\ne$ Causation.]{.smalladage}
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/cat-causation.png")
+```
+
+
+## {background-image="images/claims.jpg" background-size="contain"}
+
+
+## {.smaller}
+
+:::: columns
+::: {.column width="50%" .nonincremental .fragment}
+```{r fig.align='center', echo = FALSE}
+knitr::include_graphics("images/descriptive.png")
+```
+
+- Numerical summaries
+- Graphical summaries
+  - Grammar of Graphics
+- Data fundamentals
+  - Data frames
+  - Data taxonomy
+:::
+
+::: {.column width="50%" .nonincremental .fragment}
+```{r fig.align='center', echo = FALSE}
+knitr::include_graphics("images/generalization.png")
+```
+
+- Confidence intervals
+  - Bootstrapping
+- Hypothesis tests
+  - Permutation and point nulls
+- Mathematical approximations
+
+:::
+::::
+
+## {.smaller}
+
+:::: columns
+::: {.column width="50%" .nonincremental .fragment}
+```{r fig.align='center', echo = FALSE}
+knitr::include_graphics("images/causal.png")
+```
+
+- Causation and counterfactuals
+- Experimental design
+  - Random assignment
+- Confounding variables
+:::
+
+::: {.column width="50%" .nonincremental .fragment}
+```{r fig.align='center', echo = FALSE}
+knitr::include_graphics("images/prediction.png")
+```
+
+- Regression models for multivariate data
+  - Simple linear regression
+  - Multiple linear regression
+  - Logistic regression
+- Uses
+  - Prediction
+  - Description
+  - Inference
+:::
+::::
+
+
+## {}
+
+<br>
+<br>
+
+[Please take out a piece of paper and pencil.]{.bigadage}
+
+
+## Example: Poverty and Graduation {.smaller}
+
+. . .
+
+::: poll
+::: nonincremental
+What is the relationship between _poverty rate_ and _high school graduation rate_ when looking at the 50 US states?
+
+1. Sketch the data frame that can answer this question.
+    - Dimensions
+    - Unit of observation
+    - Column names
+    - Range of values
+
+2. Sketch a plot that captures this relationship.
+    - How are you applying the grammar of graphics?
+    - How would you describe the relationship in words?
+:::
+:::
+
+```{r echo = FALSE}
+countdown::countdown(minutes = 3, font_size = "2em")
+```
+
+## The data frame
+
+:::: columns
+::: {.column width="50%"}
+::: nonincremental
+1. Sketch the data frame that can answer this question.
+  - Dimensions
+  - Unit of observation
+  - Column names
+  - Range of values
+:::
+:::
+
+::: {.column width="50%" .fragment}
+```{r echo = FALSE}
+poverty <- read_delim("poverty.txt")
+poverty %>%
+  select(State, Graduates, Poverty)
+```
+:::
+::::
+
+
+## The plot 
+
+:::: columns
+::: {.column width="50%" .nonincremental}
+2. Sketch a plot that captures this relationship.
+  - How are you applying the grammar of graphics?
+  - How would you describe the relationship in words?
+:::
+
+::: {.column width="50%" .fragment .nonincremental}
+```{r gg1, eval = FALSE}
+ggplot(poverty, aes(x = Poverty, 
+                    y = Graduates)) +
+  geom_point()
+```
+
+- Map `Poverty` to the x-axis.
+- Map `Graduates` to the y-axis.
+- Use the point geometry.
+:::
+::::
+
+
+## The plot
+
+:::: columns
+::: {.column width="65%"}
+```{r echo = FALSE, fig.width=8}
+p1 <- ggplot(poverty, aes(x = Poverty, 
+                    y = Graduates)) +
+  geom_point() +
+  theme_bw(base_size = 18)
+p1
+```
+:::
+
+::: {.column width="35%" .fragment .nonincremental}
+The trend is:
+
+- linear
+- moderately strong
+- negative
+  
+> How can we capture this notion in a _statistic_?
+
+:::
+::::
+
+# The Correlation Coefficient
+
+## {}
+
+boardwork
+
+## {}
+
+```{r echo = FALSE, fig.width=12, fig.height=5.5}
+library(openintro)
+library(ggpubr)
+p_scatter <- simulated_scatter %>%
+  filter(group %in% c(9:12, 14:17)) %>%
+  mutate(group_label = rep(LETTERS[1:8], each = 50)) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_point(size = 2, alpha = 0.8) +
+  theme_void(base_size = 18) +
+  facet_wrap(~group_label, nrow = 2, scales = "free") + 
+  theme(
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1),
+    strip.background = element_blank()
+  )
+p_scatter
+```
+
+::: poll
+Which of the following relationships is weakest, as measured by $r$?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/cTlDN0n0NylT3L6Hdjifd?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+## {}
+
+```{r echo = FALSE, fig.width=12, fig.height=5.5}
+p_scatter + 
+  stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~")))
+```
+
+> **Remember**: r measures only the strength of the _linear_ relationship.
+
+
+## Poverty and Graduation: Correlation
+
+:::: columns
+::: {.column width="60%"}
+```{r echo = FALSE, fig.height = 5}
+p1
+```
+:::
+
+::: {.column width="40%" .fragment}
+
+<br>
+
+```{r}
+poverty %>%
+  summarize(r = cor(Graduates, 
+                    Poverty))
+```
+:::
+::::
+
+. . .
+
+The relationship between poverty and graduation is _linear_, _negative_ and _moderately strong_.
+
+. . .
+
+> What other questions can we ask?
+
+
+# Questions of Scatterplots
+
+
+## Which state has the highest... {.smaller}
+
+```{r echo = FALSE}
+library(ggrepel)
+poverty <- poverty %>%
+  mutate(hi_grad = case_when(
+    State %in% c("New Hampshire", "Minnesota") ~ State, 
+    TRUE ~ ""),
+    hi_pov = case_when(
+      State %in% c("New Mexico", "Arkansas", "Mississippi") ~ State,
+      TRUE ~ ""),
+    hi_res = case_when(
+      State %in% c("Montana", "District of Columbia") ~ State,
+      TRUE ~ ""))
+pov_hi_grad <- poverty %>%
+  filter(hi_grad == TRUE)
+p_hi_grad <- poverty %>%
+  ggplot(aes(x = Poverty, 
+             y = Graduates)) +
+  geom_point(size = 3) +
+  geom_text_repel(aes(label = hi_grad),
+                  seed = 29) +
+  theme_bw(base_size = 18)
+p_hi_grad_pov <- p_hi_grad +
+  geom_text_repel(aes(label = hi_pov),
+                  seed = 29)
+p_hi_grad_pov_res <- p_hi_grad_pov +
+  geom_text_repel(aes(label = hi_res),
+                  seed = 29)
+p_all <- poverty %>%
+  ggplot(aes(x = Poverty, 
+             y = Graduates)) +
+  geom_point(size = 3) +
+  geom_text_repel(aes(label = State),
+                  seed = 29) +
+  theme_bw(base_size = 18)
+```
+
+:::: columns
+::: {.column width="25%"}
+
+> Graduation rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p1
+```
+
+:::
+::::
+
+## Which state has the highest... {.smaller}
+
+:::: columns
+::: {.column width="25%"}
+
+> Graduation rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p_hi_grad
+```
+
+:::
+::::
+
+## Which state has the highest... {.smaller}
+
+:::: columns
+::: {.column width="25%"}
+
+Graduation rate?
+
+> Poverty rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p_hi_grad
+```
+
+:::
+::::
+
+
+## Which state has the highest... {.smaller}
+
+:::: columns
+::: {.column width="25%"}
+
+Graduation rate?
+
+> Poverty rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p_hi_grad_pov
+```
+
+:::
+::::
+
+
+## Which state has the highest... {.smaller}
+
+:::: columns
+::: {.column width="25%"}
+
+Graduation rate?
+
+Poverty rate?
+
+> Graduation rate for its poverty rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p_hi_grad_pov
+```
+
+:::
+::::
+
+
+## Which state has the highest... {.smaller}
+
+:::: columns
+::: {.column width="25%"}
+
+Graduation rate?
+
+Poverty rate?
+
+> Graduation rate for its poverty rate?
+
+:::
+
+::: {.column width="75%"}
+```{r echo = FALSE, fig.height=7}
+p_hi_grad_pov_res
+```
+
+:::
+::::
+

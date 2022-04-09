@@ -11,7 +11,7 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/28/experimental-design.html
+  url: https://stat20.org/lectures/29/experimental-design-2.html
 ---
 
 ## Additional Readings

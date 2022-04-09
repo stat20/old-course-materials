@@ -1,5 +1,5 @@
 ---
-title: "Lecture 27: Experimental Design"
+title: "Lecture 28: Experimental Design"
 summary: "Planning for causal claims."
 subtitle: "Planning for causal claims"
 layout: single
