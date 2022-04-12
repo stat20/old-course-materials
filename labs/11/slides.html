@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lab 11: Cities</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 20 UC Berkeley" />
+    <script src="assets/libs/header-attrs-2.11/header-attrs.js"></script>
+    <link rel="stylesheet" href="stat20.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lab 11: Cities
+### STAT 20 UC Berkeley
+
+---
+
+
+
+
+## Goals
+
+- Describe the relation between two variables
+- Give a more precise description of linear relations
+- Interpret the relations and make predictions
+
+---
+
+## The data
+
+We will use data about Brazilian cities. Our sample consists of a random sample of 60 cities from all 5573 cities in Brazil. It has been collected from various official websites and has been made available on kaggle.
+
+We will try to predict the population of a city using a number of other features.
+
+---
+## The variables
+
+
+
+```
+## # A tibble: 15 × 2
+##    Field           Description                                 
+##    &lt;chr&gt;           &lt;chr&gt;                                       
+##  1 city            Name of the City                            
+##  2 state           Name of the State                           
+##  3 pop             Resident Population                         
+##  4 pop_braz        Resident Population Brazilian               
+##  5 pop_for         Redident Population Foreigners              
+##  6 planted_area    Planted Area (hectares)                     
+##  7 area            City area (squared kilometers)              
+##  8 gva             Total Gross Added Value                     
+##  9 gdp             Gross Domestic Product                      
+## 10 mun_exp         Municipal expenditures - in reais           
+## 11 comp            Total number of companies                   
+## 12 hotels          Total number of hotels                      
+## 13 cars            Total number of cars                        
+## 14 motorcycles     Total number of motorcycles, scooters, moped
+## 15 wheeled_tractor Total number of wheeled tractors
+```
+
+---
+# Part I
+
+Q: What do you think the distribution of the variable `pop` looks like? Which plot would you use to show this distribution?
+
+---
+## Visualizing two numerical variables
+Q: Choose a variable that you think has a strong relation to `pop`. How would you plot these two variables? Sketch a plot of what you expect. Describe how you expect the relation to look like. Is it linear? If yes, is it a positive or negative relation?
+
+---
+# Part II
+
+## Loading the data
+
+
+```r
+library(tidyverse)
+cit &lt;- read_csv("https://tinyurl.com/4e57c5tj")
+cit %&gt;%
+  glimpse()
+```
+
+```
+## Rows: 60
+## Columns: 15
+## $ city             &lt;chr&gt; "Boqueirão Do Piauí", "Matelândia", "Fagundes Varela"…
+## $ state            &lt;chr&gt; "PI", "PR", "RS", "SP", "MG", "CE", "BA", "PR", "RS",…
+## $ pop              &lt;dbl&gt; 6193, 16078, 2579, 33797, 6484, 18626, 11845, 5160, 1…
+## $ pop_bra          &lt;dbl&gt; 6193, 16024, 2579, 33769, 6484, 18626, 11845, 5155, 1…
+## $ pop_for          &lt;dbl&gt; 0, 54, 0, 28, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 0, 10, 56…
+## $ planted_area     &lt;dbl&gt; 801, 22054, 2799, 14699, 1972, 5854, 1280, 9745, 1763…
+## $ area             &lt;dbl&gt; 269.80, 639.75, 134.30, 411.99, 3204.22, 588.70, 509.…
+## $ gdp              &lt;dbl&gt; 37.90, 752985.73, 78093.02, 1152441.22, 90927.87, 122…
+## $ gva              &lt;dbl&gt; 36244.84, 656.38, 72.43, 1079027.68, 85354.29, 117761…
+## $ mun_exp          &lt;dbl&gt; 15142396, 59173155, 13499268, 115703289, 19514775, 36…
+## $ comp             &lt;dbl&gt; 40, 544, 127, 1726, 79, 129, 70, 210, 44, 94, 192, 77…
+## $ hotels           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ cars             &lt;dbl&gt; 367, 6817, 1127, 14851, 703, 937, 838, 1615, 455, 894…
+## $ motorcycles      &lt;dbl&gt; 901, 2580, 290, 6481, 601, 2554, 1090, 826, 227, 215,…
+## $ wheeled_tractors &lt;dbl&gt; 0, 2, 2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0,…
+```
+
+---
+
+##Visualizations
+We now use a scatterplot to show the relation between the number of companies and the population of a city.
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-4-1.png" width="504" style="display: block; margin: auto;" /&gt;
+How would you describe this relation?
+
+---
+We could see on the plot that there are a few outliers. More specifically there is a group of points that are close together and a few other ones that are well separated. Why could that be?
+
+---
+
+Let us now look at the distribution of the population size.
+&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+How would you describe these distributions?
+
+---
+## Transforming variables
+
+Because these variables are right-skewed we use the log-transform to make them more evenly spread out.
+&lt;img src="slides_files/figure-html/unnamed-chunk-6-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+
+We add these transformed variables to our dataframe:
+
+```r
+cit &lt;- cit %&gt;% 
+  mutate(log_pop = log10(pop), 
+         log_comp = log10(comp))
+```
+
+
+
+
+And look at the scatterplot of these variables:
+&lt;img src="slides_files/figure-html/unnamed-chunk-9-1.png" width="504" style="display: block; margin: auto;" /&gt;
+Q: How would you describe this relation? What is its form, direction and strength? Is it linear?
+---
+
+## Correlation
+
+Is used to assess the strength of a linear relation. 
+
+For the correlation between the logarithm of the population and the logarithm of the number of companies we get:
+
+
+```
+## # A tibble: 1 × 1
+##   `cor(log_pop, log_comp)`
+##                      &lt;dbl&gt;
+## 1                    0.849
+```
+
+---
+## Correlation and visualization
+
+Q: Use some other variable and compute its correlation with population. Is it stronger or weaker than you expected?
+
+Q: Now plot the two variables using a scatterplot and describe their relation to each other. If the variables you selected are right-skewed, you might want to first create a new variable that is the logarithm of the new one.
+
+---
+## Manually fitting a line to a scatterplot
+
+Just like we used the mean and standard deviation to summarize a single variable, we can summarize the relationship between these two variables by finding the line that best follows their association.
+
+We will now use the interactive function `plot_ss` to manually fit a line to the points we have. Don't use this function in a markdown file!
+
+We use this code:
+
+```r
+library(oilabs)
+plot_ss(x = log_comp, y = log_pop, data = cit)
+```
+---
+
+## Interpretting the fit of a line
+
+The line you specified by clicking two points will be shown in
+black and the residuals in blue. You will also be given an intercept, a slope and the sum of squared residuals. 
+
+Recall that the residuals are the difference between the
+observed values and the values predicted by the line:
+
+$$
+  e_i = y_i - \hat{y}_i
+$$
+
+The most common way to do linear regression is to select the line that minimizes the sum of squared residuals.
+
+---
+## Fitting a line to a scatterplot
+
+We can use the `lm` function in R to fit the linear model that minimizes the sum of squared residuals.
+
+
+```r
+m1 &lt;- lm(log_pop ~ log_comp, data = cit)
+```
+
+The first argument in the function `lm` is a formula that takes the form
+`y ~ x`. Here it can be read that we want to make a linear model of `log_pop` as a function of `log_comp`. The second argument specifies that R should look in the `cit` data frame to find the `comp` and `pop` variables.
+
+---
+## The coefficients of a linear model
+
+The output of `lm` is an object that contains all of the information we need about the linear model that was just fit. Let us look at the coefficients.
+
+
+```r
+coefficients(m1)
+```
+
+```
+## (Intercept)    log_comp 
+##   2.5447799   0.6904834
+```
+
+So the line with the best fit is approximately
+$$ \log(pop) = 2.54 + 0.69 \cdot \log(comp).$$
+---
+## Computing the slope
+
+We can also compute the slope from two stats we have already seen: the SD of the two variables and their `\(r\)`.
+
+
+```
+## # A tibble: 1 × 4
+##    sd_p  sd_c cor_pc slope
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.535 0.658  0.849 0.690
+```
+Q: Find the slope of the linear regression line that describes the relation between the variable you chose earlier and `pop` using this method.
+
+---
+## Predictions
+
+Let us see how well this model predicts the population of cities that were not in the dataset.
+
+
+```
+## # A tibble: 3 × 2
+##   city         log_comp
+##   &lt;chr&gt;           &lt;dbl&gt;
+## 1 Belo Jardim      2.96
+## 2 Manoel Ribas     2.49
+## 3 Florínea         1.69
+```
+Q: What is the predicted population size for these cities according to our model? 
+
+---
+Instead of doing this by hand we can also use the `predict` function in R. It takes the model as the first input and the new rows as the second input.
+
+```r
+predict(m1, cit_new)
+```
+
+```
+##        1        2        3 
+## 4.591226 4.261129 3.711832
+```
+Let us compare these values to the true ones:
+
+
+```
+## # A tibble: 3 × 4
+##   city         log_comp log_pop log_pop_pred
+##   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+## 1 Belo Jardim      2.96    4.86         4.59
+## 2 Manoel Ribas     2.49    4.12         4.26
+## 3 Florínea         1.69    3.45         3.71
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-forest-light",
+"highlightLines": true,
+"highlightSpans": true,
+"ratio": "16:9",
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

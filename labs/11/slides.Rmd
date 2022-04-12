@@ -1,0 +1,271 @@
+---
+title: "Lab 11: Cities"
+author: "STAT 20 UC Berkeley"
+output:
+  xaringan::moon_reader:
+    css: stat20.css
+    lib_dir: assets/libs
+    nature:
+      highlightStyle: atelier-forest-light
+      highlightLines: true
+      highlightSpans: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+#| include=FALSE,
+#| warning=FALSE
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.align = "center",
+                      fig.retina = 3)
+
+library(tidyverse)
+library(stat20data)
+data(arbuthnot)
+library(xaringanthemer)
+source("https://raw.githubusercontent.com/stat20/course-materials/master/assets/stat20-style.r")
+```
+
+## Goals
+
+- Describe the relation between two variables
+- Give a more precise description of linear relations
+- Interpret the relations and make predictions
+
+---
+
+## The data
+
+We will use data about Brazilian cities. Our sample consists of a random sample of 60 cities from all 5573 cities in Brazil. It has been collected from various official websites and has been made available on kaggle.
+
+We will try to predict the population of a city using a number of other features.
+
+---
+## The variables
+```{r, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+cit <- read_csv("https://www.dropbox.com/s/vx3tmh3ybwtbqk7/cities.csv?dl=1")
+dic <- read_csv("https://www.dropbox.com/s/pwbvn51x4o1fvh9/data_dic.csv?dl=1")
+cit_all <- read_csv("https://www.dropbox.com/s/tbnac25c91krrhj/cities_all.csv?dl=1")
+```
+
+```{r, eval = TRUE, echo = FALSE}
+dic %>% 
+  select(Field, Description) %>%
+  print()
+```
+
+---
+# Part I
+
+Q: What do you think the distribution of the variable `pop` looks like? Which plot would you use to show this distribution?
+
+---
+## Visualizing two numerical variables
+Q: Choose a variable that you think has a strong relation to `pop`. How would you plot these two variables? Sketch a plot of what you expect. Describe how you expect the relation to look like. Is it linear? If yes, is it a positive or negative relation?
+
+---
+# Part II
+
+## Loading the data
+
+```{r, echo = TRUE, eval = TRUE}
+library(tidyverse)
+cit <- read_csv("https://tinyurl.com/4e57c5tj")
+cit %>%
+  glimpse()
+```
+
+---
+
+##Visualizations
+We now use a scatterplot to show the relation between the number of companies and the population of a city.
+
+```{r, eval = TRUE, echo = FALSE}
+cit %>% 
+  ggplot(aes(x=comp, y = pop)) +
+  geom_point() + 
+  labs(y= "Population",
+       x = "Number of companies")
+
+```
+How would you describe this relation?
+
+---
+We could see on the plot that there are a few outliers. More specifically there is a group of points that are close together and a few other ones that are well separated. Why could that be?
+
+---
+
+Let us now look at the distribution of the population size.
+```{r, eval = TRUE, echo = FALSE}
+library(patchwork)
+p1 <- cit %>% 
+  ggplot(aes(x=comp)) + 
+  geom_histogram() + 
+  labs(x = "Number of companies")
+p2 <- cit %>% 
+  ggplot(aes(x=pop)) + 
+  geom_histogram() + 
+  labs(x = "Population")
+p1 + p2
+```
+
+How would you describe these distributions?
+
+---
+## Transforming variables
+
+Because these variables are right-skewed we use the log-transform to make them more evenly spread out.
+```{r, eval = TRUE, echo = FALSE}
+p1 <- cit %>%
+  ggplot(aes(x=log10(comp))) + 
+  geom_histogram() + 
+  labs(x = "log(Number of companies)")
+p2 <- cit %>% 
+  ggplot(aes(x=log10(pop))) +
+  geom_histogram() + 
+  labs(x = "log(Population)")
+p1 + p2
+```
+
+---
+
+We add these transformed variables to our dataframe:
+```{r, eval = TRUE, echo = TRUE}
+cit <- cit %>% 
+  mutate(log_pop = log10(pop), 
+         log_comp = log10(comp))
+```
+
+```{r, echo = F}
+cit_all <- cit_all %>% 
+  mutate(log_pop = log10(pop), 
+         log_comp = log10(comp))
+```
+
+
+And look at the scatterplot of these variables:
+```{r, eval = TRUE, echo = FALSE, fig.height = 4}
+cit %>% 
+  ggplot(aes(x=log_comp, y = log_pop)) + 
+  geom_point() + 
+  labs(y= "log(Population)",
+       x = "log(Number of companies)")
+```
+Q: How would you describe this relation? What is its form, direction and strength? Is it linear?
+---
+
+## Correlation
+
+Is used to assess the strength of a linear relation. 
+
+For the correlation between the logarithm of the population and the logarithm of the number of companies we get:
+
+```{r}
+cit %>% 
+  drop_na(log_pop, log_comp) %>% 
+  summarize(cor(log_pop, log_comp))
+```
+
+---
+## Correlation and visualization
+
+Q: Use some other variable and compute its correlation with population. Is it stronger or weaker than you expected?
+
+Q: Now plot the two variables using a scatterplot and describe their relation to each other. If the variables you selected are right-skewed, you might want to first create a new variable that is the logarithm of the new one.
+
+---
+## Manually fitting a line to a scatterplot
+
+Just like we used the mean and standard deviation to summarize a single variable, we can summarize the relationship between these two variables by finding the line that best follows their association.
+
+We will now use the interactive function `plot_ss` to manually fit a line to the points we have. Don't use this function in a markdown file!
+
+We use this code:
+```{r, eval = F, echo = T}
+library(oilabs)
+plot_ss(x = log_comp, y = log_pop, data = cit)
+```
+---
+
+## Interpretting the fit of a line
+
+The line you specified by clicking two points will be shown in
+black and the residuals in blue. You will also be given an intercept, a slope and the sum of squared residuals. 
+
+Recall that the residuals are the difference between the
+observed values and the values predicted by the line:
+
+$$
+  e_i = y_i - \hat{y}_i
+$$
+
+The most common way to do linear regression is to select the line that minimizes the sum of squared residuals.
+
+---
+## Fitting a line to a scatterplot
+
+We can use the `lm` function in R to fit the linear model that minimizes the sum of squared residuals.
+
+```{r, eval = TRUE, echo = TRUE}
+m1 <- lm(log_pop ~ log_comp, data = cit)
+```
+
+The first argument in the function `lm` is a formula that takes the form
+`y ~ x`. Here it can be read that we want to make a linear model of `log_pop` as a function of `log_comp`. The second argument specifies that R should look in the `cit` data frame to find the `comp` and `pop` variables.
+
+---
+## The coefficients of a linear model
+
+The output of `lm` is an object that contains all of the information we need about the linear model that was just fit. Let us look at the coefficients.
+
+```{r, eval = TRUE, echo = TRUE}
+coefficients(m1)
+```
+
+So the line with the best fit is approximately
+$$ \log(pop) = 2.54 + 0.69 \cdot \log(comp).$$
+---
+## Computing the slope
+
+We can also compute the slope from two stats we have already seen: the SD of the two variables and their $r$.
+
+```{r}
+cit %>%
+  summarize(sd_p = sd(log_pop), 
+            sd_c = sd(log_comp), 
+            cor_pc = cor(log_pop,log_comp)) %>%
+  mutate(slope = sd_p/sd_c*cor_pc)
+```
+Q: Find the slope of the linear regression line that describes the relation between the variable you chose earlier and `pop` using this method.
+
+---
+## Predictions
+
+Let us see how well this model predicts the population of cities that were not in the dataset.
+
+```{r, echo = F}
+set.seed(4)
+cit_new <- cit_all %>% 
+  filter(!(city %in% cit$city)) %>% 
+  select(city, log_comp, log_pop) %>%
+  slice_sample(n=3)
+cit_new %>% 
+  select(-log_pop)
+```
+Q: What is the predicted population size for these cities according to our model? 
+
+---
+Instead of doing this by hand we can also use the `predict` function in R. It takes the model as the first input and the new rows as the second input.
+```{r, echo = T, eval = T}
+predict(m1, cit_new)
+```
+Let us compare these values to the true ones:
+
+```{r, echo = FALSE}
+cit_new %>% 
+  mutate(log_pop_pred = predict(m1,cit_new))
+```
