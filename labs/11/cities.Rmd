@@ -26,10 +26,8 @@ dic <- read_csv("https://www.dropbox.com/s/pwbvn51x4o1fvh9/data_dic.csv?dl=1")
 
 1. What do you think the distribution of the variable `pop` looks like? Which plot would you use to show this distribution?
 
-<!-- A histogram would probably be best and they might predict that it is right-skewed. -->
-
 2. *Choose a variable that you think has a strong relation to `pop`. How would you plot these two variables? Sketch a plot (paper and pencil or tablet) of what you expect. Describe how you expect the relation to look like. Is it linear? If yes, is it a positive or negative relation?
-<!-- They should draw some kind of scatterplot here. -->
+
 
 ### Data description: visualization
 
@@ -41,15 +39,14 @@ cit <- read_csv("https://www.dropbox.com/s/vx3tmh3ybwtbqk7/cities.csv?dl=1")
 
 3. Create two new columns: the log (base 10) of population and the number of companies and use them to construct a scatterplot. How would you describe the relation between these two variables? What is its form, strength and direction?
 
-<!-- There is a strong positive linear relation between the two variables. -->
 
-4. *Choose a variable besides the number of companies and visualize it's relationship with (log) population. Describe their relationship in words. You will probably need to use a log-transform here as well if you want to see more clearly what is happening. While a log transformation of a variable, $x$, with zeroes won't work, you can add one to that variable, then take the log (i.e. $\textrm{log}_{10}(x + 1)$).
+4. Choose a variable besides the number of companies and visualize it's relationship with (log) population. Describe their relationship in words. You will probably need to use a log-transform here as well if you want to see more clearly what is happening. While a log transformation of a variable, $x$, with zeroes won't work, you can add one to that variable, then take the log (i.e. $\textrm{log}_{10}(x + 1)$).
 
 ### Data description: numerical summaries
 
 5. Compute the correlation coefficient between log population and the log number of companies of these cities. Does it confirm your visual interpretation of their relation?
 
-6. *Now compute the correlation between the log population and the log-transform of a variable of your choice (from question 4) to quantify the strength of the linear relation. Does the strength of the correlation surprise you?
+6. Now compute the correlation between the log population and the log-transform of a variable of your choice (from question 4) to quantify the strength of the linear relation. Does the strength of the correlation surprise you?
 
 7. Instead of just numerically describing the relationship between log population and log number of companies using the correlation coefficient, you can fit a linear model using the method of least squares. What are the coefficients of this linear model? Write out the form of the line that you could use to predict the log population of a city.
 
@@ -71,9 +68,9 @@ cit_new <- cit_new %>%
 
 8. Use the equation of the line you derived in the previous question to predict the value of log population for one new city. How does this predictions compare to the true value?
 
-9. *Using the original data set, compute a linear model for that predicts log population using a variable of your choice. Use that model to predict the value of log population for one of the new cities.
+9. Using the original data set, compute a linear model for that predicts log population using a variable of your choice. Use that model to predict the value of log population for one of the new cities.
 
-10. *The plot below shows the original data in black, the linear model fit to that data, and the five new cities is red (or actually "tomato").
+10. The plot below shows the original data in black, the linear model fit to that data, and the five new cities is red (or actually "tomato").
     
     ```{r, message = FALSE, fig.height=3, fig.width=4, fig.align = "center"}
     ggplot(cit, aes(x = log_comp, y = log_pop)) +
