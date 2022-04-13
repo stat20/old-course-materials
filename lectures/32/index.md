@@ -1,5 +1,5 @@
 ---
-title: "Lecture 31: Predictions"
+title: "Lecture 32: Predictions"
 summary: "Linear model: what's it good for?"
 subtitle: "Linear model: what's it good for?"
 layout: single
@@ -11,5 +11,5 @@ links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/31/predictions.html
+  url: https://stat20.org/lectures/32/predictions.html
 ---
