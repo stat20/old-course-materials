@@ -30,6 +30,7 @@ set.seed(80)
 - Quiz 4 Again tomorrow 11 am - Friday 11 am
 - Midterm walk-through
 
+
 ## {}
 ```{r echo=FALSE, fig.width=14, fig.height=8, fig.align="center"}
 library(ggrepel)
@@ -107,10 +108,10 @@ Two methods of finding that line:
 
 :::: columns
 ::: {.column width="50%"}
-Numerical Optimization
+[Numerical Optimization]{.inversebox}
 :::
 ::: {.column width="50%"}
-Calculus
+[Analytical Approach]{.inversebox}
 :::
 ::::
 
@@ -123,12 +124,18 @@ $$\sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n (y_i - \mathbf{b_0} - \mathbf{
 
 :::: columns
 ::: {.column width="50%"}
+[Numerical Optimization]{.inversebox}
+
+E.g. Nelder-Mead Algorithm
+
 ```{r echo = FALSE, fig.align='center'}
 knitr::include_graphics("images/nelder-mead.png")
 ```
 :::
-::: {.column width="50%"}
-Take derivatives of $f_{RSS}$, set to 0, solve.
+::: {.column width="50%" .fragment}
+[Analytical Approach]{.inversebox}
+
+Take partial derivatives of $f_{RSS}$, set to 0, solve.
 
 $$ b_1 = r \frac{s_y}{s_x} $$
 
@@ -195,19 +202,69 @@ residuals(m1)
 ```
 
 
-# The linear model: what is it good for?
+# The Linear Model
+
+[What is it good for?]{.smalladage}
 
 
-## The linear model: what is it good for?
+## The Linear Model: what is it good for?
 
-1. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
+1. _Description_: describing the linear relationship between the variables in the data set.
 
-2. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
+2. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
 
-3. _Description_: describing the linear relationship between the variables in the data set.
+3. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
+
+## Interpretation of $b_1$
+
+. . .
+
+The **slope** describes the estimated difference in the $y$ variable if the explanatory
+variable $x$ for a case happened to be one unit larger.
+
+. . .
+
+```{r}
+coef(m1)[2]
+```
+
+. . .
+
+*For a state that is one point higher in the percentage of people living below the poverty level, we expect that state's proportion of high school graduates to be is 0.898 lower*.
+
+> Be cautious. If it is observational data, you do not have evidence of a 
+*causal link*, but of an association, which still can be used for prediction.
 
 
-## Linear Models for Prediction
+## Interpretation of $b_0$
+
+. . .
+
+The **intercept** is the predicted value that $y$ will take for a case with an $x$ value of zero.
+
+. . .
+
+```{r}
+coef(m1)[1]
+```
+
+. . .
+
+*For a state that has 0% of people living below the poverty level, we expect that state's proportion of high school graduates to be 96.2%*.
+
+> Do we? While necessary for prediction, the intercept often has no meaningful interpretation.
+
+
+## The Linear Model: what is it good for?
+
+::: nonincremental
+1. _Description_: describing the linear relationship between the variables in the data set.
+
+2. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
+:::
+
+
+## Linear Models for Prediction {.smaller}
 
 :::: columns
 ::: {.column width="25%"}
@@ -228,7 +285,12 @@ p1 +
 ::::
 
 
-## Linear Models for Prediction
+## {}
+
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/nRKtJXHxf0rfZO3gF0xH6?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+
+
+## Linear Models for Prediction {.smaller}
 
 :::: columns
 ::: {.column width="25%"}
@@ -249,13 +311,15 @@ p1 +
 ::::
 
 
-## Linear Models for Prediction
+## Linear Models for Prediction {.smaller}
 
 :::: columns
 ::: {.column width="25%"}
+::: poll
 What graduation rate would you expect for a state with a poverty rate of 15%?
 
 $$\hat{y} = 96.2 - .9 x$$
+:::
 :::
 ::: {.column width="75%"}
 ```{r, echo = FALSE, fig.height = 6, fig.width = 9, fig.align="center"}
@@ -271,7 +335,7 @@ p1 +
 ::::
 
 
-## Linear Models for Prediction
+## Linear Models for Prediction {.smaller}
 
 :::: columns
 ::: {.column width="25%"}
@@ -280,9 +344,10 @@ What graduation rate would you expect for a state with a poverty rate of 15%?
 
 $$\hat{y} = 96.2 - .9 x$$
 
-$$ 96.2 - .9 \times 15 = 82.7$$
+$$ 96.2 - .9 \times 15 \\
+= 82.7$$
 :::
-
+:::
 ::: {.column width="75%"}
 ```{r, echo = FALSE, fig.height = 6, fig.width = 9, fig.align="center"}
 povnew <- data.frame(Poverty = 15)
@@ -300,33 +365,46 @@ p1 +
 ## Linear Models for Prediction in R
 
 :::: columns
-::: {.column width="50%"}
-By hand:
+::: {.column width="47%"}
+
+By "hand":
+
 ```{r}
 coef(m1)[1] + coef(m1)[2] * 15
 ```
 :::
-::: {.column width="50%"}
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%" .fragment}
+
 Using `predict()`:
+
 ```{r}
-newx <- data.frame(Poverty = 15)
+newx <- tibble(Poverty = 15)
 predict(m1, newx)
 ```
+
+<br>
+<br>
+
+>Note: be sure `newx` has the `x` variable named identically to the original df
 :::
 ::::
 
 
-## How good were the predictions?
+## How good were the "predictions"?
 
 . . .
 
 ::: poll
-Which data set(s) will yield a linear model with the best predictions?
+Which data set(s) will yield a linear model with the best in-sample "predictions"?
 :::
 
 . . .
 
-```{r out.width="55%", echo = FALSE, fig.align='center'}
+```{r out.width="75%", echo = FALSE, fig.align='center'}
 knitr::include_graphics("images/id-the-slr.png")
 ```
 
@@ -337,8 +415,8 @@ boardwork
 ## {background-image="images/r-squared.jpg" background-size="contain"}
 
 
-## How good were the predictions?
-
+## How good were the "predictions"?
+ 
 . . .
 
 $r^2$, the square of the correlation coefficient measures the proportion of total variability in the $y$ that is explained by the linear model.
@@ -387,19 +465,25 @@ p1 +
 ```{r echo = FALSE, out.width = "60%"}
 knitr::include_graphics("https://imgs.xkcd.com/comics/extrapolating.png")
 ```
-  
+
+<br>
+
 _Extrapolation is treacherous._
 
+<br>
+<br>
+
+<center>
 [source: https://xkcd.com/605/]{.footer}
+</center>
 
+## The Linear Model: what is it good for?
 
-## The linear model: what is it good for?
+1. _Description_: describing the linear relationship between the variables in the data set.
 
-1. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
+2. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
 
-2. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
-
-3. _Description_: describing the linear relationship between the variables in the data set.
+3. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
 
 
 ## Residual Analysis
@@ -407,8 +491,6 @@ _Extrapolation is treacherous._
 ::: poll
 What is the definition of _residual_?
 :::
-
-. . .
 
 A) $\hat{y}_i - \bar{y}_i$
 
@@ -419,6 +501,13 @@ C) $\hat{y}_i - \bar{y}_i$
 D) $y_i - \hat{y}_i$
 
 E) $\hat{y}_i - y_i$
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/DmKI9uPZldOiqQeSmRElL?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
 
 
 ## Residual Analysis
@@ -453,7 +542,7 @@ p1
 . . .
 
 :::: columns
-::: {.column width="50%"}
+::: {.column width="43%"}
 ```{r res1, eval = FALSE}
 poverty %>%
   mutate(yhat = fitted(m1),
@@ -461,11 +550,12 @@ poverty %>%
   ggplot(aes(x = Poverty,
              y = res)) +
   geom_point(size = 3) +
-  geom_text_repel(aes(label = State)) +
+  geom_text_repel(
+    aes(label = State)) +
   theme_bw(base_size = 18)
 ```
 :::
-::: {.column width="50%"}
+::: {.column width="57%"}
 ```{r ref.label="res1", echo = FALSE}
 ```
 :::
@@ -474,7 +564,7 @@ poverty %>%
 ## Residuals vs $\hat{y}$
 
 :::: columns
-::: {.column width="50%"}
+::: {.column width="43%"}
 ```{r res2, eval = FALSE}
 poverty %>%
   mutate(yhat = fitted(m1),
@@ -482,11 +572,12 @@ poverty %>%
   ggplot(aes(x = yhat,
              y = res)) +
   geom_point(size = 3) +
-  geom_text_repel(aes(label = State)) +
+  geom_text_repel(
+    aes(label = State)) +
   theme_bw(base_size = 18)
 ```
 :::
-::: {.column width="50%"}
+::: {.column width="57%"}
 ```{r ref.label="res2", echo = FALSE}
 ```
 :::
@@ -502,46 +593,11 @@ What to look for:
 - Non-linear trends
 
 
-## The linear model: what is it good for?
+## The Linear Model: what is it good for?
 
-1. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
+1. _Description_: describing the linear relationship between the variables in the data set.
 
-2. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
+2. _Prediction_: predicting the unknown value of $y_i$ for a new $x_i$ not in the data set.
 
-3. _Description_: describing the linear relationship between the variables in the data set.
+3. _Residual Analysis_: understanding the deviation of each observation, $y_i$, relative to the model's prediction, $\hat{y}_i$.
 
-
-## Interpretation of $b_1$
-
-. . .
-
-The **slope** describes the estimated difference in the $y$ variable if the explanatory
-variable $x$ for a case happened to be one unit larger.
-
-. . .
-
-```{r}
-coef(m1)[2]
-```
-
-*For each additional percentage point of people living below the poverty level,
-we expect a state to have a proportion of high school graduates that is 0.898
-lower*.
-
-**Be Cautious**: if it is observational data, you do not have evidence of a 
-*causal link*, but of an association, which still can be used for prediction.
-
-
-## Interpretation of $b_0$
-
-. . .
-
-The **intercept** is the predicted value that $y$ will take for a case with an $x$ value of zero.
-
-. . .
-
-```{r}
-coef(m1)[2]
-```
-
-While necessary for prediction, the intercept often has no meaningful interpretation.

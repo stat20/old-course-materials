@@ -407,9 +407,9 @@
 <p>Two methods of finding that line:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Numerical Optimization</p>
+<p><span class="inversebox">Numerical Optimization</span></p>
 </div><div class="column" style="width:50%;">
-<p>Calculus</p>
+<p><span class="inversebox">Analytical Approach</span></p>
 </div>
 </div>
 </div>
@@ -420,17 +420,20 @@
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
+<p><span class="inversebox">Numerical Optimization</span></p>
+<p>E.g. Nelder-Mead Algorithm</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/nelder-mead.png" width="819"></p>
+<p><img data-src="images/nelder-mead.png" width="812"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<p>Take derivatives of <span class="math inline">\(f_{RSS}\)</span>, set to 0, solve.</p>
+</div><div class="column fragment" style="width:50%;">
+<p><span class="inversebox">Analytical Approach</span></p>
+<p>Take partial derivatives of <span class="math inline">\(f_{RSS}\)</span>, set to 0, solve.</p>
 <p><span class="math display">\[ b_1 = r \frac{s_y}{s_x} \]</span></p>
 <p><span class="math display">\[ b_0 = \bar{y} - b_1 \bar{x} \]</span></p>
 </div>
@@ -551,19 +554,70 @@ $class
 </div>
 </section></section>
 <section>
-<section id="the-linear-model-what-is-it-good-for" class="title-slide slide level1 center">
-<h1>The linear model: what is it good for?</h1>
-
+<section id="the-linear-model" class="title-slide slide level1 center">
+<h1>The Linear Model</h1>
+<p><span class="smalladage">What is it good for?</span></p>
 </section>
-<section id="the-linear-model-what-is-it-good-for-1" class="slide level2">
-<h2>The linear model: what is it good for?</h2>
+<section id="the-linear-model-what-is-it-good-for" class="slide level2">
+<h2>The Linear Model: what is it good for?</h2>
 <ol type="1">
+<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 <li class="fragment"><p><em>Prediction</em>: predicting the unknown value of <span class="math inline">\(y_i\)</span> for a new <span class="math inline">\(x_i\)</span> not in the data set.</p></li>
 <li class="fragment"><p><em>Residual Analysis</em>: understanding the deviation of each observation, <span class="math inline">\(y_i\)</span>, relative to the model’s prediction, <span class="math inline">\(\hat{y}_i\)</span>.</p></li>
-<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 </ol>
 </section>
-<section id="linear-models-for-prediction" class="slide level2">
+<section id="interpretation-of-b_1" class="slide level2">
+<h2>Interpretation of <span class="math inline">\(b_1\)</span></h2>
+<div class="fragment">
+<p>The <strong>slope</strong> describes the estimated difference in the <span class="math inline">\(y\)</span> variable if the explanatory variable <span class="math inline">\(x\)</span> for a case happened to be one unit larger.</p>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">coef</span>(m1)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>   Poverty 
+-0.8979109 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><em>For a state that is one point higher in the percentage of people living below the poverty level, we expect that state’s proportion of high school graduates to be is 0.898 lower</em>.</p>
+<blockquote>
+<p>Be cautious. If it is observational data, you do not have evidence of a <em>causal link</em>, but of an association, which still can be used for prediction.</p>
+</blockquote>
+</div>
+</section>
+<section id="interpretation-of-b_0" class="slide level2">
+<h2>Interpretation of <span class="math inline">\(b_0\)</span></h2>
+<div class="fragment">
+<p>The <strong>intercept</strong> is the predicted value that <span class="math inline">\(y\)</span> will take for a case with an <span class="math inline">\(x\)</span> value of zero.</p>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">coef</span>(m1)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-stdout">
+<pre><code>(Intercept) 
+   96.20217 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><em>For a state that has 0% of people living below the poverty level, we expect that state’s proportion of high school graduates to be 96.2%</em>.</p>
+<blockquote>
+<p>Do we? While necessary for prediction, the intercept often has no meaningful interpretation.</p>
+</blockquote>
+</div>
+</section>
+<section id="the-linear-model-what-is-it-good-for-1" class="slide level2">
+<h2>The Linear Model: what is it good for?</h2>
+<div>
+<ol type="1">
+<li><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
+<li><p><em>Prediction</em>: predicting the unknown value of <span class="math inline">\(y_i\)</span> for a new <span class="math inline">\(x_i\)</span> not in the data set.</p></li>
+</ol>
+</div>
+</section>
+<section id="linear-models-for-prediction" class="slide level2 smaller">
 <h2>Linear Models for Prediction</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
@@ -571,46 +625,6 @@ $class
 <p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
 <p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
 </div>
-</div><div class="column" style="width:75%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-20-1.png" width="864"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="linear-models-for-prediction-1" class="slide level2">
-<h2>Linear Models for Prediction</h2>
-<div class="columns">
-<div class="column" style="width:25%;">
-<div class="poll">
-<p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
-<p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
-</div>
-</div><div class="column" style="width:75%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-22-1.png" width="864"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="linear-models-for-prediction-2" class="slide level2">
-<h2>Linear Models for Prediction</h2>
-<div class="columns">
-<div class="column" style="width:25%;">
-<p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
-<p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
 </div><div class="column" style="width:75%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -624,16 +638,20 @@ $class
 </div>
 </div>
 </section>
-<section id="linear-models-for-prediction-3" class="slide level2">
+<section id="section-6" class="slide level2">
+<h2></h2>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/nRKtJXHxf0rfZO3gF0xH6?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</section>
+<section id="linear-models-for-prediction-1" class="slide level2 smaller">
 <h2>Linear Models for Prediction</h2>
 <div class="columns">
 <div class="column" style="width:25%;">
 <div class="poll">
 <p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
 <p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
-<p><span class="math display">\[ 96.2 - .9 \times 15 = 82.7\]</span></p>
 </div>
-<div class="column" style="width:75%;">
+</div><div class="column" style="width:75%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -644,36 +662,88 @@ $class
 </div>
 </div>
 </div>
-</div><section id="linear-models-for-prediction-in-r" class="slide level2">
+</div>
+</section>
+<section id="linear-models-for-prediction-2" class="slide level2 smaller">
+<h2>Linear Models for Prediction</h2>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="poll">
+<p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
+<p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
+</div>
+</div><div class="column" style="width:75%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-28-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-models-for-prediction-3" class="slide level2 smaller">
+<h2>Linear Models for Prediction</h2>
+<div class="columns">
+<div class="column" style="width:25%;">
+<div class="poll">
+<p>What graduation rate would you expect for a state with a poverty rate of 15%?</p>
+<p><span class="math display">\[\hat{y} = 96.2 - .9 x\]</span></p>
+<p><span class="math display">\[ 96.2 - .9 \times 15 \\
+= 82.7\]</span></p>
+</div>
+</div><div class="column" style="width:75%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-30-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-models-for-prediction-in-r" class="slide level2">
 <h2>Linear Models for Prediction in R</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
-<p>By hand: ::: {.cell layout-align=“center”}</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">coef</span>(m1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(m1)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="column" style="width:47%;">
+<p>By “hand”:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">coef</span>(m1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(m1)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>(Intercept) 
    82.73351 </code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:50%;">
-<p>Using <code>predict()</code>: ::: {.cell layout-align=“center”}</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Poverty =</span> <span class="dv">15</span>)</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">predict</span>(m1, newx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column fragment" style="width:47%;">
+<p>Using <code>predict()</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Poverty =</span> <span class="dv">15</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">predict</span>(m1, newx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>       1 
 82.73351 </code></pre>
 </div>
 </div>
-</section>
+<p><br> <br></p>
+<blockquote>
+<p>Note: be sure <code>newx</code> has the <code>x</code> variable named identically to the original df</p>
+</blockquote>
 </div>
-<p>::::</p>
+</div>
 </section>
 <section id="how-good-were-the-predictions" class="slide level2">
-<h2>How good were the predictions?</h2>
+<h2>How good were the “predictions”?</h2>
 <div class="fragment">
 <div class="poll">
-<p>Which data set(s) will yield a linear model with the best predictions?</p>
+<p>Which data set(s) will yield a linear model with the best in-sample “predictions”?</p>
 </div>
 </div>
 <div class="fragment">
@@ -681,22 +751,22 @@ $class
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/id-the-slr.png" style="width:55.0%"></p>
+<p><img data-src="images/id-the-slr.png" style="width:75.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="section-6" class="slide level2">
+<section id="section-7" class="slide level2">
 <h2></h2>
 <p>boardwork</p>
 </section>
-<section id="section-7" class="slide level2" data-background-image="images/r-squared.jpg" data-background-size="contain">
+<section id="section-8" class="slide level2" data-background-image="images/r-squared.jpg" data-background-size="contain">
 <h2></h2>
 </section>
 <section id="how-good-were-the-predictions-1" class="slide level2">
-<h2>How good were the predictions?</h2>
+<h2>How good were the “predictions”?</h2>
 <div class="fragment">
 <p><span class="math inline">\(r^2\)</span>, the square of the correlation coefficient measures the proportion of total variability in the <span class="math inline">\(y\)</span> that is explained by the linear model.</p>
 </div>
@@ -728,7 +798,7 @@ $class
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-34-1.png" width="864"></p>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-38-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -736,18 +806,22 @@ $class
 </div>
 </div>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-9" class="slide level2">
 <h2></h2>
 
-<img data-src="https://imgs.xkcd.com/comics/extrapolating.png" style="width:60.0%" class="r-stretch quarto-figure-center"><p><em>Extrapolation is treacherous.</em></p>
-<p><span class="footer">source: https://xkcd.com/605/</span></p>
+<img data-src="https://imgs.xkcd.com/comics/extrapolating.png" style="width:60.0%" class="r-stretch quarto-figure-center"><p><br></p>
+<p><em>Extrapolation is treacherous.</em></p>
+<p><br> <br></p>
+<center>
+<span class="footer">source: https://xkcd.com/605/</span>
+</center>
 </section>
 <section id="the-linear-model-what-is-it-good-for-2" class="slide level2">
-<h2>The linear model: what is it good for?</h2>
+<h2>The Linear Model: what is it good for?</h2>
 <ol type="1">
+<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 <li class="fragment"><p><em>Prediction</em>: predicting the unknown value of <span class="math inline">\(y_i\)</span> for a new <span class="math inline">\(x_i\)</span> not in the data set.</p></li>
 <li class="fragment"><p><em>Residual Analysis</em>: understanding the deviation of each observation, <span class="math inline">\(y_i\)</span>, relative to the model’s prediction, <span class="math inline">\(\hat{y}_i\)</span>.</p></li>
-<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 </ol>
 </section>
 <section id="residual-analysis" class="slide level2">
@@ -755,7 +829,6 @@ $class
 <div class="poll">
 <p>What is the definition of <em>residual</em>?</p>
 </div>
-<div class="fragment">
 <ol type="A">
 <li class="fragment"><p><span class="math inline">\(\hat{y}_i - \bar{y}_i\)</span></p></li>
 <li class="fragment"><p><span class="math inline">\(y_i - \bar{y}_i\)</span></p></li>
@@ -763,7 +836,13 @@ $class
 <li class="fragment"><p><span class="math inline">\(y_i - \hat{y}_i\)</span></p></li>
 <li class="fragment"><p><span class="math inline">\(\hat{y}_i - y_i\)</span></p></li>
 </ol>
-</div>
+</section>
+<section id="section-10" class="slide level2">
+<h2></h2>
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/DmKI9uPZldOiqQeSmRElL?controls=none&amp;short_poll=true" width="800px" height="600px">
+</iframe>
+</center>
 </section>
 <section id="residual-analysis-1" class="slide level2">
 <h2>Residual Analysis</h2>
@@ -787,7 +866,7 @@ $class
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -798,23 +877,24 @@ $class
 <h2>Residuals vs <span class="math inline">\(x\)</span></h2>
 <div class="fragment">
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:43%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>poverty <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">mutate</span>(<span class="at">yhat =</span> <span class="fu">fitted</span>(m1),</span>
-<span id="cb17-3"><a href="#cb17-3"></a>         <span class="at">res  =</span> <span class="fu">residuals</span>(m1)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Poverty,</span>
-<span id="cb17-5"><a href="#cb17-5"></a>             <span class="at">y =</span> res)) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> State)) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>poverty <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">mutate</span>(<span class="at">yhat =</span> <span class="fu">fitted</span>(m1),</span>
+<span id="cb21-3"><a href="#cb21-3"></a>         <span class="at">res  =</span> <span class="fu">residuals</span>(m1)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Poverty,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>             <span class="at">y =</span> res)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb21-8"><a href="#cb21-8"></a>    <span class="fu">aes</span>(<span class="at">label =</span> State)) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:57%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-40-1.png" width="960"></p>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-44-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -826,23 +906,24 @@ $class
 <section id="residuals-vs-haty" class="slide level2">
 <h2>Residuals vs <span class="math inline">\(\hat{y}\)</span></h2>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:43%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>poverty <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">mutate</span>(<span class="at">yhat =</span> <span class="fu">fitted</span>(m1),</span>
-<span id="cb18-3"><a href="#cb18-3"></a>         <span class="at">res  =</span> <span class="fu">residuals</span>(m1)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> yhat,</span>
-<span id="cb18-5"><a href="#cb18-5"></a>             <span class="at">y =</span> res)) <span class="sc">+</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> State)) <span class="sc">+</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>poverty <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">mutate</span>(<span class="at">yhat =</span> <span class="fu">fitted</span>(m1),</span>
+<span id="cb22-3"><a href="#cb22-3"></a>         <span class="at">res  =</span> <span class="fu">residuals</span>(m1)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> yhat,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>             <span class="at">y =</span> res)) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb22-8"><a href="#cb22-8"></a>    <span class="fu">aes</span>(<span class="at">label =</span> State)) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:57%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
+<p><img data-src="predictions_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -859,48 +940,15 @@ $class
 </ul>
 </section>
 <section id="the-linear-model-what-is-it-good-for-3" class="slide level2">
-<h2>The linear model: what is it good for?</h2>
+<h2>The Linear Model: what is it good for?</h2>
 <ol type="1">
+<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 <li class="fragment"><p><em>Prediction</em>: predicting the unknown value of <span class="math inline">\(y_i\)</span> for a new <span class="math inline">\(x_i\)</span> not in the data set.</p></li>
 <li class="fragment"><p><em>Residual Analysis</em>: understanding the deviation of each observation, <span class="math inline">\(y_i\)</span>, relative to the model’s prediction, <span class="math inline">\(\hat{y}_i\)</span>.</p></li>
-<li class="fragment"><p><em>Description</em>: describing the linear relationship between the variables in the data set.</p></li>
 </ol>
-</section>
-<section id="interpretation-of-b_1" class="slide level2">
-<h2>Interpretation of <span class="math inline">\(b_1\)</span></h2>
-<div class="fragment">
-<p>The <strong>slope</strong> describes the estimated difference in the <span class="math inline">\(y\)</span> variable if the explanatory variable <span class="math inline">\(x\)</span> for a case happened to be one unit larger.</p>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">coef</span>(m1)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>   Poverty 
--0.8979109 </code></pre>
-</div>
-</div>
-<p><em>For each additional percentage point of people living below the poverty level, we expect a state to have a proportion of high school graduates that is 0.898 lower</em>.</p>
-<p><strong>Be Cautious</strong>: if it is observational data, you do not have evidence of a <em>causal link</em>, but of an association, which still can be used for prediction.</p>
-</div>
-</section>
-<section id="interpretation-of-b_0" class="slide level2">
-<h2>Interpretation of <span class="math inline">\(b_0\)</span></h2>
-<div class="fragment">
-<p>The <strong>intercept</strong> is the predicted value that <span class="math inline">\(y\)</span> will take for a case with an <span class="math inline">\(x\)</span> value of zero.</p>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">coef</span>(m1)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-stdout">
-<pre><code>   Poverty 
--0.8979109 </code></pre>
-</div>
-</div>
-<p>While necessary for prediction, the intercept often has no meaningful interpretation.</p>
-<p><img src="images/stat20-hex.png" class="slide-logo"></p>
-<div class="footer footer-default">
 
-</div>
+<img src="images/stat20-hex.png" class="slide-logo r-stretch"><div class="footer footer-default">
+
 </div>
 </section></section>
     </div>
