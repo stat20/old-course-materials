@@ -77,3 +77,11 @@
   - Vote on best viz
   
   
+# Causality
+- Start with counterfactual
+  - as the perfect control
+  - show two rows of a data frame that match on all rows (verrrry wide data frame) except for the explanatory variable as the counterfactual data frame
+- That's an impossible condition, so how do we come up with approximate controls: matching units with similar units.
+  - Problem: rows start to differ on more than just the explanatory variable
+  - Sometimes this matters (confounders), sometimes it doesnt. Knowing the causal model allows you to make this determination.
+- Since random assignment will on average balance out confounders, we switch to average casual effect.
