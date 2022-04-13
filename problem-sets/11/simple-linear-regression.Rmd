@@ -1,0 +1,157 @@
+---
+title: 'Problem Set 11'
+subtitle: 'Simple Linear Regression'
+output:
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      fig.width = 3,
+                      fig.height = 2.5,
+                      echo = FALSE)
+```
+
+1.  The two scatterplots below show the relationship between the overall course average and two midterm exams (Exam 1 and Exam 2) recorded for 233 students during several years for a statistics course at a university.
+
+    ```{r fig.width = 8, fig.height = 3}
+    library(openintro)
+    library(tidyverse)
+    library(patchwork)
+    
+    p_1 <- ggplot(exam_grades, aes(x = exam1, y = course_grade)) +
+      geom_point(size = 2, alpha = 0.8) +
+      labs(x = "Exam 1 grade", y = "Course grade")
+    
+    p_2 <- ggplot(exam_grades, aes(x = exam2, y = course_grade)) +
+      geom_point(size = 2, alpha = 0.8) +
+      labs(x = "Exam 2 grade", y = "Course grade")
+    
+    p_1 + p_2
+    ```
+
+    a.  Based on these graphs, which of the two exams has the strongest correlation with the course grade? Explain.
+
+    b.  Can you think of a reason why the correlation between the exam you chose in part (a) and the course grade is higher?
+
+
+2. Researchers studying anthropometry collected body and skeletal diameter measurements, as well as age, weight, height and sex for 507 physically active individuals. 
+The scatterplot below shows the relationship between height and shoulder girth (circumference of shoulders measured over deltoid muscles), both measured in centimeters.
+
+    ```{r, fig.height = 2.5, fig.width = 2.5, fig.align = "center"}
+    library(tidyverse)
+    library(openintro)
+    
+    ggplot(bdims, aes(x = sho_gi, y = hgt)) +
+      geom_point(size = 1, alpha = 0.6) +
+      labs(x = "Shoulder girth (cm)", y = "Height (cm)")
+    ```
+
+    a.  Describe the relationship between shoulder girth and height.
+
+    b.  How would the relationship change if shoulder girth was measured in inches while the units of height remained in centimeters?
+    
+
+3. The scatterplot below shows the relationship between the number of calories and amount of protein (in grams) Starbucks food menu items contain. Since Starbucks only lists the number of calories on the display items, we might be interested in predicting the amount of protein a menu item has based on its calorie content.
+
+    ```{r fig.height = 3, fig.width = 8, fig.align = "center"}
+    library(openintro)
+    library(ggplot2)
+    library(broom)
+    library(patchwork)
+    
+    p_1 <- ggplot(starbucks, aes(y = protein, x = calories)) +
+      geom_smooth(method = "lm", color = "darkgray", se = FALSE) +
+      geom_point(size = 2) +
+      labs(
+        x = "Calories",
+        y = "Protein (grams)"
+        )
+    m <- lm(protein ~ calories, data = starbucks)
+    m_aug <- augment(m)
+    
+    p_2 <- ggplot(m_aug, aes(x = .fitted, y = .resid)) +
+      geom_hline(yintercept = 0, linetype = "dashed") +
+      geom_point(size = 2) +
+      labs(
+        x = "Predicted protein (grams)",
+        y = "Residuals"
+        )
+    
+    p_1 + p_2
+    ```
+
+    a.  Describe the relationship between number of calories and amount of protein (in grams) that Starbucks food menu items contain.
+
+    b.  In this scenario, what are the predictor and outcome variables?
+
+    c.  Why might we want to fit a regression line to these data?
+
+    d.  What does the residuals vs. predicted plot tell us about the variability in our prediction errors based on this model for items with lower vs. higher predicted protein?
+
+4. The following scatterplot shows the relationship between percent of population below the poverty level (`poverty`) from unemployment rate among those ages 20-64 (`unemployment_rate`) in counties in the US, as provided by data from the 2019 American Community Survey. 
+The regression output for the model for predicting `poverty` from `unemployment_rate` is also provided.
+
+```{r fig.height = 3, fig.width = 3.5, fig.align = "center"}
+library(openintro)
+library(broom)
+library(kableExtra)
+library(ggplot2)
+library(scales)
+
+ggplot(county_2019, aes(x = unemployment_rate, y = poverty)) +
+  geom_point(alpha = 0.5) +
+  labs(
+    y = "Percent below the poverty level",
+    x = "Unemployment rate"
+  ) +
+  scale_x_continuous(labels = label_percent(scale = 1, accuracy = 1)) +
+  scale_y_continuous(labels = label_percent(scale = 1, accuracy = 1))
+```
+```{r results = "asis"}
+m <- lm(poverty ~ unemployment_rate, data = county_2019)
+m_rsq <- format(round(glance(m)$r.squared, 2)*100, digits = 0)
+m_tidy <- tidy(m)
+m_tidy %>%
+  mutate(p.value = ifelse(p.value < 0.001, "<0.0001", round(p.value, 4))) %>%
+  kbl(linesep = "", booktabs = TRUE, digits = 3, align = "lrrrr",
+      format = "latex") %>%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                latex_options = "HOLD_position") %>%
+  column_spec(1, width = "8em", monospace = TRUE) %>%
+  column_spec(2:5, width = "5em")
+```
+a.  Write out the linear model.
+
+b.  Interpret the intercept.
+
+c.  Interpret the slope.
+
+d.  For this model $R^2$ is `r m_rsq`%. Interpret this value.
+
+e.  Calculate the correlation coefficient.
+
+
+5.  The scatterplot below shows the percent of families who own their home vs. the percent of the population living in urban areas. 
+There are 52 observations, each corresponding to a state in the US. Puerto Rico and District of Columbia are also included.
+
+```{r fig.align = "center"}
+library(tidyverse)
+library(openintro)
+library(scales)
+
+ggplot(urban_owner, aes(x = poppct_urban, y = pct_owner_occupied)) +
+  geom_point() +
+  scale_x_continuous(labels = label_percent(scale = 1, accuracy = 1)) +
+  scale_y_continuous(labels = label_percent(scale = 1, accuracy = 1)) +
+  labs(
+    x = "Percent urban population",
+    y = "Percent who own their home"
+  )
+```
+
+a.  Describe the relationship between the percent of families who own their home and the percent of the population living in urban areas.
+
+b.  The outlier at the bottom right corner is District of Columbia, where 100% of the population is considered urban. What type of an outlier is this observation?
+    
