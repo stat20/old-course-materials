@@ -1,5 +1,5 @@
 ---
-title: "Lab 13: Multiple Regression with Baseball"
+title: "Lab 12: Baseball"
 output: pdf_document
 ---
 
@@ -19,11 +19,7 @@ data(Batting)
 
 1. What are some questions we can answer about baseball (or other sports) using statistics?
 
-<!-- A: A big use of regression in baseball is valuing players and projecting out their future performance (e.g., draft models). Descriptive stats are really helpful in determining player strengths and weaknesses. Models to predict pitch quality, predict injury, detect changes in performance. -->
-
 2. How do you think publicly available baseball data is collected? What sources of error could be associated with different collection methods?
-
-<!-- A: Some data is collected by an army of volunteers (e.g., from Retrosheet). Other data could be scraped from websites (e.g., injury information). There's also data that comes from cameras in stadiums. Good to think through here how people are actually getting the data. Could be errors in human recording, errors in machine recording or how cameras are set up. -->
 
 There are a number of [publicly available baseball datasets](https://sabr.org/sabermetrics/data). One main source of data that we will be using this week is the Lahman database which contains a number of datasets with different units of observation. Below is the first few rows and some of the columns for two of these datasets: Teams and Batting.
 
@@ -40,23 +36,13 @@ knitr::kable(head(Batting %>%
 
 3. What is the unit of observation for the Teams dataset? What about for the Batting dataset?
 
-<!-- A: Teams dataset: stats for a team in a given season; Batting dataset: stats for a specific player on a team in a given season -->
-
 4. What is a question you could answer using the Teams dataset but not the Batting dataset, and vice versa?
-
-<!-- A: Teams: How are runs and runs allowed related to number of wins? Batting: Do players that walk more also score more runs? -->
 
 5. What is a question that we would need more granular (measured on a finer/more specific part of the game) data than the Teams and Batting dataset provide to answer?
 
-<!-- A: There's a lot of questions you'd want pitch by pitch data for: player whiff rate, questions about pitch quality. -->
-
 6. Roughly since 1962 MLB teams have played 162 games in a season. What do you think the distribution of wins looks like? Sketch a plot and describe.
 
-<!-- A: Centered around 80, fairly symmetric -->
-
 7. What do you think the relationship between wins and runs looks like? Sketch a plot and describe.
-
-<!-- A: Strong, positive, linear relationship -->
 
 8. Some people believe analytics is ruining baseball because teams are more cautious which makes the games less entertaining. Do you agree or disagree? Why?
 
@@ -71,50 +57,17 @@ data(Teams)
 
 9. Subset the Teams dataset to only include years from 2000 to present day. What are the dimensions of this filtered dataset?
 
-```{r, include=F}
-Teams <- Teams %>% filter(yearID >= 2000)
-dim(Teams)
-```
-
 10. Plot the distribution of wins. Describe the relationship.
-```{r, include = F}
-ggplot(Teams, aes(x = W)) + geom_histogram()
-```
 
 11. Plot the relationship between runs and wins. Describe the relationship (form, direction, strength, presence of outliers).
 
-```{r, include = F}
-ggplot(Teams, aes(x = R, y = W)) + geom_point()
-```
-
 12. Plot the relationship between runs allowed and wins. Describe the relationship. How does it compare to the relationship between runs and wins?
-
-```{r, include = F}
-ggplot(Teams, aes(x = RA, y = W)) + geom_point()
-```
 
 13. Fit a linear model to predict wins by runs. Write out the equation for the linear model and interpret the slope. What are the $R^2$ and adjusted-$R^2$ values?
 
-```{r, include = F}
-model <- lm(W ~ R, data = Teams)
-summary(model)$r.squared
-summary(model)$adj.r.squared
-```
-
 14. What is the average number of season runs and wins? Based on the previous model, how many games would you predict a team that scored the average number of runs would win? What about a team that scored 600 runs? What about 850 runs?
 
-```{r, include = F}
-mean(Teams$R)
-mean(Teams$W)
-predict(model, data.frame(R = c(mean(Teams$R), 850, 600))) 
-```
-
 15. Fit a linear model to predict wins by runs and runs allowed. Write out the equation for the linear model and interpret the slopes. What are the $R^2$ and adjusted-$R^2$ values? Compare to the simple linear regression from the previous question.
-
-```{r, include = F}
-model <- lm(W ~ R + RA, data = Teams)
-summary(model)
-```
 
 16. Try fitting another linear model to predict wins using other variables in this dataset. How does the $R^2$ and adjusted-$R^2$ values change? Do you think the new model you created predicts wins better?
 
