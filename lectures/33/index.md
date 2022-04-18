@@ -1,5 +1,5 @@
 ---
-title: "Lecture 32: Inference for Regression"
+title: "Lecture 33: Inference for Regression"
 summary: "Back to Plato's Cave"
 subtitle: "Back to Plato's Cave"
 layout: single
