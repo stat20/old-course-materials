@@ -26,6 +26,16 @@ knitr::opts_chunk$set(echo = TRUE,
 set.seed(80)
 ```
 
+## Agenda
+
+1. Common mathematical assumptions of the linear model
+  - Residual analysis
+2. Multiple Regression
+  - Example: shipping books
+  - Adding complexity: Two intercepts
+3. Extending the Model
+  - Interaction terms
+
 ## {background-image="images/model-assumptions-1.jpg" background-size="contain"}
 
 ## {background-image="images/model-assumptions-2.jpg" background-size="contain"}
@@ -134,6 +144,12 @@ $$ \widehat{weight} = 107.7 + 0.708 volume $$
 ## {}
 
 **Question 2**: Does this appear to be a reasonable setting in which to apply linear regression for inference?
+
+. . .
+
+What is the population we wish to draw inferences on?
+
+> All books sold on Amazon
 
 . . .
 
@@ -335,7 +351,9 @@ summary(m2)
 volume and cover?
 
 
-## {}
+## Mathematical CIs
+
+. . .
 
 ```{r}
 coef(summary(m2))
@@ -345,12 +363,25 @@ qt(.025, df = nrow(books) - 3)
 . . .
 
 ::: poll
-Which of the follow represents the appropriate 95% CI for `coverpb`?
+Which of the following represents the appropriate 95% CI for `coverpb`?
 
-1. $197 \pm 1.96 \times 59.19$
-2. $-184 \pm 2.18 \times 40.5$
-3. $-184 \pm -4.55 \times 40.5$
+::: nonincremental
+A. $197 \pm 1.96 \times 59.19$
+B. $-184 \pm 2.18 \times 40.5$
+C. $-184 \pm -4.55 \times 40.5$
 :::
+:::
+
+```{r echo = FALSE}
+countdown::countdown(1, font_size = "1.5em")
+```
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/bUAlI8vXMBnDvqYwsFxes?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
 
 
 ## Mathematical CIs in R
@@ -464,6 +495,9 @@ confint(m2)
 > With $n=15$, bootstrap intervals are likely inaccurate.
 
 
+# Extending the model
+
+
 ## Extending the model
 
 . . .
@@ -472,7 +506,7 @@ confint(m2)
 p3
 ```
 
-The two cover types have different intercepts. Do they share the same slope?
+> The two cover types have different intercepts. Do they share the same slope?
 
 
 ## Extending the model
