@@ -1,16 +1,17 @@
 ---
 title: "Lab 13: Multiple Regression with Baseball"
-subtitle: ""
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
-    lib_dir: libs
+    css: stat20.css
+    lib_dir: assets/libs
     nature:
       highlightStyle: atelier-forest-light
       highlightLines: true
       highlightSpans: true
+      ratio: 16:9
       countIncrementalSlides: false
+      slideNumberFormat: "%current%"
 ---
 
 ```{r setup, include=FALSE, warning=FALSE}
@@ -21,16 +22,11 @@ knitr::opts_chunk$set(fig.align = "center",
                       warning = FALSE)
 
 library(tidyverse) 
-library(gridExtra)
-library(xaringanthemer)
-source("https://raw.githubusercontent.com/stat-20/stat-20-website/main/xaringan-theme.R")
-ggplot2::theme_set(ggplot2::theme_gray(base_size = 18))
-knitr::opts_chunk$set()
 ```
 
 
 ## Baseball Rules
-```{r echo = F, out.width = "75%", fig.align = "center"}
+```{r echo = F, out.width = "65%", fig.align = "center"}
 knitr::include_graphics("baseball_rules.png")
 ```
 ???
@@ -40,16 +36,16 @@ Here's a helpful glossary from MLB: https://www.mlb.com/glossary
 
 ## Baseball Rules
 
-```{r echo = F, out.width = "75%", fig.align = "center"}
+```{r echo = F, out.width = "60%", fig.align = "center"}
 knitr::include_graphics("baseball_diamond.png")
 ```
 
 ---
-class: center, middle, inverse
+## Sabermetrics
 
-### Coined by Bill James in 1980, sabermetrics is
+Coined by Bill James in 1980, sabermetrics is
 
-### “the search for objective knowledge about baseball.”
+> “the search for objective knowledge about baseball.”
 
 ---
 ## History of Sabermetrics

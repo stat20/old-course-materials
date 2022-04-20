@@ -19,9 +19,9 @@
  *
  * ------------------------------------------------------- */
 @import url(https://fonts.googleapis.com/css?family=Commissioner&display=swap);
-@import url(https://fonts.googleapis.com/css?family=Bitter:300&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Cabin:600,600i&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Fira+Mono&display=swap);
-
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC:Bold,700&display=swap);
 
 :root {
   /* Fonts */
@@ -29,7 +29,7 @@
   --text-font-is-google: 1;
   --text-font-family-fallback: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
   --text-font-base: sans-serif;
-  --header-font-family: Bitter;
+  --header-font-family: Cabin;
   --header-font-is-google: 1;
   --header-font-family-fallback: Georgia, serif;
   --code-font-family: 'Fira Mono';
@@ -43,23 +43,33 @@
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #272822;
-  --header-color: #2F4C3E;
-  --background-color: #F3F3EE;
-  --link-color: #2F4C3E;
-  --text-bold-color: #4A7862;
+  --text-color: #5c5859;
+  --header-color: #4466B0;
+  --background-color: #FFFFFF;
+  --link-color: #4466B0;
+  --text-bold-color: #4466B0;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #FFFFFF;
-  --inverse-background-color: #2F4C3E;
-  --inverse-header-color: #FFFFFF;
-  --inverse-link-color: #2F4C3E;
-  --title-slide-background-color: #2F4C3E;
+  --inverse-background-color: #EFBE43;
+  --inverse-header-color: #5c5859;
+  --inverse-link-color: #4466B0;
+  --title-slide-background-color: #4466B0;
   --title-slide-text-color: #FFFFFF;
-  --header-background-color: #2F4C3E;
-  --header-background-text-color: #F3F3EE;
-  --base: #2F4C3E;
+  --header-background-color: #4466B0;
+  --header-background-text-color: #FFFFFF;
+  --primary: #4466B0;
+  --secondary: #EFBE43;
   --white: #FFFFFF;
-  --black: #272822;
+  --black: #5c5859;
+  --: #FFFFFF;
+  --: #4466B0;
+  --: #EFBE43;
+  --: #5c5859;
+  --: #1696d2;
+  --: #d2d2d2;
+  --: #fdbf11;
+  --: #ec008b;
+  --: #55b748;
 }
 
 html {
@@ -100,10 +110,10 @@ h1, h2, h3 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #2F4C3E;
+  color: #4466B0;
 }
 .remark-slide-number {
-  color: #2F4C3E;
+  color: #4466B0;
   opacity: 1;
   font-size: 0.9rem;
 }
@@ -151,10 +161,10 @@ a, a > code {
   float: left;
 }
 .left-column h2, .left-column h3 {
-  color: #2F4C3E99;
+  color: #4466B099;
 }
 .left-column h2:last-of-type, .left-column h3:last-child {
-  color: #2F4C3E;
+  color: #4466B0;
 }
 .right-column {
   width: 75%;
@@ -176,7 +186,7 @@ img, video, iframe {
   max-width: 100%;
 }
 blockquote {
-  border-left: solid 5px #2F4C3E80;
+  border-left: solid 5px #EFBE4380;
   padding-left: 1em;
 }
 .remark-slide table {
@@ -191,7 +201,7 @@ th, td {
   padding: 5px;
 }
 .remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
-  background: #D5DBD8;
+  background: #FBF2D9;
 }
 table.dataTable tbody {
   background-color: var(--background-color);
@@ -201,7 +211,7 @@ table.dataTable.display tbody tr.odd {
   background-color: var(--background-color);
 }
 table.dataTable.display tbody tr.even {
-  background-color: #D5DBD8;
+  background-color: #FBF2D9;
 }
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -241,11 +251,17 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   }
 }
 
-.base {
-  color: var(--base);
+.primary {
+  color: var(--primary);
 }
-.bg-base {
-  background-color: var(--base);
+.bg-primary {
+  background-color: var(--primary);
+}
+.secondary {
+  color: var(--secondary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
 }
 .white {
   color: var(--white);
@@ -259,10 +275,124 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 .bg-black {
   background-color: var(--black);
 }
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
+. {
+  color: var(--);
+}
+.bg- {
+  background-color: var(--);
+}
 
 
 
 /* Extra CSS */
+h1 {
+  margin-block-start: 0.4rem;
+  margin-block-end: 0.4rem;
+}
+h2 {
+  margin-block-start: 0.4rem;
+  margin-block-end: 0.4rem;
+}
+h3 {
+  margin-block-start: 0.4rem;
+  margin-block-end: 0.4rem;
+}
+.tiny {
+  font-size: 70%;
+}
+.small {
+  font-size: 80%;
+}
+.midi {
+  font-size: 90%;
+}
+.tiny .remark-code {
+  font-size: 70%;
+}
+.small .remark-code {
+  font-size: 80%;
+}
+.midi .remark-code {
+  font-size: 90%;
+}
+.large {
+  font-size: 200%;
+}
+.adage {
+  font-size: 250%;
+  font-family: Amatic SC;
+}
+.task {
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-bottom: 6px;
+  margin-top: 6px;
+  border-left: solid 5px #F1DE67;
+  background-color: #F1DE6750;
+}
+.cite {
+  vertical-align: bottom;
+  font-size: 50%;
+  float: left;
+}
+.pull-left {
+  width: 49%;
+  float: left;
+}
+.pull-right {
+  width: 49%;
+  float: right;
+}
 .pull-left-wide {
   width: 70%;
   float: left;
@@ -279,21 +409,19 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   width: 70%;
   float: right;
 }
-.mini {
-  font-size: 65%;
+.pull-left-forty {
+  width: 39%;
+  float: left;
 }
-.cite {
-  vertical-align: bottom;
-  font-size: 50%;
-  text-align: right;
+.pull-left-sixty {
+  width: 59%;
+  float: left;
 }
-.task {
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-bottom: 6px;
-  margin-top: 6px;
-  border-left: solid 5px #F1DE67;
-  background-color: #F1DE6750;
+.pull-right-forty {
+  width: 39%;
+  float: right;
+}
+.pull-left-sixty {
+  width: 59%;
+  float: right;
 }

@@ -21,7 +21,7 @@ data(Batting)
 
 2. How do you think publicly available baseball data is collected? What sources of error could be associated with different collection methods?
 
-There are a number of [publicly available baseball datasets](https://sabr.org/sabermetrics/data). One main source of data that we will be using this week is the Lahman database which contains a number of datasets with different units of observation. Below is the first few rows and some of the columns for two of these datasets: Teams and Batting.
+There are a number of [publicly available baseball datasets](https://sabr.org/sabermetrics/data). One main source of data that we will be using this week is the Lahman database which contains a number of data sets with different units of observation. Below is the first few rows and some of the columns for two of these data sets: Teams and Batting.
 
 ```{r, echo = FALSE}
 knitr::kable(head(Teams %>% 
@@ -34,9 +34,9 @@ knitr::kable(head(Batting %>%
                   ))
 ```
 
-3. What is the unit of observation for the Teams dataset? What about for the Batting dataset?
+3. What is the unit of observation for the Teams data set? What about for the Batting data set?
 
-4. What is a question you could answer using the Teams dataset but not the Batting dataset, and vice versa?
+4. What is a question you could answer using the Teams dataset but not the Batting data set, and vice versa?
 
 5. What is a question that we would need more granular (measured on a finer/more specific part of the game) data than the Teams and Batting dataset provide to answer?
 
@@ -63,12 +63,14 @@ data(Teams)
 
 12. Plot the relationship between runs allowed and wins. Describe the relationship. How does it compare to the relationship between runs and wins?
 
-13. Fit a linear model to predict wins by runs. Write out the equation for the linear model and interpret the slope. What are the $R^2$ and adjusted-$R^2$ values?
+13. Fit a simple linear model to predict wins by runs. Write out the equation for the linear model and interpret the slope. What are the $R^2$ and adjusted-$R^2$ values?
 
 14. What is the average number of season runs and wins? Based on the previous model, how many games would you predict a team that scored the average number of runs would win? What about a team that scored 600 runs? What about 850 runs?
 
-15. Fit a linear model to predict wins by runs and runs allowed. Write out the equation for the linear model and interpret the slopes. What are the $R^2$ and adjusted-$R^2$ values? Compare to the simple linear regression from the previous question.
+15. Fit a simple linear regression model to predict wins by runs and runs allowed. Write out the equation for the linear model and interpret the slopes. What are the $R^2$ and adjusted-$R^2$ values? Compare to the simple linear regression from the previous question.
 
-16. Try fitting another linear model to predict wins using other variables in this dataset. How does the $R^2$ and adjusted-$R^2$ values change? Do you think the new model you created predicts wins better?
+16. Fit a multiple regression model to predict wins using at least two other variables in this data set. How does the $R^2$ and adjusted-$R^2$ values change? Do you think the new model you created predicts wins better?
 
-17. Does this seem like a reasonable setting to conduct inference? Is there a causal interpretation for any of these models?
+17. Does this seem like a reasonable setting to conduct statistical inference / make generalizations? To which population might a sabermetrician wish to generalize?
+
+18. Is it reasonable to draw a causal conclusion from these models? Why or why not or under which circumstances?
