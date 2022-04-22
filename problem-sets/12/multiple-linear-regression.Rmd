@@ -17,7 +17,7 @@ knitr::opts_chunk$set(message = FALSE,
 1. **Baby's weight and father's age, randomization test.**
 US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country.
 The data used here are a random sample of 1000 births from 2014.
-Here, we study the relationship between the father's age and the weight of the baby. [@data:births14]
+Here, we study the relationship between the father's age and the weight of the baby.
 
     Below are two items.
     The first is the standard linear model output for predicting baby's weight (in pounds) from father's age (in years).
@@ -69,7 +69,7 @@ Here, we study the relationship between the father's age and the weight of the b
 
 1. **Baby's weight and father's age, mathematical test.**
 Is the father's age useful in predicting the baby's weight?
-The scatterplot and least squares summary below show the relationship between baby's weight (measured in pounds) and father's age for a random sample of babies. [@data:births14]
+The scatterplot and least squares summary below show the relationship between baby's weight (measured in pounds) and father's age for a random sample of babies.
 
     \vspace{-2mm}
 
@@ -107,7 +107,7 @@ The scatterplot and least squares summary below show the relationship between ba
 US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country.
 The data used here are a random sample of 1000 births from 2014.
 Here, we study the relationship between the father's age and the weight of the baby.
-Below is the bootstrap distribution of the slope statistic from 1,000 different bootstrap samples of the data. [@data:births14]
+Below is the bootstrap distribution of the slope statistic from 1,000 different bootstrap samples of the data.
 
     ```{r}
     library(tidyverse)
@@ -136,7 +136,7 @@ Below is the bootstrap distribution of the slope statistic from 1,000 different 
     \clearpage
     
 1. **Urban homeowners, conditions.**
-The scatterplot below shows the percent of families who own their home vs. the percent of the population living in urban areas. [@data:urbanOwner] There are 52 observations, each corresponding to a state in the US. Puerto Rico and District of Columbia are also included.
+The scatterplot below shows the percent of families who own their home vs. the percent of the population living in urban areas. There are 52 observations, each corresponding to a state in the US. Puerto Rico and District of Columbia are also included.
 
     ````{r out.width = "50%", fig.asp = 1}
     library(openintro)
@@ -227,7 +227,7 @@ A model was fit to predict return-on-investment (ROI) on movies based on release
     c. The adjusted $R^2$ of this model is `r m_movie_small_adj_rsq`%. Adding the production budget of the movie to the model increases the adjusted $R^2$ to `r m_movie_large_adj_rsq`%. Should production budget be added to the model?
     
 1. **Palmer penguins, predicting body mass.**
-Researchers studying a community of Antarctic penguins collected body measurement (bill length, bill depth, and flipper length measured in millimeters and body mass, measured in grams), species (Adelie, Chinstrap, or Gentoo), and sex (female or male) data on 344 penguins living on three islands (Torgersen, Biscoe, and Dream) in the Palmer Archipelago, Antarctica. The summary table below shows the results of a linear regression model for predicting body mass (which is more difficult to measure) from the other variables in the dataset. [@palmerpenguins] 
+Researchers studying a community of Antarctic penguins collected body measurement (bill length, bill depth, and flipper length measured in millimeters and body mass, measured in grams), species (Adelie, Chinstrap, or Gentoo), and sex (female or male) data on 344 penguins living on three islands (Torgersen, Biscoe, and Dream) in the Palmer Archipelago, Antarctica. The summary table below shows the results of a linear regression model for predicting body mass (which is more difficult to measure) from the other variables in the dataset.
     
     ```{r}
     library(palmerpenguins)
