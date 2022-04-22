@@ -1,0 +1,263 @@
+---
+title: 'Problem Set 12'
+subtitle: 'Multiple Linear Regression'
+output:
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      fig.width = 3,
+                      fig.height = 2.5,
+                      fig.align = "center",
+                      echo = FALSE)
+```
+
+1. **Baby's weight and father's age, randomization test.**
+US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country.
+The data used here are a random sample of 1000 births from 2014.
+Here, we study the relationship between the father's age and the weight of the baby. [@data:births14]
+
+    Below are two items.
+    The first is the standard linear model output for predicting baby's weight (in pounds) from father's age (in years).
+    The second is a histogram of slopes from 1000 randomized datasets (1000 times, `weight` was permuted and regressed against `fage`).
+    The red vertical line is drawn at the observed slope value which was produced in the linear model output.
+
+    ```{r}
+    library(tidyverse)
+    library(openintro)
+    library(infer)
+    library(broom)
+    library(kableExtra)
+    
+    births14 %>%
+      drop_na() %>%
+      lm(weight ~ fage, data = .) %>%
+      tidy() %>%
+      mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 3) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE) %>%
+      column_spec(1, width = "10em", monospace = TRUE) %>%
+      column_spec(2:5, width = "5em")
+    set.seed(47)
+    births14 %>%
+      drop_na() %>%
+      specify(weight ~ fage) %>%
+      hypothesize(null = "independence") %>%
+      generate(reps = 1000, type = "permute") %>%
+      calculate(stat = "slope") %>%
+      ggplot(aes(x = stat)) +
+      geom_histogram(binwidth = 0.0025, fill = IMSCOL["green", "full"]) +
+      labs(
+        title = "1,000 randomized slopes",
+        x = "Slope from randomly permuted data", 
+        y = "Count"
+        ) +
+      geom_vline(xintercept = 0.005, color = IMSCOL["red", "full"], size = 1)
+    ```
+
+    a. What are the null and alternative hypotheses for evaluating whether the slope of the model for predicting baby's weight from father's age is different than 0?
+
+    b. Using the histogram which describes the distribution of slopes when the null hypothesis is true, find the p-value and conclude the hypothesis test in the context of the problem (use words like father's age and weight of baby). What does the conclusion of your test say about whether the father's age is a useful predictor of baby's weight?
+
+    c. Is the conclusion based on the histogram of randomized slopes consistent with the conclusion which would have been obtained using the mathematical model? Explain.
+    
+    \clearpage
+
+1. **Baby's weight and father's age, mathematical test.**
+Is the father's age useful in predicting the baby's weight?
+The scatterplot and least squares summary below show the relationship between baby's weight (measured in pounds) and father's age for a random sample of babies. [@data:births14]
+
+    \vspace{-2mm}
+
+    ```{r out.width = "70%"}
+    library(openintro)
+    library(tidyverse)
+    library(kableExtra)
+    library(broom)
+    
+    ggplot(births14, aes(x = fage, y = weight)) +
+      geom_point(alpha = .2) +
+      labs(
+        x = "Father's age",
+        y = "Weight (lbs)"
+      )
+    
+    m_weight_fage <- lm(weight ~ fage, data = births14)
+    tidy(m_weight_fage) %>%
+      mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 4) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE) %>%
+      column_spec(1, width = "10em", monospace = TRUE) %>%
+      column_spec(2:5, width = "5em")
+    ```
+    
+    a. What is the predicted weight of a baby whose father is 30 years old.
+    
+    b. Do the data provide convincing evidence that the model for predicting baby weights from father's age has a slope different than 0? State the null and alternative hypotheses, report the p-value (using a mathematical model), and state your conclusion.
+    
+    c. Based on your conclusion, is father's age a useful predictor of baby's weight?
+
+1.  **Baby's weight and father's age, bootstrap percentile interval.**
+US Department of Health and Human Services, Centers for Disease Control and Prevention collect information on births recorded in the country.
+The data used here are a random sample of 1000 births from 2014.
+Here, we study the relationship between the father's age and the weight of the baby.
+Below is the bootstrap distribution of the slope statistic from 1,000 different bootstrap samples of the data. [@data:births14]
+
+    ```{r}
+    library(tidyverse)
+    library(openintro)
+    library(infer)
+    
+    set.seed(47)
+    births14 %>%
+      drop_na() %>%
+      specify(weight ~ fage) %>%
+      generate(reps = 1000, type = "bootstrap") %>%
+      calculate(stat = "slope") %>%
+      ggplot(aes(x = stat)) +
+      geom_histogram(binwidth = 0.005, fill = IMSCOL["green", "full"]) +
+      labs(
+        title = "1,000 bootstrapped slopes",
+        x = "Slope from bootstrapped data", 
+        y = "Count"
+        )
+    ```
+
+    a. Using the bootstrap percentile method and the histogram above, find a 95% confidence interval for the slope parameter.
+    
+    b. Interpret the confidence interval in the context of the problem.
+    
+    \clearpage
+    
+1. **Urban homeowners, conditions.**
+The scatterplot below shows the percent of families who own their home vs. the percent of the population living in urban areas. [@data:urbanOwner] There are 52 observations, each corresponding to a state in the US. Puerto Rico and District of Columbia are also included.
+
+    ````{r out.width = "50%", fig.asp = 1}
+    library(openintro)
+    
+    lmPlot(urban_owner$poppct_urban, 
+       urban_owner$pct_owner_occupied, 
+       col = IMSCOL["blue", "full"], 
+       xlab = "% Urban population", ylab = "% Who own home", 
+       lCol = IMSCOL["gray", "full"], lwd = 2, 
+       resSymm = TRUE, 
+       resAxis = 3, xAxis = 5, yAxis = 5, 
+       cex.lab = 1, cex.axis = 1)
+    
+    rsq_uo <- round(cor(urban_owner$poppct_urban,  urban_owner$pct_owner_occupied), 2)^2*100
+    ````
+
+    a. For these data, $R^2$ is `r rsq_uo`%. What is the value of the correlation coefficient? How can you tell if it is positive or negative?
+
+    b. Examine the residual plot. What do you observe? Is a simple least squares fit appropriate for these data?  Which of the LINE conditions are met or not met?
+    
+1. **Training for the 5K.**
+Nico signs up for a 5K (a 5,000 metre running race) 30 days prior to the race. 
+They decide to run a 5K every day to train for it, and each day they record the following information: `days_since_start` (number of days since starting training), `days_till_race` (number of days left until the race), `mood` (poor, good, awesome), `tiredness` (1-not tired to 10-very tired), and `time` (time it takes to run 5K, recorded as mm:ss).
+Top few rows of the data they collect is shown below.
+
+    ```{r}
+    library(tidyverse)
+    tribble(
+      ~days_since_start, ~days_till_race, ~mood, ~tiredness, ~time,
+      "1", "29", "good", "3", "25:45",
+      "2", "28", "poor", "5", "27:13",
+      "3", "27", "awesome", "4", "24:13",
+      "...", "...", "...", "...", "..."
+    ) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "rrlrr") %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position", 
+                    full_width = FALSE)
+    ```
+    
+    Using these data Nico wants to build a model predicting `time` from the other variables. Should they include all variables shown above in their model? Why or why not?
+
+1. **Movie returns, prediction.**
+A model was fit to predict return-on-investment (ROI) on movies based on release year and genre (Adventure, Action, Drama, Horror, and Comedy). The model output is shown below.
+
+    ```{r}
+    library(openintro)
+    library(tidyverse)
+    library(kableExtra)
+    library(lubridate)
+    library(broom)
+    
+    movie_profit <- read_csv("https://raw.githubusercontent.com/OpenIntroStat/ims/main/exercises/data/movie_profit.csv")
+    movie_profit <- movie_profit %>%
+      mutate(
+        release_date = mdy(release_date),
+        release_year = year(release_date),
+        oct_release = ifelse(month(release_date) == 10, "yes", "no"),
+        dom_gross_to_prod = domestic_gross / production_budget,
+        ww_gross_to_prod = worldwide_gross / production_budget
+        )%>%
+      filter(
+        release_year >= 2010,
+        release_year < 2019
+        )
+    
+    m_movie_small <- lm(ww_gross_to_prod ~ release_year + genre, data = movie_profit)
+    m_movie_large <- lm(ww_gross_to_prod ~ release_year + genre + production_budget, data = movie_profit)
+    
+    m_movie_small_adj_rsq <- round(glance(m_movie_small)$adj.r.squared, 4)*100
+    m_movie_large_adj_rsq <- round(glance(m_movie_large)$adj.r.squared, 4)*100
+    
+    m_movie_small %>%
+      tidy() %>%
+      mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 2) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position",
+                    full_width = FALSE) %>%
+      column_spec(1, width = "10em", monospace = TRUE) %>%
+      column_spec(2:5, width = "5em")
+    ```
+    
+    a. For a given release year, which genre of movies are predicted, on average, to have the highest predicted return on investment?
+    
+    b. If you were to plot this model on a single scatterplot of the data, what would the model look like? A single line? A curved line? Multiple lines? Parallel or skewed from one another?
+    
+    c. The adjusted $R^2$ of this model is `r m_movie_small_adj_rsq`%. Adding the production budget of the movie to the model increases the adjusted $R^2$ to `r m_movie_large_adj_rsq`%. Should production budget be added to the model?
+    
+1. **Palmer penguins, predicting body mass.**
+Researchers studying a community of Antarctic penguins collected body measurement (bill length, bill depth, and flipper length measured in millimeters and body mass, measured in grams), species (Adelie, Chinstrap, or Gentoo), and sex (female or male) data on 344 penguins living on three islands (Torgersen, Biscoe, and Dream) in the Palmer Archipelago, Antarctica. The summary table below shows the results of a linear regression model for predicting body mass (which is more difficult to measure) from the other variables in the dataset. [@palmerpenguins] 
+    
+    ```{r}
+    library(palmerpenguins)
+    library(broom)
+    library(kableExtra)
+    library(tidyverse)
+    
+    m_full_penguins <- lm(body_mass_g ~ bill_length_mm + bill_depth_mm + flipper_length_mm + sex + species, data = penguins)
+    
+    m_full_penguins_rsq <- round(glance(m_full_penguins)$r.squared*100, 1)
+    m_full_penguins_tidy <- tidy(m_full_penguins)
+    
+    m_full_penguins_tidy %>%
+      mutate(
+        p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4)),
+        ) %>%
+      kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 1,
+          format.args = list(scientific = FALSE)) %>%
+      kable_styling(bootstrap_options = c("striped", "condensed"), 
+                    latex_options = "HOLD_position", 
+                    full_width = FALSE) %>%
+      column_spec(1, width = "10em", monospace = TRUE) %>%
+      column_spec(2:5, width = "5em")
+    ```
+
+    a.  Write the equation of the regression model.
+
+    a.  Interpret each one of the slopes in this context.
+
+    b.  Calculate the residual for a male Adelie penguin that weighs 3750 grams with the following body measurements: `bill_length_mm` = 39.1, `bill_depth_mm` = 18.7, `flipper_length_mm` = 181. Does the model overpredict or underpredict this penguin's weight?
+    
+    c.  The $R^2$ of this model is `r m_full_penguins_rsq`%. Interpret this value in context of the data and the model.
+    
