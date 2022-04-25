@@ -1,0 +1,555 @@
+---
+title: "Complexity and Overfitting"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+library(infer)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align = "center")
+set.seed(80)
+```
+
+## Announcements
+
+1. Quiz 5 Tuesday 11 am - Wednesday 11 am
+2. Quiz 5 Again Thursday 11 am - Friday 11 am
+3. Stay tuned for Final Information post
+4. Labs next week: final review
+5. Finish up your (optional) Lab 5!
+
+
+# Case Study, cont.
+
+Understanding Restaurant Pricing in NYC
+
+
+## Ex: Restaurants in NYC 
+
+```{r echo = FALSE}
+nyc <- read_csv("images/nyc.csv")
+```
+
+
+## Two models to predict the price of a meal
+
+. . .
+
+[Model 1]{.inversebox}
+
+$$Price \sim Food + Decor$$
+
+```{r}
+m1 <- lm(Price ~ Food + Decor, data = nyc)
+```
+
+. . .
+
+[Model 2]{.inversebox}
+
+$$Price \sim Food + Decor + East$$
+
+```{r}
+m2 <- lm(Price ~ Food + Decor + East, data = nyc)
+```
+
+
+## Model 2
+
+```{r echo = FALSE}
+summary(m2)$coef[,1:2]
+```
+
+::: {.absolute top="-100" left="290" width="800" height="350"}
+```{r fig.align = "center", fig.height = 9, fig.width=9, echo = FALSE}
+library(plotly)
+library(reshape2)
+m1 <- lm(Price ~ Food + Decor, data = nyc)
+grid_points <- 30
+axis_x <- seq(min(nyc$Food), 
+              max(nyc$Food),
+              length.out = grid_points)
+axis_y <- seq(min(nyc$Decor), 
+              max(nyc$Decor),
+              length.out = grid_points)
+nyc_plane <- expand.grid(Food = axis_x, 
+                         Decor = axis_y, 
+                         KEEP.OUT.ATTRS = F)
+nyc_plane$Price <- predict.lm(m1, newdata = nyc_plane)
+z <- acast(nyc_plane, Food ~ Decor, value.var = "Price")
+
+nyc_plane_east <- nyc_plane %>%
+  mutate(East = 1)
+nyc_plane_east$Price <- predict.lm(m2, newdata = nyc_plane_east)
+z_east <- acast(nyc_plane_east, Food ~ Decor, value.var = "Price")
+nyc_plane_west <- nyc_plane %>%
+  mutate(East = 0)
+nyc_plane_west$Price <- predict.lm(m2, newdata = nyc_plane_west)
+z_west <- acast(nyc_plane_west, Food ~ Decor, value.var = "Price")
+
+plot_ly(nyc, x = ~Food, y = ~Decor, z = ~Price) %>%
+  add_markers(marker = list(size = 5,
+                            opacity = .6)) %>%
+  add_surface(x = ~axis_x, 
+              y = ~axis_y, 
+              z = ~z_east,
+              showscale = FALSE) %>%
+  add_surface(x = ~axis_x, 
+              y = ~axis_y, 
+              z = ~z_west,
+              showscale = FALSE)
+```
+:::
+
+<br>
+<br>
+
+::: poll
+Survey
+:::
+
+```{r, echo = FALSE}
+countdown::countdown(5, font_size = "1.5em")
+```
+
+
+## The geometry of regression models 
+
+- When you have two numerical predictors $x_1$, $x_2$, then your mean function is *a plane*.
+- When you have two numerical predictors $x_1$, $x_2$, and a categorical predictor $x_3$, then your mean function represents *parallel planes*.
+- When you add in interaction effects, the planes become *tilted*.
+
+
+## Model 3: Food + Decor + East + Decor:East
+
+. . .
+
+```{r}
+m3 <- lm(Price ~ Food + Decor + East + Decor:East, data = nyc)
+summary(m3)
+```
+
+
+## {}
+
+::: {.absolute top="-100" left="130" width="900" height="400"}
+```{r fig.align = "center", fig.height = 9, fig.width=9, echo = FALSE}
+nyc_plane_east <- nyc_plane %>%
+  mutate(East = 1)
+nyc_plane_east$Price <- predict.lm(m3, newdata = nyc_plane_east)
+z_east <- acast(nyc_plane_east, Food ~ Decor, value.var = "Price")
+nyc_plane_west <- nyc_plane %>%
+  mutate(East = 0)
+nyc_plane_west$Price <- predict.lm(m3, newdata = nyc_plane_west)
+z_west <- acast(nyc_plane_west, Food ~ Decor, value.var = "Price")
+
+plot_ly(nyc, x = ~Food, y = ~Decor, z = ~Price) %>%
+  add_markers(marker = list(size = 5,
+                            opacity = .6)) %>%
+  add_surface(x = ~axis_x, 
+              y = ~axis_y, 
+              z = ~z_east,
+              showscale = FALSE) %>%
+  add_surface(x = ~axis_x, 
+              y = ~axis_y, 
+              z = ~z_west,
+              showscale = FALSE)
+```
+:::
+
+
+## Comparing Models
+
+- The `East` term was significant in model 2, suggesting that there is a significant relationship between location and price.
+
+. . .
+
+```{r echo = FALSE}
+summary(m2)$coef
+```
+
+
+## Comparing Models
+
+::: nonincremental
+- The `East` term was significant in model 2, suggesting that there is a significant relationship between location and price.
+- That term became non-significant in model 3 when we allowed the slope of `Decor` to vary with location, and that difference in slopes was also non-significant.
+:::
+
+. . .
+
+```{r echo = FALSE}
+summary(m3)$coef
+```
+
+
+## Comparing Models
+
+::: nonincremental
+- The `East` term was significant in model 2, suggesting that there is a significant relationship between location and price.
+- That term became non-significant in model 3 when we allowed the slope of `Decor` to vary with location, and that difference in slopes was also non-significant.
+- Notice that slope estimate for a given variable will almost *always* change depending on the other variables that are in the model.
+:::
+
+
+## Taking the big picture
+
+. . .
+
+Are we using the model to . . .
+
+- **describe** the data at hand,
+- **predict** the $y$ for new data,
+- to make **inferences** on population parameters, or to
+- draw **causal conclusions**?
+
+
+# What is a *model*?
+
+. . .
+
+[A useful simplification of reality.]{.bigadage}
+
+. . .
+
+[A specific answer to a specific question.]{.bigadage}
+
+
+## {}
+
+[Question 1]{.inversebox}
+
+What is the relationship between the quality of the food and the price at Italian restaurants in Manhattan?
+
+. . .
+
+$$\widehat{\textrm{price}} = -17.8 + 2.9 \textrm{food}$$
+
+. . .
+
+[Question 2]{.inversebox}
+
+After controlling for the decor, what is the relationship between the quality of the food and the price at Italian restaurants in Manhattan?
+
+. . .
+
+$$\widehat{\textrm{price}} = -24.5 + 1.6 \textrm{food} + 1.8 \textrm{decor}$$
+
+
+# What is a *model*?
+
+. . .
+
+[A useful simplification of reality.]{.bigadage}
+
+. . .
+
+[A specific answer to a specific question.]{.bigadage}
+
+. . .
+
+[A prediction machine.]{.bigadage}
+
+
+## Adding complexity {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+[Model 1]{.inversebox}
+
+```{r}
+m1 <- lm(Price ~ Food + Decor, 
+         data = nyc)
+```
+:::
+
+::: {.column width="50%"}
+[Model 2]{.inversebox}
+
+```{r}
+m2 <- lm(Price ~ Food + Decor + East, 
+         data = nyc)
+```
+:::
+::::
+
+<br>
+<br>
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+[Model 3]{.inversebox}
+
+```{r}
+m3 <- lm(Price ~ Food + Decor + East +
+           East:Decor, 
+         data = nyc)
+```
+:::
+
+::: {.column width="50%"}
+[Model 4]{.inversebox}
+
+```{r}
+m4 <- lm(Price ~ Food + Decor + East + 
+           East:Decor + East:Food, 
+         data = nyc)
+```
+:::
+::::
+
+
+## Adding complexity {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+[Model 1]{.inversebox}
+
+```{r}
+m1 <- lm(Price ~ Food + Decor, 
+         data = nyc)
+summary(m1)$r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 2]{.inversebox}
+
+```{r}
+m2 <- lm(Price ~ Food + Decor + East, 
+         data = nyc)
+summary(m2)$r.squared
+```
+:::
+::::
+
+<br>
+<br>
+
+:::: columns
+::: {.column width="50%"}
+[Model 3]{.inversebox}
+
+```{r}
+m3 <- lm(Price ~ Food + Decor + East +
+           East:Decor, 
+         data = nyc)
+summary(m3)$r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 4]{.inversebox}
+
+```{r}
+m4 <- lm(Price ~ Food + Decor + East + 
+           East:Decor + East:Food, 
+         data = nyc)
+summary(m4)$r.squared
+```
+:::
+::::
+
+. . .
+
+> More variables, higher r-squared . . .
+
+
+## Assessing model fit
+
+Our existing statistic to measure how well the model captures the variability in the data is $R^2$.
+
+$$R^2 = \frac{SSR}{TSS}$$
+
+> **Note**: $R^2$ can *never* decrease when additional variables are added to the model.
+
+
+## {}
+
+boardwork
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/oBKm2c0BXrjBpkbnLOiSw?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Assessing model fit, cont.
+
+Our existing statistic to measure how well the model captures the variability in the data is $R^2$.
+
+$$R^2 = \frac{SSR}{TSS}$$
+
+. . .
+
+A more useful statistic when comparing MLR models of different complexities is adjusted $R^2$, which balances the ability of the model to explain the data with its simplicity.
+
+$$R^2_{adj} = 1 - \frac{SSE}{TSS} \cdot \frac{n - 1}{n - p - 1} $$
+
+
+## Adding complexity {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+[Model 1]{.inversebox}
+
+```{r}
+m1 <- lm(Price ~ Food + Decor, 
+         data = nyc)
+summary(m1)$r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 2]{.inversebox}
+
+```{r}
+m2 <- lm(Price ~ Food + Decor + East, 
+         data = nyc)
+summary(m2)$r.squared
+```
+:::
+::::
+
+<br>
+<br>
+
+:::: columns
+::: {.column width="50%"}
+[Model 3]{.inversebox}
+
+```{r}
+m3 <- lm(Price ~ Food + Decor + East +
+           East:Decor, 
+         data = nyc)
+summary(m3)$r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 4]{.inversebox}
+
+```{r}
+m4 <- lm(Price ~ Food + Decor + East + 
+           East:Decor + East:Food, 
+         data = nyc)
+summary(m4)$r.squared
+```
+:::
+::::
+
+
+## Adding complexity {auto-animate=true}
+
+:::: columns
+::: {.column width="50%"}
+[Model 1]{.inversebox}
+
+```{r}
+m1 <- lm(Price ~ Food + Decor, 
+         data = nyc)
+summary(m1)$r.squared
+summary(m1)$adj.r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 2]{.inversebox}
+
+```{r}
+m2 <- lm(Price ~ Food + Decor + East, 
+         data = nyc)
+summary(m2)$r.squared
+summary(m2)$adj.r.squared
+```
+:::
+::::
+
+<br>
+<br>
+
+:::: columns
+::: {.column width="50%"}
+[Model 3]{.inversebox}
+
+```{r}
+m3 <- lm(Price ~ Food + Decor + East +
+           East:Decor, 
+         data = nyc)
+summary(m3)$r.squared
+summary(m3)$adj.r.squared
+```
+:::
+
+::: {.column width="50%"}
+[Model 4]{.inversebox}
+
+```{r}
+m4 <- lm(Price ~ Food + Decor + East + 
+           East:Decor + East:Food, 
+         data = nyc)
+summary(m4)$r.squared
+summary(m4)$adj.r.squared
+```
+:::
+::::
+
+## 
+
+<br>
+<br>
+<br>
+
+<center>
+[Plurality must never be posited without necessity.]{.bigadage} 
+- William of Ockham c. 1300
+</center>
+
+
+## The Signal and the Noise
+
+Data is a combination of **signal** and **noise**.
+
+A good predictive model will capture only the **signal**.
+
+. . .
+
+Approaches:
+
+:::: columns
+::: {.column width="50%"}
+[Information Criteria]{.inversebox}
+
+- Adjusted $R^2$
+- Mallow's $C_p$
+- AIC
+- BIC
+:::
+
+::: {.column width="50%"}
+[Test / Train]{.inversebox}
+
+- Validation Set
+- Cross-validation
+:::
+:::
