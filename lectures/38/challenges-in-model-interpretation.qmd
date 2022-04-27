@@ -1,0 +1,436 @@
+---
+title: "Challenges in Model Interpretation"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+library(infer)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align = "center")
+set.seed(80)
+```
+
+## Announcements
+
+1. Quiz 5 Again Thurs 11 am - Fri 11 am
+2. Lab tomorrow: more practice
+
+
+## Agenda
+
+1. Simpson's Paradox
+2. Ecological Fallacy
+
+
+# Simpson's Paradox
+
+## Ex: LA Homes
+
+:::: columns
+::: {.column width="47%"}
+```{r echo = FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/david-mansion-LA.jpg")
+```
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="47%"}
+Steps in model building:
+
+::: nonincremental
+1. Statistical question
+2. Data wrangling
+3. Exploratory data analysis (EDA)
+4. **Modeling**
+5. **Interpretation**
+:::
+:::
+::::
+
+
+## Modeling: a simple model for price  
+
+$$ \widehat{log(price)} \sim bed $$
+
+```{r}
+LA <- read.csv("images/LA.csv") %>%
+  mutate(logprice = log(price),
+         logsqft = log(sqft))
+```
+
+
+```{r}
+m4 <- lm(logprice ~ bed, data = LA)
+```
+
+. . .
+
+<br>
+
+::: poll
+What do you expect the *sign* of the slope for `bed` to be?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/Sz0t3wSunsV8MD0pZU6nd?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## Modeling: a simple model for price  
+
+$$ \widehat{log(price)} \sim bed $$
+
+```{r}
+m4 <- lm(logprice ~ bed, data = LA)
+```
+
+
+<br>
+
+::: poll
+What do you expect the *sign* of the slope for `bed` to be?
+:::
+
+```{r}
+summary(m4)$coef
+```
+
+
+## A less simple model for price  
+
+. . .
+
+$$ \widehat{log(price)} \sim bed + log(sqft) $$
+
+```{r}
+m5 <- lm(log(price) ~ bed + logsqft, data = LA)
+```
+
+. . .
+
+<br>
+
+::: poll
+What do you expect the *sign* of the slope for `bed` and `logsqft` to be?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/UmNKTdk2ZFlqRflo6r8ck?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## A less simple model for price  
+
+$$ \widehat{log(price)} \sim bed + log(sqft) $$
+
+```{r}
+m5 <- lm(log(price) ~ bed + logsqft, data = LA)
+```
+
+<br>
+
+::: poll
+What do you expect the *sign* of the slope for `bed` and `logsqft` to be?
+:::
+
+```{r}
+summary(m5)$coef
+```
+
+
+## {}
+What is the relationship between `bed` and `logprice`?
+
+. . .
+
+```{r echo = FALSE, fig.width=10, fig.height=7}
+LA %>%
+  filter(bed > 0, bed < 7) %>%
+  ggplot(aes(x = bed, y = logprice)) +
+  geom_jitter(alpha = .5) +
+  theme_bw(base_size = 18)
+```
+
+
+## {}
+
+What is the relationship between `logsqft` and `logprice`?
+
+. . .
+
+```{r echo = FALSE, fig.width=10, fig.height=7}
+LA %>%
+  filter(bed > 0, bed < 7) %>%
+  ggplot(aes(x = logsqft, y = logprice)) +
+  geom_point(alpha = .5) +
+  theme_bw(base_size = 18)
+```
+
+
+## {}
+
+What is the relationship between `logsqft` and `logprice`, controlling for `bed`?
+
+. . .
+
+```{r echo = FALSE, fig.width=10, fig.height=6}
+LA %>%
+  filter(bed < 7, bed > 0) %>%
+  ggplot(aes(x = logsqft, y = logprice)) +
+  geom_point(alpha = .3) +
+  facet_wrap(vars(bed)) +
+  theme_bw(base_size = 18)
+```
+
+
+## {}
+
+What is the relationship between `bed` and `logprice`, controlling for `logsqft`?
+
+. . .
+
+```{r echo = FALSE, fig.width=10, fig.height=6}
+LA %>%
+  filter(bed < 7, bed > 0) %>%
+  mutate(logsqft_cat = cut(logsqft, breaks = 6)) %>%
+  ggplot(aes(x = bed, y = logprice)) +
+  geom_jitter(alpha = .3) +
+  facet_wrap(vars(logsqft_cat)) +
+  theme_bw(base_size = 18)
+```
+
+
+## Simpson's Paradox
+
+Simpson's paradox, which also goes by several other names, is a phenomenon in probability and statistics in which a trend appears in several groups of data but disappears or reverses when the groups are combined.
+
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/simpsons.png")
+```
+
+[Source: Wikipedia]{.footer}
+
+
+# What is a *model*?
+
+. . .
+
+[A useful simplification of reality.]{.bigadage}
+
+[A specific answer to a specific question.]{.bigadage}
+
+[A prediction machine.]{.bigadage}
+
+
+## Model Interpretation
+
+**Question 1**
+What is the relationship between the number of bedrooms in a house and its price?
+
+. . .
+
+$$ \widehat{\textrm{log(price)}} = 11.8 + .53 \textrm{bed}$$
+
+. . .
+
+**Question 2**
+After controlling for the size of a house, what is the relationship between the number of bedrooms in a house and its price?
+
+$$ \widehat{\textrm{log(price)}} = 11.8 + -0.12 \textrm{bed} + 1.66 \textrm{log(sqft)}$$
+
+
+# Example 2
+
+Exercise, Age, and Cholesterol
+
+
+# Example 3
+
+UC Berkeley Gender Bias in Admissions
+
+
+## UC Berkeley Admissions (1973)
+
+Admission rate to the graduate school was 44% for men and 35% for women.
+
+. . .
+
+```{r fig.align='center', echo = FALSE, out.height="400", out.width="750"}
+knitr::include_graphics("images/ucb-1.png")
+```
+
+
+## UC Berkeley Admissions (1973)
+
+Admission rate to the graduate school was 44% for men and 35% for women.
+
+```{r fig.align='center', echo = FALSE, out.height="400", out.width="750"}
+knitr::include_graphics("images/ucb-2.png")
+```
+
+
+## UC Berkeley Admissions (1973)
+
+Admission rate to the graduate school was 44% for men and 35% for women.
+
+```{r fig.align='center', echo = FALSE, out.height="400", out.width="750"}
+knitr::include_graphics("images/ucb-3.png")
+```
+
+
+# Ecological Fallacy
+
+## Immigration and Illiteracy
+
+<br>
+<br>
+
+[How does the literacy rate compare between native-born and foreign born US residents in 1930?]{.smalladage}
+
+. . .
+
+<br>
+
+> **Robinson's data**: percent foreign born and percent illiterate in each of the 9 geographic divisions of the US.
+
+
+## Immigration and Illiteracy
+
+```{r echo = FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/eco-robinson.png")
+```
+
+. . .
+
+> Suggests foreign-born people tend to be more literate (cor = -0.51).
+
+[Source: Robinson, 1950]{.footnote}
+
+
+## Immigration and Illiteracy
+
+Let's look instead at *individual-level* data.
+
+. . .
+
+```{r echo = FALSE, fig.height = 5, fig.width = 8}
+birthplace <- rep(c("foreign", "native"), each = 100)
+literate <- as.factor(c(rep(c("yes", "no"), c(90, 10)), rep(c("yes", "no"), c(96, 4))))
+literate <-  factor(literate, levels(literate)[c(2,1)])
+df <- data.frame(birthplace, literate)
+ggplot(df, aes(x = birthplace, fill = literate)) +
+  geom_bar(position = "fill")
+```
+
+
+## What's going on?
+
+:::: columns
+::: {.column width="50%"}
+```{r echo = FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("images/eco-robinson.png")
+```
+:::
+::: {.column width="50%"}
+
+- **Unit of observation**: region (New England, Mountain, Pacific, etc.)
+
+<br>
+
+- **Explanation**: regions with many foreign-born have highly literate natives.
+:::
+::::
+
+
+## Ecological Fallacy
+
+The false assumption that relationships that exist at an **aggregated level** (e.g. between states, counties, nations) also hold at the **individual level**.
+
+```{r echo = FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics("images/simpsons.gif")
+```
+
+[Source: Wikipedia]{.footer}
+
+
+<!-- --- -->
+<!-- ## Immigration and Income {.flexbox .vcenter .build} -->
+
+<!-- Freedman (1999) -->
+
+<!-- ```{r echo = FALSE, out.width="50%", fig.align='center'} -->
+<!-- knitr::include_graphics("images/eco-freedman.png") -->
+<!-- ``` -->
+
+<!-- **Suggests that foreign-born populations tend to have higher incomes (corr = 0.52).** -->
+
+
+<!-- --- -->
+<!-- ## Immigration and Income -->
+
+<!-- ```{r echo = FALSE, fig.height = 3.5, fig.width = 5} -->
+<!-- birthplace <- rep(c("foreign", "native"), each = 100) -->
+<!-- highincome <- as.factor(c(rep(c("yes", "no"), c(28, 72)), rep(c("yes", "no"), c(35, 65)))) -->
+<!-- highincome <-  factor(highincome, levels(highincome)[c(2,1)]) -->
+<!-- df <- data.frame(birthplace, highincome) -->
+<!-- ggplot(df, aes(x = birthplace, fill = highincome)) + -->
+<!--   geom_bar(position = "fill") -->
+<!-- ``` -->
+
+<!-- - correlation = -0.05 -->
+
+<!-- --- -->
+<!-- ## What's going on? -->
+
+<!-- ```{r echo = FALSE, out.width="50%", fig.align='center'} -->
+<!-- knitr::include_graphics("images/eco-freedman.png") -->
+<!-- ``` -->
+
+<!-- - **Unit of observation**: state -->
+<!-- - **Explanation**: states with many foreign-born people have natives with -->
+<!-- higher incomes. -->
+
+
+<!-- --- -->
+<!-- ## Ecological Fallacy -->
+
+<!-- The false assumption that relationships that exist at an **aggregated level** (e.g. -->
+<!-- between states, counties, nations) also hold at the **individual level**. -->
+
+<!-- Interpretations can invert due to: -->
+
+<!-- - confounding / omitted variable (Model 1) -->
+<!-- - aggregation (Model 2) -->
+
+
+---
+## Strategies
+
+1. When dealing with an ecological study, restrict model interpretations to the 
+same observational level on which the data was collected.
+2. If you want to make individual-level inferences, be sure your data is collected on that same level. Aggregate-level effects can be introduced via a multi-level model (take more stats!)
+
+
