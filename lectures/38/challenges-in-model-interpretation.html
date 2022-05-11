@@ -438,7 +438,7 @@
 <section id="modeling-a-simple-model-for-price" class="slide level2">
 <h2>Modeling: a simple model for price</h2>
 <p><span class="math display">\[ \widehat{log(price)} \sim bed \]</span></p>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-code_line_numbers="2">
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>LA <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"images/LA.csv"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="fu">mutate</span>(<span class="at">logprice =</span> <span class="fu">log</span>(price),</span>
 <span id="cb1-3"><a href="#cb1-3"></a>         <span class="at">logsqft =</span> <span class="fu">log</span>(sqft))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -451,9 +451,12 @@
 <div class="poll">
 <p>What do you expect the <em>sign</em> of the slope for <code>bed</code> to be?</p>
 </div>
+
 </div>
-</section>
-<section id="section" class="slide level2">
+<aside><div>
+<p>hi there</p>
+</div></aside></section>
+<section id="pollquestion1" class="slide level2">
 <h2></h2>
 <center>
 <iframe src="https://embed.polleverywhere.com/multiple_choice_polls/Sz0t3wSunsV8MD0pZU6nd?controls=none&amp;short_poll=true" width="800px" height="600px">
@@ -462,6 +465,7 @@
 </section>
 <section id="modeling-a-simple-model-for-price-1" class="slide level2">
 <h2>Modeling: a simple model for price</h2>
+<p><a href="#/pollquestion1">link to previous slide</a></p>
 <p><span class="math display">\[ \widehat{log(price)} \sim bed \]</span></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r cell-code number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logprice <span class="sc">~</span> bed, <span class="at">data =</span> LA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -494,7 +498,7 @@ bed          0.5317318 0.01423942  37.34223 9.771372e-220</code></pre>
 </div>
 </div>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section" class="slide level2">
 <h2></h2>
 <center>
 <iframe src="https://embed.polleverywhere.com/multiple_choice_polls/UmNKTdk2ZFlqRflo6r8ck?controls=none&amp;short_poll=true" width="800px" height="600px">
@@ -521,7 +525,7 @@ logsqft      1.6562996 0.03461792 47.845152 2.595985e-310</code></pre>
 </div>
 </div>
 </section>
-<section id="section-2" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 <p>What is the relationship between <code>bed</code> and <code>logprice</code>?</p>
 <div class="fragment">
@@ -536,7 +540,7 @@ logsqft      1.6562996 0.03461792 47.845152 2.595985e-310</code></pre>
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2">
+<section id="section-2" class="slide level2">
 <h2></h2>
 <p>What is the relationship between <code>logsqft</code> and <code>logprice</code>?</p>
 <div class="fragment">
@@ -551,7 +555,7 @@ logsqft      1.6562996 0.03461792 47.845152 2.595985e-310</code></pre>
 </div>
 </div>
 </section>
-<section id="section-4" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <p>What is the relationship between <code>logsqft</code> and <code>logprice</code>, controlling for <code>bed</code>?</p>
 <div class="fragment">
@@ -566,7 +570,7 @@ logsqft      1.6562996 0.03461792 47.845152 2.595985e-310</code></pre>
 </div>
 </div>
 </section>
-<section id="section-5" class="slide level2">
+<section id="section-4" class="slide level2">
 <h2></h2>
 <p>What is the relationship between <code>bed</code> and <code>logprice</code>, controlling for <code>logsqft</code>?</p>
 <div class="fragment">

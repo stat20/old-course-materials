@@ -1,7 +1,7 @@
 ---
 title: "Lecture 38: Challenges in Model Interpretation"
 summary: "Simpson's Paradox and Ecological Fallacy."
-subtitle: "Simpson's Paradox and Ecological Fallacyn"
+subtitle: "Simpson's Paradox and Ecological Fallacy"
 layout: single
 publishdate: "2022-04-27" # when the page will be renderable
 date: "2022-04-27"        # when the lecture was given

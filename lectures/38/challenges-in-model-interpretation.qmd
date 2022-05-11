@@ -68,7 +68,7 @@ Steps in model building:
 
 $$ \widehat{log(price)} \sim bed $$
 
-```{r}
+```{r code_line_numbers="2"}
 LA <- read.csv("images/LA.csv") %>%
   mutate(logprice = log(price),
          logsqft = log(sqft))
@@ -85,6 +85,10 @@ m4 <- lm(logprice ~ bed, data = LA)
 
 ::: poll
 What do you expect the *sign* of the slope for `bed` to be?
+:::
+
+::: notes
+hi there
 :::
 
 
