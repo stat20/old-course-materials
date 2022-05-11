@@ -1,0 +1,402 @@
+---
+title: "Data and Science"
+institute: "STAT 20 UC Berkeley"
+logo: "images/stat20-hex.png"
+format: 
+  revealjs:
+    theme: "../../assets/stat20.scss"
+    highlight-style: breezedark
+    slide-number: true
+    incremental: true
+    menu: false
+    title-slide-attributes:
+      data-background-image: "images/hex-background.png"
+      data-background-size: cover  
+    progress: false
+execute:
+  freeze: auto
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(patchwork)
+library(infer)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align = "center")
+set.seed(80)
+```
+
+## Announcements
+
+1. Office hours as scheduled next week
+2. Evening study session poll during RRR week
+3. Survey
+
+
+## {}
+
+> This semester, we experimented with allowing the quizzes to have an optional retake. What is your opinion of this mechanism?
+
+. . .
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/survey-1.png")
+```
+
+
+## {}
+
+> Based on student feedback last semester, we tried a system this semester of only having one lecture recording available at a time, with all recordings being published to prepare for exams. How would you characterize your experience with this system?
+
+. . .
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/survey-2.png")
+```
+
+
+## {}
+
+> Most lab assignments featured an analysis of a real data set. Please tell us your thoughts on each of those labs.
+
+. . .
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/survey-3.png")
+```
+
+
+## {}
+
+> Anything else you'd like to add?
+
+. . .
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/survey-4.png")
+```
+
+
+## Agenda
+
+1. Critiquing and constructing claims with data
+2. Two lessons from epidemiology
+    1. Data: Cancer in the water
+    2. Science: Cholera in the water
+
+# Claims with Data
+
+## {background-image="images/claims.jpg" background-size="contain"}
+
+## Poverty and Education
+
+```{r echo = FALSE}
+poverty <- read_delim("images/poverty.txt")
+library(ggrepel)
+poverty <- poverty %>%
+  mutate(hi_grad = case_when(
+    State %in% c("New Hampshire", "Minnesota") ~ State, 
+    TRUE ~ ""),
+    hi_pov = case_when(
+      State %in% c("New Mexico", "Arkansas", "Mississippi") ~ State,
+      TRUE ~ ""),
+    hi_res = case_when(
+      State %in% c("Montana", "District of Columbia") ~ State,
+      TRUE ~ ""))
+p_all <- poverty %>%
+  ggplot(aes(x = Poverty, 
+             y = Graduates)) +
+  geom_point(size = 3) +
+  geom_text_repel(aes(label = State),
+                  seed = 29) +
+  theme_bw(base_size = 18)
+p_all
+```
+
+. . .
+
+> Description and Causation.
+
+
+## Politics
+
+```{r echo = FALSE}
+library(openintro)
+data(unempl)
+data(house)
+data(president); pres <- president
+year   <- seq(1898, 2010, 4)+1
+n      <- length(year)
+unemp  <- rep(0, n)
+change <- rep(0, n)
+presid <- rep("", n)
+party  <- rep("", n)
+for(i in 1:n){
+	urow <- which(unempl$year == year[i]-1)
+	if(i < n){
+		prow <- which(pres$end > year[i])[1]
+	} else {
+		prow <- which(pres$potus == "Barack Obama")
+	}
+	hrow <- which(house$year_end >= year[i])[1]
+	party[i] <- as.character(pres$party[prow])
+	if(substr(house$p1[hrow],1,5) == substr(party[i],1,5)){
+		oldHouse <- house$np1[hrow] / house$seats[hrow]
+	} else {
+		oldHouse <- house$np2[hrow] / house$seats[hrow]
+	}
+	if(substr(house$p1[hrow+1],1,5) == substr(party[i],1,5)){
+		newHouse <- house$np1[hrow+1] / house$seats[hrow+1]
+	} else {
+		newHouse <- house$np2[hrow+1] / house$seats[hrow+1]
+	}
+	change[i] <- (newHouse - oldHouse)/oldHouse * 100
+	presid[i] <- as.character(pres$potus[prow])
+	unemp[i]  <- unempl$unemp[urow]
+}
+
+ump <- data.frame(year=year, 
+                           potus=presid, 
+                           party=party,
+                           unemp=unemp, 
+                           change=change)
+ump[29, 3] <- "Democratic"
+ump <- ump %>%
+    mutate(party = factor(party, levels = c("Republican", "Democratic"))) %>%
+    tibble()
+p1 <- ump %>%
+    ggplot(aes(x = unemp, y = change, col = party)) +
+    geom_point(size = 3) +
+    theme_bw(base_size = 14) +
+    xlab("Unemployment") +
+    ylab("Percent change of seats in Congress") +
+    scale_color_manual(values = c("red", "blue"))
+p1
+```
+
+. . .
+
+> Generalization and Causation.
+
+## Books
+
+```{r echo = FALSE}
+library(DAAG)
+data(allbacks)
+books <- allbacks[, c(3, 1, 4)] %>%
+  tibble()
+p1 <- ggplot(books, aes(x = volume, y = weight)) +
+  geom_point(size = 3) +
+  theme_bw(base_size = 18)
+p1
+```
+
+. . .
+
+> Prediction.
+
+
+# Two Lessons from Epidemiology
+
+## Getting to a Cause
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/frost.png")
+```
+
+
+# Data: Cancer in the Water
+
+Karanak et al. (1980)
+
+
+## {}
+
+::: poll
+**Question**: Do asbestos fibers in the water cause cancer?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/ze4kOK5fUpN2F0U5rxdzA?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+::: poll
+**Question**: Do asbestos fibers in the water cause cancer?
+:::
+
+. . .
+
+:::: columns
+::: {.column width="57%"}
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/bay-area.png")
+```
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="37%"}
+**Data**
+
+722 census-tracts in the SF Bay Area.
+
+- 1000s of people per tract
+- Many demographic variables available from census
+- Researchers sampled water in each tract and measured asbestos
+:::
+::::
+
+
+## The response variable
+
+The researchers aimed to explain the cancer rate in each census tract.
+
+$$\textrm{Obs}$$
+
+They started with the observed number of cancers in each tract.
+
+## The response variable
+
+The researchers aimed to explain the cancer rate in each census tract.
+
+$$\frac{\textrm{Obs}}{\textrm{Exp}}$$
+
+They started with the observed number of cancers in each tract. Then they calculated how many they would expect in that tract by adjusting the national rate to the age and sex distribution of that tract and took the ratio of these two numbers.
+
+## The response variable
+
+The researchers aimed to explain the cancer rate in each census tract.
+
+$$\log \left( \frac{\textrm{Obs}}{\textrm{Exp}} \right)$$
+
+They started with the observed number of cancers in each tract. Then they calculated how many they would expect in that tract by adjusting the national rate to the age and sex distribution of that tract and took the ratio of these two numbers.  Then they took the natural log transform to account for a right skew.
+
+
+## Building a regression model
+
+boardwork
+
+
+## Building a regression model
+
+\begin{align}
+\widehat{\log \left( \frac{\textrm{Obs}}{\textrm{Exp}} \right)} &\sim b_0 + b_1 asbestos + b_2 income + \\
+ & b_3 education + b_4 married + b_5 asbestos\_worker
+\end{align}
+
+. . .
+
+> $b_1$ is "highly statistically significant" with p < 0.001.
+
+
+## {}
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/dag.png")
+```
+
+- Without random assignment, difficult to address all confounders.
+- Ecological inference is treacherous.
+
+
+# Science: Cholera in the Water
+
+Snow (1855)
+
+
+## {}
+
+::: poll
+**Question** What is the cause of Cholera?
+:::
+
+
+## {}
+
+<center>
+<iframe src="https://embed.polleverywhere.com/multiple_choice_polls/5mbBVAxa3ppsl86U1iulV?controls=none&short_poll=true" width="800px" height="600px"></iframe>
+</center>
+
+
+## {}
+
+::: poll
+**Question** What is the cause of cholera?
+:::
+
+. . .
+
+:::: columns
+::: {.column width="57%"}
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/john-snow.jpeg")
+```
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="37%"}
+**Existing Theory**
+
+Cholera is caused by exposure to bad air (miasma).
+
+> Can we find data that suggests otherwise?
+:::
+::::
+
+
+## I. Shipping Lanes
+
+```{r echo = FALSE}
+knitr::include_graphics("images/port.jpeg")
+```
+
+
+
+## II. The Broad Street Pump
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/broad-st-pump.jpeg")
+```
+
+
+## III. Water Company Data
+
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("images/snows-table.png")
+```
+
+In 1853, the Lambeth company moved their intake pipe farther upstream in the Thames.
+
+## Lessons from John Snow
+
+<br>
+<br>
+
+<center>
+[Scientific theory and reasoning is the skeleton; data is the flesh.]{.smalladage}
+</center>
+
+. . .
+
+<br>
+
+<center>
+[Persistence and skepticism are essential.]{.smalladage}
+</center>
+
+## {background-image="images/shoebill-3.png" background-size="cover"}
+
+# The End
+
+<br>
+<br>
+<br>
+
+<center>
+[Thank you.]{.smalladage}
+</center>
