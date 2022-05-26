@@ -12,3 +12,17 @@ links:
   url: https://stat20.org/lectures/24/inference-review.html
 ---
 
+We have spent a lot of time on confidence intervals and hypothesis tests;
+here's a review!
+
+## Key Questions
+
+- What are the roles of the confidence interval and hypothesis test, respectively?
+- What is the difference between the null distribution and the sampling distribution? When are we concerned with each one?
+
+## Terminology and Skills
+
+- confidence interval
+- hypothesis test
+- null distribution
+- sampling distribution

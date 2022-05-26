@@ -14,6 +14,20 @@ links:
   url: https://stat20.org/lectures/27/causality.html
 ---
 
+Determining whether one event directly causes another is very useful for all kinds of people, including but not limited to scientists and policymakers. But what does it mean for event A to cause event B? And how can we determine whether this might be the case?
+
+## Key Questions
+
+- What role does the counterfactual play in terms of determining the existence of causation?
+- What are some strategies that can be employed to try to identify causality?
+
+## Terminology and Skills
+
+- causation
+- counterfactual
+- experiment
+
+
 ## Additional Reading
 
 - _Causal Inference for Statistics, Social, and Biomedical Science_, Imbens and Rubin 2017

@@ -14,6 +14,8 @@ links:
   url: https://stat20.org/lectures/39/data-and-science.html
 ---
 
+Thanks for learning with us this semester! Today we wrap up by bringing together the four pillars of the course: description, generalization, prediction, and causation. We also present some case studies to leave you with some final thoughts. 
+
 ## Additional Readings
 
 - [Statistics and Shoe Leather](https://psychology.okstate.edu/faculty/jgrice/psyc5314/Freedman_1991A.pdf)

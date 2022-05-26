@@ -13,3 +13,22 @@ links:
   name: Slides
   url: https://stat20.org/lectures/36/complexity.html
 ---
+
+You might imagine that a linear model can include many, many predictive variables! Therefore, we need to introduce criterion that can tell us when "enough is enough" when it comes to adding more predictors. 
+
+## Key Question
+
+- What is the major drawback of using R^2 in a linear model with lots of predictive variables and how does adjusted R^2 help rectify it?
+
+## Terminology and Skills
+
+- adjusted R^2
+- TSS
+- SSR
+- signal
+- noise
+- AIC
+- BIC
+- Mallow's cp
+- Test/training set
+- Validation

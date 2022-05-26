@@ -14,17 +14,26 @@ links:
   url: https://stat20.org/lectures/00/lecture-title.html
 ---
 
-This is a 2-3 sentence summary about what the lecture is about.
+We introduce the idea of using statistics we have collected from data
+in previous lectures (**the sample**) to make statements about the **population** which they come from. 
 
 ### Key Questions
 
-- 
-- 
+- What is a generalization?
+- How can generalizations go wrong?
+- What are the properties of a probability distribution?
 
 ### Terminology and Skills
 
-- 
-- 
+- generalization
+- sampling variability
+- systematic bias
+- population
+- sample
+- census
+- anecdote
+- probability distribution
+
 
 ### References and Additional Readings
 

@@ -1,23 +1,34 @@
 ---
-title: "Lecture 30: Correlation"
-summary: "A measure of association."
-subtitle: "A measure of association"
+title: "Lecture 31: A Simple Linear Model"
+summary: "Finding the best fit."
+subtitle: "Finding the best fit"
 layout: single
-publishdate: "2022-04-06" # when the page will be renderable
-date: "2022-04-06"        # when the lecture was given
+publishdate: "2022-04-08" # when the page will be renderable
+date: "2022-04-08"        # when the lecture was given
 show_post_date: false
 featured: true
 links:
 - icon: images
   icon_pack: fas
   name: Slides
-  url: https://stat20.org/lectures/30/correlation.html
+  url: https://stat20.org/lectures/31/simple-linear-model.html
 ---
 
-## Additional Resources
+The title says it all!
 
-- A walk through of the calculus approach to deriving the least squares estimates:
+## Key Questions
 
-[https://www.youtube.com/watch?v=ewnc1cXJmGA](https://www.youtube.com/watch?v=ewnc1cXJmGA)
+- What are the roles of b0 and b1 in the simple linear model and what are their interpretations, if applicable?
+- What is the residual in a linear model?
+- How can we use a linear model for prediction?
 
-The final expression of the slope that they show can be rearranged with some algebra into the expression in we've seen in lecture / the book (a function of sx, sy, and r).
+## Terminology and Skills
+
+- simple linear model
+- residual
+- `lm()`
+- `attributes()`
+- `coef()`
+
+
+

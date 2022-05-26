@@ -13,3 +13,15 @@ links:
   name: Slides
   url: https://stat20.org/lectures/37/concepts-in-model-building.html
 ---
+
+Today's lecture is extremely crucial and gives you a first glance at how to approach problems you might tackle with statistics beyond this course, using the linear model as an example. 
+
+## Terminology and Skills
+- statistical question
+- exploratory analysis
+- confirmatory analysis
+- data wrangling
+- exploratory data analysis (EDA)
+- transformations
+- dummy variables
+- modeling
