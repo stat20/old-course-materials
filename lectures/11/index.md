@@ -15,7 +15,7 @@ links:
 ---
 
 We introduce the idea of using statistics we have collected from data
-in previous lectures (**the sample**) to make statements about the **population** which they come from. 
+in previous lectures (**the sample**) to make statements about the **population** from which they from. 
 
 ### Key Questions
 
