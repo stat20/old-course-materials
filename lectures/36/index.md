@@ -27,8 +27,3 @@ You might imagine that a linear model can include many, many predictive variable
 - SSR
 - signal
 - noise
-- AIC
-- BIC
-- Mallow's cp
-- Test/training set
-- Validation
