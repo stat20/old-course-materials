@@ -20,7 +20,7 @@ We have spent the last few lectures making sure that you understand "correlation
 
 - How does the correlation coefficient measure the association between two variables? What do different values of the correlation indicate about this association?
 
-- What kinds of data structures/types and graphics allow us to measure and visualize correlation, respectively?
+- What kinds of data structures/types and graphics allow us to measure and visualize correlation, respectively? 
 
 ## Terminology and Skills
 
