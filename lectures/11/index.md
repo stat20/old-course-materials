@@ -1,7 +1,7 @@
 ---
-title: "Lecture X: Title"
-subtitle: "This is the subtitle on the landing page"
-summary: "This a one sentence summary for the blogfeed."
+title: "Lecture XI: Making Generalizations"
+subtitle: "Beginning to construct claims using data."
+summary: "Introducing part two of the course."
 layout: single
 publishdate: "2022-01-25" # when the page will be renderable
 date: "2022-01-25"        # when the lecture was given
@@ -15,7 +15,7 @@ links:
 ---
 
 We introduce the idea of using statistics we have collected from data
-in previous lectures (**the sample**) to make statements about the **population** from which they from. 
+in previous lectures the sample to make statements about the population from which they are derived. 
 
 ### Key Questions
 
