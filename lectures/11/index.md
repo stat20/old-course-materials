@@ -1,5 +1,5 @@
 ---
-title: "Lecture XI: Making Generalizations"
+title: "Lecture 11: Making Generalizations"
 subtitle: "Beginning to construct claims using data."
 summary: "Introducing part two of the course."
 layout: single
