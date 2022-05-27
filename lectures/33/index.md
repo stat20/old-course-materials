@@ -1,10 +1,10 @@
 ---
 title: 'Lecture 33: Inference for Regression'
-summary: Back to Plato's Cave
+subtitle: "Back to Plato's Cave"
+summary: "Back to Plato's Cave"
 date: '2022-04-15'
 layout: single
 publishdate: '2022-04-15'
-subtitle: Back to Plato's Cave
 show_post_date: no
 featured: yes
 links:
