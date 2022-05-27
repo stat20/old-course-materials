@@ -14,6 +14,13 @@ links:
   url: https://stat20.org/lectures/38/challenges-in-model-interpretation.html
 ---
 
+Often times we might find a strong relationship between two variables and call it a day. If we have a third variable which might relate to both of the variables, however, it would behoove us to include that information in our model! 
+
+## Terminology and Skills
+
+- Ecological Fallacy
+- Simpson's Paradox
+
 ## Additional Readings
 
 - [Sex Bias in Graduate Admissions: Data from Berkeley](https://homepage.stat.uiowa.edu/~mbognar/1030/Bickel-Berkeley.pdf)

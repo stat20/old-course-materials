@@ -14,6 +14,23 @@ links:
   url: https://stat20.org/lectures/29/experimental-design-2.html
 ---
 
+We continue our discussion on causality and present two methods that are often used to make causal claims: observational studies and experiments. Experiments are especially of interest because we can design them such that our causal claim is as founded as possible. We learn how do to just that!
+
+## Key Questions
+
+- What are the advantages and disadvantages of performing observational studies versus experiments?
+
+- How does each principle of experimental design contribute to the ability to make a causal claim?
+
+## Terminology and Skills
+- Takeaway: Correlation does not equal causation.
+- observational study
+- experiment
+- random assignment
+- replication
+- treatment and control
+- blinding
+
 ## Additional Readings
 
 - [The Placebo Phenomenon](https://www.harvardmagazine.com/2013/01/the-placebo-phenomenon), Harvard Magazine
