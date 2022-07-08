@@ -3,7 +3,7 @@ title: "Lab 13: Multiple Regression with Baseball"
 author: "STAT 20 UC Berkeley"
 output:
   xaringan::moon_reader:
-    css: stat20.css
+    css: assets/css/stat20.css
     lib_dir: assets/libs
     nature:
       highlightStyle: atelier-forest-light
@@ -27,7 +27,7 @@ library(tidyverse)
 
 ## Baseball Rules
 ```{r echo = F, out.width = "65%", fig.align = "center"}
-knitr::include_graphics("baseball_rules.png")
+knitr::include_graphics("assets/images/baseball_rules.png")
 ```
 ???
 Key terms to define here are Runs (R) and Wins (W).
@@ -37,7 +37,7 @@ Here's a helpful glossary from MLB: https://www.mlb.com/glossary
 ## Baseball Rules
 
 ```{r echo = F, out.width = "60%", fig.align = "center"}
-knitr::include_graphics("baseball_diamond.png")
+knitr::include_graphics("assets/images/baseball_diamond.png")
 ```
 
 ---
@@ -56,6 +56,6 @@ Coined by Bill James in 1980, sabermetrics is
 - [Moneyball](https://www.youtube.com/watch?v=pWgyy_rlmag)
 
 ```{r echo = F, out.width = "50%", fig.align = "center"}
-knitr::include_graphics("box_score.jpeg")
+knitr::include_graphics("assets/images/box_score.jpeg")
 ```
 
